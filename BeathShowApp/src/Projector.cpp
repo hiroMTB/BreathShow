@@ -78,6 +78,8 @@ void Projector::endFbo() {
     
     fbo.begin();
     if(projectorCalibration.get()) {
+        ofClear(0);
+        ofBackground(0);
         drawCalibration();
     }
     fbo.end();
@@ -190,9 +192,54 @@ void Projector::calculateProjectiveTextureMatrix()
 //    }
 }
 
-void Projector::setRotationRads(const glm::vec3& eulerRads)
+//void Projector::setRotationRads(const glm::vec3& eulerRads)
+//{
+//    setRotationDegs(ofRadToDeg(1.f) * eulerRads);
+//}
+
+ofRectangle Projector::getViewport() const
 {
-    setRotationDegs(ofRadToDeg(1.f) * eulerRads);
+    return ofRectangle(0.f, 0.f, resolution.get().x, resolution.get().y);
+}
+
+// TODO should be reviewed
+vector<glm::vec2> Projector::getProjectionAreaTriangle(){
+    auto projectorMatrix = getTransformationMatrix();
+    glm::vec2 projectorCenter = projectorMatrix * glm::vec4(0, 0,0, 1.0);
+    
+    float angleTotal = getThrowAngleRad();
+    float angleTotal2 = angleTotal/2.0f;
+    float angleProjector = ofDegToRad(rotationDegs.get().z)+PI/2;
+    float angleStart = -angleTotal2+angleProjector;
+    float angleEnd = angleStart+angleTotal;
+    
+    //char m[255];
+    //sprintf(m, "Projector Angles\nStart: %0.2f\nEnd: 0.2%\nTotal: %0.2f\nprojector angle: %0.2f", ofRadToDeg(angleStart), ofRadToDeg(angleEnd), ofRadToDeg(angleTotal), ofRadToDeg(angleProjector));
+    //ofLogNotice("Nozzles") << m;
+    
+    glm::vec2 rayEnd1 = projectorMatrix* glm::vec4(0,10000,0,1);
+    rayEnd1 = glm::rotate(rayEnd1,-angleTotal/2.0f);
+    glm::vec2 rayEnd2 = projectorMatrix* glm::vec4(0,10000,0,1);
+    rayEnd2 = glm::rotate(rayEnd2,angleTotal/2.0f);
+    
+    vector<glm::vec2> ret = {projectorCenter,rayEnd1,rayEnd2};
+    return ret;
+}
+
+// TODO should be reviewed
+glm::mat4 Projector::getTransformationMatrix(){
+    glm::mat4x4 mat;
+    // _mat = glm::scale(_mat,glm::vec3(1,-1,1));
+    mat = glm::translate(mat, position.get());
+    glm::vec3 rad = glm::radians(rotationDegs.get());
+    mat = mat * glm::eulerAngleXYZ(rad.x, rad.y, rad.z);
+    return mat;
+}
+
+// Copy from distribution_v2
+float Projector::getThrowAngleRad() {
+    auto throwRatio = 2.f * atan(.5f * 1.f / throwToWidthRatio.get());
+    return throwRatio;
 }
 
 void Projector::onThrowToWidthRatio(float& throwToWidthRatio)
@@ -235,9 +282,9 @@ void Projector::onPosition(glm::vec3& position)
 void Projector::onPrincipalPoint(glm::vec2& principalPoint)
 {
     glm::vec2 lensOffset(
-        2.f * (.5f * getResolution().x - principalPoint.x) / getResolution().x,
-        2.f * (principalPoint.y - .5f * getResolution().y) / getResolution().y
-    );
+                         2.f * (.5f * resolution.get().x - principalPoint.x) / resolution.get().x,
+                         2.f * (principalPoint.y - .5f * resolution.get().y) / resolution.get().y
+                         );
     setLensOffset(lensOffset);
 }
 
@@ -245,18 +292,16 @@ void Projector::onActivated(bool& activate) {
     ofLog() << "PJLink temporaily disabled...";
     return;
     ofLog() << "Projector activated: " << activate;
-//        for(unsigned i=4;i<=6;i++){
-        //string command = "%1AVMT 31\r";
-        //if(activate) command = "%1AVMT 30\r";
-        //pjLink.setProjectorIP(projectorIP);
-//            pjLink.setProjectorIP("10.0.78."+ofToString(40+i));
-        //pjLink.sendPJLinkCommand(command);
-        //ofLog() << "bing";
-//        }
+    //        for(unsigned i=4;i<=6;i++){
+    //string command = "%1AVMT 31\r";
+    //if(activate) command = "%1AVMT 30\r";
+    //pjLink.setProjectorIP(projectorIP);
+    //            pjLink.setProjectorIP("10.0.78."+ofToString(40+i));
+    //pjLink.sendPJLinkCommand(command);
+    //ofLog() << "bing";
+    //        }
 }
-
-ofRectangle Projector::getViewport() const
-{
-    return ofRectangle(0.f, 0.f, resolution.get().x, resolution.get().y);
+void Projector::onNearFarClipChanged(float & f){
+    setNearClip(nearClip);
+    setFarClip(farClip);
 }
-
