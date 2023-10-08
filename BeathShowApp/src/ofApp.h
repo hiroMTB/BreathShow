@@ -23,7 +23,12 @@ class ofApp : public ofBaseApp{
 		void mousePressed(ofMouseEventArgs & args);
 		
         void drawProjector(ofEventArgs & args);
-    void drawProjectorFbo();
+        void drawProjectorFbo();
+
+        void dialogueSaveProject();
+        void dialogueLoadProject();
+        string saveProject(string dirpath);
+        string loadProject(string dirpath);
 
     private:
         void dock();
