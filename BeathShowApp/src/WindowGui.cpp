@@ -5,13 +5,10 @@ void ofApp::drawGui()
     auto settings = ofxImGui::Settings();
     
     if(ofxImGui::BeginWindow("Gui", settings, false, (bool*)&bGuiOpen.get())) {
-        
-        
-        static bool bShow = true;
-        ImGui::Checkbox(ofxImGui::GetUniqueName("Show"), (bool*)&bShow);
-        
+                
+        ImGuiTreeNodeFlags flag = ImGuiTreeNodeFlags_DefaultOpen;
         ImGui::PushID("Human");
-        if(ImGui::CollapsingHeader("Human")){
+        if(ImGui::CollapsingHeader("Human", flag)){
             
             if(ImGui::SliderFloat3("position", (float*)&humanPosition.get().x, humanPosition.getMin().x, humanPosition.getMax().x)){
                 human.setPosition(humanPosition.get().x, humanPosition.get().y, humanPosition.get().z);
@@ -29,7 +26,7 @@ void ofApp::drawGui()
 
         
         ImGui::PushID("Fan L");
-        if(ImGui::CollapsingHeader("Fan L")){
+        if(ImGui::CollapsingHeader("Fan L", flag)){
             if(ImGui::SliderInt("direction", (int*)&fanL.direction.get(), fanL.direction.getMin(), fanL.direction.getMax())){
             }
 
@@ -52,7 +49,7 @@ void ofApp::drawGui()
 
         
         ImGui::PushID("Fan R");
-        if(ImGui::CollapsingHeader("Fan R")){
+        if(ImGui::CollapsingHeader("Fan R", flag)){
             if(ImGui::SliderInt("direction", (int*)&fanR.direction.get(), fanR.direction.getMin(), fanR.direction.getMax())){
             }
 
