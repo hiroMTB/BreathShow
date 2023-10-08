@@ -106,9 +106,8 @@ void ofApp::drawProjectorFbo(){
 }
 
 void ofApp::drawProjector(ofEventArgs & args){
+    drawProjectorFbo();
     
-//    int w = ofGetWindowWidth();
-//    int h = ofGetWindowHeight();
     ofRectangle v1 = ofGetCurrentViewport();
     ofRectangle v2 = projector.getViewport();
     v2.scaleTo(v1);
