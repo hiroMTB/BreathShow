@@ -4,6 +4,7 @@ void ofApp::setup()
 {
     ofSetLogLevel(OF_LOG_VERBOSE);
     ofDisableArbTex();
+    ofSetCircleResolution(64);
     
 #ifndef USE_MULTI_VIEWPORT
     gui.setup(nullptr, false, ImGuiConfigFlags_DockingEnable, true);
@@ -28,6 +29,8 @@ void ofApp::setup()
     }else{
         ofLogError() << "Can not load human.obj";
     }
+    
+    loadProject("./projects/testProject");
 }
 
 void ofApp::update()
@@ -38,8 +41,6 @@ void ofApp::update()
 
 void ofApp::draw()
 {
-    drawProjectorFbo();
-    
     ofBackground(0);
     gui.begin();
     
@@ -112,10 +113,11 @@ void ofApp::menu(){
             
             //if (ImGui::MenuItem("New")) {}
             if (ImGui::MenuItem("Open", "Ctrl+O")) {
+                dialogueLoadProject();
             }
             
             if (ImGui::MenuItem("Save", "Ctrl+S")) {
-                //string error = saveProject(setupPath);
+                dialogueSaveProject();
             }
             
             if (ImGui::MenuItem("Save As", "Ctrl+Shift+S")) {

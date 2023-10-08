@@ -9,14 +9,14 @@
 #define Fan_h
 
 #include "ofMain.h"
+#include "Saveable.h"
 
 using glm::vec2;
 using glm::vec3;
 
-class Fan{
+class Fan : public Saveable{
     
     public:
-
     Fan(){
         setup(180);
         
@@ -68,6 +68,8 @@ class Fan{
         ofPopMatrix();
     }
     
+    ofParameterGroup & getParametersRef() override { return grp; }
+
     ofParameter<vec3> position{"position", vec3(5,36,0), vec3(-100), vec3(100)};
     ofParameter<vec3> scale{"scale", vec3(1), vec3(-2), vec3(2)};
     ofParameter<float> orientationY{"orientationY", 0, -180, 180};
