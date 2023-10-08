@@ -19,89 +19,29 @@ public:
     void endCamera();
     void begin() override;
     void end() override;
-    
     void renderTestGrid();
-    
     void draw(float x, float y, float w, float h) const;
     
-    glm::vec2 getPrincipalPoint() const { return principalPoint; }
-    void setPrincipalPoint(const glm::vec2& principalPoint) { this->principalPoint = principalPoint; }
-    
-    float getThrowToWidthRatio() const { return throwToWidthRatio; }
-    void setThrowToWidthRatio(float throwToWidthRatio) { this->throwToWidthRatio = throwToWidthRatio; }
-    
-    glm::vec3 getRotationDegs() const { return rotationDegs; }
-    void setRotationDegs(const glm::vec3& eulerDegs) { this->rotationDegs = eulerDegs; }
-    void setRotationRads(const glm::vec3& eulerRads);
-    
-    void setFrustumVisible(bool frustumVisible) { this->frustumVisible = frustumVisible; }
-    bool getFrustumVisible() { return frustumVisible; }
-    void setClearColor(const ofFloatColor& clearColor) { this->clearColor = clearColor; }
-    glm::mat4 getProjectiveTextureMatrix() const { return projectiveTextureMatrix; }
-    glm::vec2 getResolution() const { return resolution; }
     ofParameterGroup& getParametersRef() override { return parameters; }
-    ofTexture& getTexture()  { return fbo.getTexture(); }
-    const ofTexture& getTexture() const  { return fbo.getTexture(); }
-    ofRectangle getViewport() const;
-
-    // parameter event handlers
-    // void onThrowToWidthRatio(float& throwToWidthRatio);
-    void onHeadingPitchRoll(glm::vec3& headingPitchRoll);
-    // void onPosition(glm::vec3& position);
-
-    void onNearFarClipChanged(float & f){
-        setNearClip(nearClip);
-        setFarClip(farClip);
-    }
-
-    ofFbo & getFbo() { return fbo; };
 
     void calculateProjectiveTextureMatrix();
+    float getThrowAngleRad();
 
-    // Copy from distribution_v2
-    float getThrowAngleRad() {
-        auto throwRatio = 2.f * atan(.5f * 1.f / getThrowToWidthRatio());
-        return throwRatio;
-    }
+    ofRectangle getViewport() const;
 
-    // TODO should be reviewed
-    glm::mat4 getTransformationMatrix(){
-        glm::mat4x4 mat;
-        // _mat = glm::scale(_mat,glm::vec3(1,-1,1));
-        mat = glm::translate(mat, position.get());
-        glm::vec3 rad = glm::radians(rotationDegs.get());
-        mat = mat * glm::eulerAngleXYZ(rad.x, rad.y, rad.z);
-        return mat;
-    }
+    vector<glm::vec2> getProjectionAreaTriangle();  // TODO should be reviewed
+    glm::mat4 getTransformationMatrix();     // TODO should be reviewed
 
-    // TODO should be reviewed
-     vector<glm::vec2> getProjectionAreaTriangle(){
-        auto projectorMatrix = getTransformationMatrix();
-        glm::vec2 projectorCenter = projectorMatrix * glm::vec4(0, 0,0, 1.0);
-
-        float angleTotal = getThrowAngleRad();
-        float angleTotal2 = angleTotal/2.0f;
-        float angleProjector = ofDegToRad(getRotationDegs().z)+PI/2;
-        float angleStart = -angleTotal2+angleProjector;
-        float angleEnd = angleStart+angleTotal;
-
-        //char m[255];
-        //sprintf(m, "Projector Angles\nStart: %0.2f\nEnd: 0.2%\nTotal: %0.2f\nprojector angle: %0.2f", ofRadToDeg(angleStart), ofRadToDeg(angleEnd), ofRadToDeg(angleTotal), ofRadToDeg(angleProjector));
-        //ofLogNotice("Nozzles") << m;
-
-        glm::vec2 rayEnd1 = projectorMatrix* glm::vec4(0,10000,0,1);
-        rayEnd1 = glm::rotate(rayEnd1,-angleTotal/2.0f);
-        glm::vec2 rayEnd2 = projectorMatrix* glm::vec4(0,10000,0,1);
-        rayEnd2 = glm::rotate(rayEnd2,angleTotal/2.0f);
-
-        vector<glm::vec2> ret = {projectorCenter,rayEnd1,rayEnd2};
-        return ret;
-     }
-
-private:
-
-    ofFbo fbo;
-    // glm::vec2 resolution;
+    // called from ofNode
+    void onPositionChanged() override;
+    
+    // parameter event handlers
+    void onNearFarClipChanged(float & f);
+    void onThrowToWidthRatio(float& throwToWidthRatio);
+    void onRotationDegs(glm::vec3& eulerDegs);
+    void onPosition(glm::vec3& position);
+    void onPrincipalPoint(glm::vec2& principalPoint);
+    void onActivated(bool& activate);
 
 public:
     ofFloatColor clearColor {ofFloatColor(0.f, 1.f)};
@@ -116,8 +56,7 @@ public:
     ofParameter<float> farClip{"farClip", 1000, 0, 10000};
     ofParameter<glm::vec2> fboOffsetPosition{"fbo offset position", glm::vec2(0), glm::vec2(-1000), glm::vec2(1000)};
 
-
-private:
+    ofFbo fbo;
     glm::mat4 projectiveTextureMatrix;
 
     ofParameterGroup parameters {
@@ -133,16 +72,5 @@ private:
         farClip,
         fboOffsetPosition
     };
-    
-    // called from ofNode
-    void onPositionChanged() override;
-    
-    // parameter event handlers
-    void onThrowToWidthRatio(float& throwToWidthRatio);
-    void onRotationDegs(glm::vec3& eulerDegs);
-    void onPosition(glm::vec3& position);
-    void onPrincipalPoint(glm::vec2& principalPoint);
-    void onActivated(bool& activate);
-
 };
 
