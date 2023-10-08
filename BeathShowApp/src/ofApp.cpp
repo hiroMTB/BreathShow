@@ -30,7 +30,8 @@ void ofApp::setup()
         ofLogError() << "Can not load human.obj";
     }
     
-    loadProject("./projects/testProject");
+    currentProjectPath = "./projects/testProject";
+    loadProject(currentProjectPath);
 }
 
 void ofApp::update()
@@ -117,10 +118,11 @@ void ofApp::menu(){
             }
             
             if (ImGui::MenuItem("Save", "Ctrl+S")) {
-                dialogueSaveProject();
+                saveProject(currentProjectPath);
             }
             
             if (ImGui::MenuItem("Save As", "Ctrl+Shift+S")) {
+                dialogueSaveProject();
             }
             
             ImGui::EndMenu();
@@ -179,8 +181,24 @@ ofFbo::Settings ofApp::getFboSettings(int w, int h, bool bUseDepth, GLint glForm
 
 void ofApp::keyPressed(ofKeyEventArgs & args)
 {
-
+    switch(args.key){
+        case 's':
+            if(ofGetKeyPressed(OF_KEY_CONTROL) || ofGetKeyPressed(OF_KEY_COMMAND)){
+                if(ofGetKeyPressed(OF_KEY_SHIFT)){
+                    dialogueSaveProject();
+                }else{
+                    saveProject(currentProjectPath);
+                }
+            }
+            break;
+        case 'o':
+            if(ofGetKeyPressed(OF_KEY_CONTROL) || ofGetKeyPressed(OF_KEY_COMMAND)){
+                dialogueLoadProject();
+            }
+            break;
+    }
 }
+
 
 void ofApp::mousePressed(ofMouseEventArgs & args){
 

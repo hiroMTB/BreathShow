@@ -63,4 +63,6 @@ class ofApp : public ofBaseApp{
         Fan fanR;
 
         Projector projector;
+    
+        string currentProjectPath;
 };
