@@ -12,7 +12,7 @@ void ofApp::dialogueSaveProject(){
     auto dir = pfd::select_folder("Select directory to save project", ofToDataPath("./projects", true));
     string dirname = dir.result();
     if(ofDirectory::doesDirectoryExist(dirname, false)) {
-        string error = saveProject(dirname);
+        bool ok = saveProject(dirname);
     }
 }
 
@@ -20,11 +20,11 @@ void ofApp::dialogueLoadProject(){
     auto dir = pfd::select_folder("Select directory to open project", ofToDataPath("./projects", true));
     string dirname = dir.result();
     if(ofDirectory::doesDirectoryExist(dirname, false)) {
-        string error = loadProject(dirname);
+        bool ok = loadProject(dirname);
     }
 }
 
-string ofApp::saveProject(string dirpath){
+bool ofApp::saveProject(string dirpath){
     
     bool bRel = ofDirectory::doesDirectoryExist(dirpath, true);
     bool bAbs = ofDirectory::doesDirectoryExist(dirpath, false);
@@ -38,24 +38,11 @@ string ofApp::saveProject(string dirpath){
     bool bProjector = projector.save(dirpath + "/projector.json");
     bool bFanL = fanL.save(dirpath + "/fanL.json");
     bool bFanR = fanR.save(dirpath + "/fanR.json");
-
-    stringstream ss;
-    if(!bCamera)    ss << "Error saving camera.settings" << "\n";
-    if(!bProjector) ss << "Error saving projector.json" << "\n";
-    if(!bFanL)      ss << "Error saving fanL.json" << "\n";
-    if(!bFanR)      ss << "Error saving fanR.json" << "\n";
-    string error = ss.str();
     
-    if(error == ""){
-        ofLogNotice("saveProject()") << dirpath << " --> Success";
-    }else{
-        ofLogError("saveProject()") << dirpath << " --> Error" << endl << error;
-    }
-    
-    return error;
+    return bCamera && bProjector && bFanL && bFanR;
 }
 
-string ofApp::loadProject(string dirpath){
+bool ofApp::loadProject(string dirpath){
 
     bool bRel = ofDirectory::doesDirectoryExist(dirpath, true);
     bool bAbs = ofDirectory::doesDirectoryExist(dirpath, false);
@@ -73,16 +60,5 @@ string ofApp::loadProject(string dirpath){
     bool bFanL = fanL.load(dirpath + "/fanL.json");
     bool bFanR = fanR.load(dirpath + "/fanR.json");
     
-    stringstream ss;
-    if(!bCamera) ss << "Error loading camera.settings" << "\n";
-    if(!bProjector) ss << "Error loading projector.json" << "\n";
-    if(!bFanL)      ss << "Error loading fanL.json" << "\n";
-    if(!bFanR)      ss << "Error loading fanR.json" << "\n";
-    string error = ss.str();
-    if(error == ""){
-        ofLogNotice("loadProject()") << dirpath << " --> Success";
-    }else{
-        ofLogError("loadProject()") << dirpath << " --> Error" << endl << error;
-    }
-    return error;
+    return bCamera && bProjector && bFanL && bFanR;
 }
