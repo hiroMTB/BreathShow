@@ -22,13 +22,8 @@ public:
     void renderTestGrid();
     void draw(float x, float y, float w, float h) const;
     
-    ofParameterGroup& getParametersRef() override { return parameters; }
-
-    void calculateProjectiveTextureMatrix();
     float getThrowAngleRad();
-
     ofRectangle getViewport() const;
-
     vector<glm::vec2> getProjectionAreaTriangle();  // TODO should be reviewed
     glm::mat4 getTransformationMatrix();     // TODO should be reviewed
 
@@ -43,6 +38,7 @@ public:
     void onPrincipalPoint(glm::vec2& principalPoint);
     void onActivated(bool& activate);
 
+    ofParameterGroup& getParametersRef() override { return parameters; }
 public:
     ofFloatColor clearColor {ofFloatColor(0.f, 1.f)};
     ofParameter<bool> frustumVisible {"frustumVisible", false};
@@ -57,7 +53,6 @@ public:
     ofParameter<glm::vec2> fboOffsetPosition{"fbo offset position", glm::vec2(0), glm::vec2(-1000), glm::vec2(1000)};
 
     ofFbo fbo;
-    glm::mat4 projectiveTextureMatrix;
 
     ofParameterGroup parameters {
         "projectorParameters",
@@ -73,4 +68,3 @@ public:
         fboOffsetPosition
     };
 };
-

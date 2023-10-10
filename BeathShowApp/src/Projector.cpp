@@ -23,16 +23,11 @@ Projector::Projector(const glm::vec2& reso)
 
 void Projector::drawProjector(const ofColor& color)
 {
-    //glm::mat4 mat = getCurtainRelativeMat();
-
     transformGL();
     ofPushMatrix();
-    
-    ofPushStyle();
     ofSetColor(color);
-    ofDrawBox(20.f, 5.f, 20.f);
-    ofPopStyle();
-    ofDrawAxis(20);
+    ofDrawBox(8, 4, 8);
+    ofDrawAxis(10);
     restoreTransformGL();
     ofPopMatrix();
 
@@ -68,12 +63,14 @@ void Projector::drawFrustum(const ofColor& color)
     ofDisableDepthTest();
 }
 
-void Projector::beginFbo() {
+void Projector::beginFbo()
+{
     fbo.begin(OF_FBOMODE_NODEFAULTS);
     ofClear(clearColor);
 }
 
-void Projector::endFbo() {
+void Projector::endFbo()
+{
     fbo.end();
     
     fbo.begin();
@@ -85,9 +82,9 @@ void Projector::endFbo() {
     fbo.end();
 }
 
-void Projector::beginCamera(){
+void Projector::beginCamera()
+{
     ofCamera::begin(ofRectangle(0, 0, resolution.get().x, resolution.get().y));
-
 }
 
 void Projector::endCamera(){
@@ -106,7 +103,8 @@ void Projector::end()
     endFbo();
 }
 
-void Projector::drawCalibration() const {
+void Projector::drawCalibration() const
+{
     const auto id = 1;
     const auto w = resolution.get().x;
     const auto h = resolution.get().y;
@@ -145,7 +143,6 @@ void Projector::drawCalibration() const {
     ofPopMatrix();
 }
 
-
 void Projector::renderTestGrid()
 {
     fbo.begin();
@@ -177,21 +174,6 @@ void Projector::draw(float x, float y, float w, float h) const
 //        fbo.draw(x+w, y, -w, h);
 }
 
-void Projector::calculateProjectiveTextureMatrix()
-{
-//    if(curtains && curtains->getCurtains().size() !=0 ) {
-//
-//        glm::mat4 translation = glm::translate(glm::vec3(.5f));
-//        glm::mat4 scale = glm::scale(glm::vec3(.5f));
-//        glm::mat4 local = getTransformationMatrix();
-//        const Curtain &curtain = curtains->getCurtains()[curtainId - 1];
-//        local = curtain.mat * local;
-//
-//        projectiveTextureMatrix =
-//                local * getModelViewProjectionMatrix(ofRectangle(0.f, 0.f, resolution.get().x, resolution.get().y));
-//    }
-}
-
 //void Projector::setRotationRads(const glm::vec3& eulerRads)
 //{
 //    setRotationDegs(ofRadToDeg(1.f) * eulerRads);
@@ -203,7 +185,8 @@ ofRectangle Projector::getViewport() const
 }
 
 // TODO should be reviewed
-vector<glm::vec2> Projector::getProjectionAreaTriangle(){
+vector<glm::vec2> Projector::getProjectionAreaTriangle()
+{
     auto projectorMatrix = getTransformationMatrix();
     glm::vec2 projectorCenter = projectorMatrix * glm::vec4(0, 0,0, 1.0);
     
@@ -227,7 +210,8 @@ vector<glm::vec2> Projector::getProjectionAreaTriangle(){
 }
 
 // TODO should be reviewed
-glm::mat4 Projector::getTransformationMatrix(){
+glm::mat4 Projector::getTransformationMatrix()
+{
     glm::mat4x4 mat;
     // _mat = glm::scale(_mat,glm::vec3(1,-1,1));
     mat = glm::translate(mat, position.get());
@@ -237,7 +221,8 @@ glm::mat4 Projector::getTransformationMatrix(){
 }
 
 // Copy from distribution_v2
-float Projector::getThrowAngleRad() {
+float Projector::getThrowAngleRad()
+{
     auto throwRatio = 2.f * atan(.5f * 1.f / throwToWidthRatio.get());
     return throwRatio;
 }
@@ -251,14 +236,11 @@ void Projector::onThrowToWidthRatio(float& throwToWidthRatio)
     fov.y = 2.f * RAD_TO_DEG * atan(.5f * 1.f / throwToHeightRatio);
     
     setFov(fov.y);
-    
-    calculateProjectiveTextureMatrix();
 }
 
 void Projector::onRotationDegs(glm::vec3& eulerDegs)
 {
     setOrientation(glm::quat(ofDegToRad(1.f) * eulerDegs));
-    calculateProjectiveTextureMatrix();
 }
 
 // called from ofNode
@@ -269,14 +251,11 @@ void Projector::onPositionChanged()
     position.disableEvents();
     position = getPosition();
     position.enableEvents();
-    
-    calculateProjectiveTextureMatrix();
 }
 
 void Projector::onPosition(glm::vec3& position)
 {
     setPosition(position);
-    calculateProjectiveTextureMatrix();
 }
 
 void Projector::onPrincipalPoint(glm::vec2& principalPoint)
@@ -288,7 +267,8 @@ void Projector::onPrincipalPoint(glm::vec2& principalPoint)
     setLensOffset(lensOffset);
 }
 
-void Projector::onActivated(bool& activate) {
+void Projector::onActivated(bool& activate)
+{
     ofLog() << "PJLink temporaily disabled...";
     return;
     ofLog() << "Projector activated: " << activate;
@@ -301,7 +281,9 @@ void Projector::onActivated(bool& activate) {
     //ofLog() << "bing";
     //        }
 }
-void Projector::onNearFarClipChanged(float & f){
+
+void Projector::onNearFarClipChanged(float & f)
+{
     setNearClip(nearClip);
     setFarClip(farClip);
 }
