@@ -1,50 +1,51 @@
-/*
- *  Saveable.cpp
- *
- *  Copyright (c) 2020, Neil Mendoza, http://www.neilmendoza.com
- *  All rights reserved.
- *
- *  Redistribution and use in source and binary forms, with or without
- *  modification, are permitted provided that the following conditions are met:
- *
- *  * Redistributions of source code must retain the above copyright notice,
- *    this list of conditions and the following disclaimer.
- *  * Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in the
- *    documentation and/or other materials provided with the distribution.
- *  * Neither the name of Neil Mendoza nor the names of its contributors may be used
- *    to endorse or promote products derived from this software without
- *    specific prior written permission.
- *
- *  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
- *  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- *  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- *  ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
- *  LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
- *  CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
- *  SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
- *  INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
- *  CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- *  POSSIBILITY OF SUCH DAMAGE.
- *
- */
-
 #include "Saveable.h"
+#include "Util.h"
 
-bool Saveable::load(const string& fileName)
+bool Saveable::load(const string& filepath)
 {
-    ofJson json = ofLoadJson(fileName);
-    if(json.empty()){
+ 
+    ofFile file(filepath);
+    if(!file.exists()){
+        ofLogError("Saveable") << "Load ERROR  : " << "file does not exist: " << filepath;
+        return false;
+    }else if (file.isDirectory()){
+        ofLogError("Saveable") << "Load ERROR  : " << "this is directory: " << filepath;
         return false;
     }
+    
+    ofJson json = ofLoadJson(filepath);
+    if(json.empty()){
+        ofLogWarning("Saveable") << "Load WARN  : " << "empty json: " << filepath;
+        return false;
+    }
+
+    if(getParametersRef().size() == 0){
+        ofLogError("Saveable")  << "Load ERROR  : " << "empty parameterGroup: " << filepath;
+        return false;
+    }
+    
     ofDeserialize(json, getParametersRef());
-    return getParametersRef().size() != 0;
+    string filename = file.getFileName();
+    ofLogNotice("Saveable") << "Load SUCCESS: " << filename;
+    return true;
 }
 
-bool Saveable::save(const string& fileName)
+bool Saveable::save(const string& filepath)
 {
+    if(getParametersRef().size() != 0){
+        ofLogError("Saveable")  << "Save ERROR  : " << "empty parameterGroup: " << filepath;
+        return false;
+    }
+
     ofJson json;
     ofSerialize(json, getParametersRef());
-    return ofSavePrettyJson(fileName, json);
+    bool ok = ofSavePrettyJson(filepath, json);
+    ofFile file(filepath);
+    string filename = file.getFileName();
+    if(ok){
+        ofLogNotice("Saveable") << "Save SUCCESS: " << filename;
+    }else{
+        ofLogError("Saveable")  << "Save ERROR  : " << "json save error" << filename;
+    }
+    return ok;
 }
