@@ -2,12 +2,19 @@
 
 void ofApp::drawGui()
 {
+    drawGui_WindowManager();
+    drawGui_ShowSettings();
+}
+
+void ofApp::drawGui_ShowSettings()
+{
     auto settings = ofxImGui::Settings();
     
     if(ofxImGui::BeginWindow("Gui", settings, false, (bool*)&bGuiOpen.get())) {
-                
+        
         ImGuiTreeNodeFlags flag = ImGuiTreeNodeFlags_DefaultOpen;
         ImGui::PushID("Human");
+        
         if(ImGui::CollapsingHeader("Human", flag)){
             
             if(ImGui::SliderFloat3("position", (float*)&humanPosition.get().x, humanPosition.getMin().x, humanPosition.getMax().x)){
@@ -73,5 +80,52 @@ void ofApp::drawGui()
         ofxImGui::AddGroup(projector.getParametersRef(), settings);
         
     }
+    ofxImGui::EndWindow(settings);
+}
+
+void ofApp::drawGui_WindowManager() {
+    auto settings = ofxImGui::Settings();
+    auto monitorNames = RenderWindow::monitorNames;
+    
+    if (ofxImGui::BeginWindow("Window Manager", settings, false, (bool *) &bWindowManagerOpen.get())) {
+        if (ImGui::TreeNodeEx("Main Window", ImGuiTreeNodeFlags_DefaultOpen)) {
+            if (ImGui::Checkbox("Open", (bool *) &mainWindow->bOpen.get())) {
+                mainWindow->setOpen(mainWindow->bOpen);
+            }
+            if(ImGui::Checkbox("Fullscreen", (bool *) &mainWindow->bFull.get())){
+                mainWindow->setFull(mainWindow->bFull);
+            }
+            ofxImGui::AddParameter(mainWindow->size);
+            ofxImGui::AddParameter(mainWindow->position);
+            ofxImGui::AddParameter(mainWindow->scale);
+            if (ofxImGui::VectorCombo("Monitor", &mainWindow->monitorSelected, monitorNames)) {
+                mainWindow->monitorName.set(monitorNames[mainWindow->monitorSelected]);
+                mainWindow->setMonitor(monitorNames[mainWindow->monitorSelected]);
+                mainWindow->monitorId.set(mainWindow->monitorSelected);
+            }
+            ImGui::TreePop();
+        }
+        
+        if (ImGui::TreeNodeEx("Projector Window", ImGuiTreeNodeFlags_DefaultOpen)) {
+            if(ImGui::Checkbox("Open", (bool *) &projectorWindow->bOpen.get())){
+                projectorWindow->setOpen(projectorWindow->bOpen);
+            };
+            
+            if(ImGui::Checkbox("Fullscreen", (bool *) &projectorWindow->bFull.get())){
+                projectorWindow->setFull(projectorWindow->bFull);
+            };
+            
+            ofxImGui::AddParameter(projectorWindow->size);
+            ofxImGui::AddParameter(projectorWindow->position);
+            ofxImGui::AddParameter(projectorWindow->scale);
+            if (ofxImGui::VectorCombo("Monitor", &projectorWindow->monitorSelected, monitorNames)) {
+                projectorWindow->monitorName.set(monitorNames[projectorWindow->monitorSelected]);
+                projectorWindow->setMonitor(monitorNames[projectorWindow->monitorSelected]);
+                projectorWindow->monitorId.set(projectorWindow->monitorSelected);
+            }
+            ImGui::TreePop();
+        }
+    }
+    
     ofxImGui::EndWindow(settings);
 }

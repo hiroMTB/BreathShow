@@ -99,6 +99,8 @@ void ofApp::dock(){
     if (io.ConfigFlags & ImGuiConfigFlags_DockingEnable){
         ImGuiID dockspace_id = ImGui::GetID(name);
         ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), dockspace_flags);
+        
+        
     }
     
     menu();
@@ -204,3 +206,13 @@ void ofApp::mousePressed(ofMouseEventArgs & args){
 
 }
 
+void ofApp::exit(){
+    
+//    ofGetCurrentRenderer().reset();
+//    //mainWindow->ofBaseWindow->setWindowShouldClose();
+//    projectorWindow->ofBaseWindow->setWindowShouldClose();
+//    ofGetCurrentWindow()->close();
+
+    ofLogNotice("ofApp") << "exit()";
+    
+}

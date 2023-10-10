@@ -6,7 +6,7 @@
 #include "imgui_internal.h"
 #include "ImHelpers.h"
 #include "Projector.h"
-
+#include "RenderWindow.h"
 #include "Fan.h"
 
 using glm::vec2;
@@ -30,6 +30,7 @@ class ofApp : public ofBaseApp{
         bool saveProject(string dirpath);
         bool loadProject(string dirpath);
 
+        void exit();
     private:
         void dock();
         void menu();
@@ -40,6 +41,8 @@ class ofApp : public ofBaseApp{
     
         // WindowGui.cpp
         void drawGui();
+        void drawGui_WindowManager();
+        void drawGui_ShowSettings();
     
         ofRectangle calcCameraControArea();
 
@@ -52,6 +55,7 @@ class ofApp : public ofBaseApp{
         ofParameter<bool> b3dSceneOpen{"3DScene Window Open", true};
         ofParameter<bool> bDemoOpen{"Demo Window Open", true};
         ofParameter<bool> bGuiOpen{"Gui Panel Open", true};
+        ofParameter<bool> bWindowManagerOpen{"Window Manager Open", true};
     
         ofxAssimpModelLoader human;
         ofParameter<vec3> humanPosition{"position", vec3(0), vec3(-500), vec3(500)};
@@ -61,8 +65,11 @@ class ofApp : public ofBaseApp{
 
         Fan fanL;
         Fan fanR;
-
-        Projector projector;
     
         string currentProjectPath;
+
+    public:
+        std::shared_ptr<MainWindow> mainWindow;
+        std::shared_ptr<ProjectorWindow> projectorWindow;
+        Projector projector;
 };

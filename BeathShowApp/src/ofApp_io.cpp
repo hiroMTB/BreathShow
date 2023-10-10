@@ -38,8 +38,10 @@ bool ofApp::saveProject(string dirpath){
     bool bProjector = projector.save(dirpath + "/projector.json");
     bool bFanL = fanL.save(dirpath + "/fanL.json");
     bool bFanR = fanR.save(dirpath + "/fanR.json");
+    bool bWin = mainWindow->save(dirpath + "/mainWindow.json");
+    bool bPrj = projectorWindow->save(dirpath + "/projectorWindow.json");
     
-    return bCamera && bProjector && bFanL && bFanR;
+    return bCamera && bProjector && bFanL && bFanR && bWin && bPrj;
 }
 
 bool ofApp::loadProject(string dirpath){
@@ -59,6 +61,8 @@ bool ofApp::loadProject(string dirpath){
     bool bProjector = projector.load(dirpath + "/projector.json");
     bool bFanL = fanL.load(dirpath + "/fanL.json");
     bool bFanR = fanR.load(dirpath + "/fanR.json");
+    bool bWin = mainWindow->load(dirpath + "/mainWindow.json");
+    bool bPrj = projectorWindow->load(dirpath + "/projectorWindow.json");
     
-    return bCamera && bProjector && bFanL && bFanR;
+    return bCamera && bProjector && bFanL && bFanR && bWin && bPrj;
 }

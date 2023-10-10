@@ -32,7 +32,7 @@ bool Saveable::load(const string& filepath)
 
 bool Saveable::save(const string& filepath)
 {
-    if(getParametersRef().size() != 0){
+    if(getParametersRef().size() == 0){
         ofLogError("Saveable")  << "Save ERROR  : " << "empty parameterGroup: " << filepath;
         return false;
     }
