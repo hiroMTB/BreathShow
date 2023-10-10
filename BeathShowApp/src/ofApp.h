@@ -27,18 +27,18 @@ class ofApp : public ofBaseApp{
 
         void dialogueSaveProject();
         void dialogueLoadProject();
-        string saveProject(string dirpath);
-        string loadProject(string dirpath);
+        bool saveProject(string dirpath);
+        bool loadProject(string dirpath);
 
     private:
         void dock();
         void menu();
     
-        // Window3D
+        // Window3D.cpp
         void draw3DWindow();
         void draw3DScene();
     
-        // WindowGui
+        // WindowGui.cpp
         void drawGui();
     
         ofRectangle calcCameraControArea();
