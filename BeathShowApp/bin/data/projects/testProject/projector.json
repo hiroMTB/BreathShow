@@ -1,11 +1,11 @@
 {
-    "projectorParameters": {
+    "Projector": {
         "calibration": "0",
-        "farClip": "1000",
+        "farClip": "500",
         "fbo_offset_position": "0, 0",
-        "frustumVisible": "0",
+        "frustumVisible": "1",
         "naerClip": "1",
-        "position": "0, 60, 100",
+        "position": "0, 235, 480",
         "principalPoint": "960, 0",
         "resolution": "1920, 1080",
         "rotationDegs": "0, 0, 0",
