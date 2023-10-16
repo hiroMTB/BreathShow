@@ -234,7 +234,7 @@ bool RenderWindow::save(string filepath){
     ofSerialize(json, grp);
     grp.setName(tmp);
 
-    ofSavePrettyJson(filepath, json);
+    return ofSavePrettyJson(filepath, json);
 }
 
 bool RenderWindow::load(string filepath){
@@ -254,8 +254,9 @@ bool RenderWindow::load(string filepath){
                 ofLogNotice("RenderWindow") << "monitorName :  " << monitorName;
                 
                 setFull(bFull);
+                return true;
             }
         }
     }
-    //grp.setName(title);
+    return false;
 }

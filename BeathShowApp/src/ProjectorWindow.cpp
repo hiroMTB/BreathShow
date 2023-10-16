@@ -9,30 +9,24 @@
 
 void ProjectorWindow::draw(ofEventArgs & args) {
 
+    //app->drawProjectorFbo();
+    
     ofClear(0, 0, 0, 0);
     ofBackground(30,255);
     ofPushMatrix();
     ofScale(scale);
-    int x = 0;
 
     Projector & projector = app->projector;
+    ofRectangle v1 = ofGetCurrentViewport();
+    ofRectangle v2 = projector.getViewport();
+    v2.scaleTo(v1);
+    
+    vec2 offset = projector.fboOffsetPosition;
+    projector.fbo.setAnchorPoint(-offset.x, offset.y);
+    
+    //projector.draw(x, 0, w, h);
+    projector.draw(v2.x, v2.y, v2.width, v2.height);
 
-    {
-        //vec2 size = ofGetWindowSize();
-        int w = projector.fbo.getWidth();
-        int h = projector.fbo.getHeight();
-        ofSetColor(0);
-        ofFill();
-        ofDrawRectangle(x,0,w, h);
-
-        ofSetColor(255);
-        {
-            vec2 offset = projector.fboOffsetPosition;
-            projector.fbo.setAnchorPoint(-offset.x, offset.y);
-            projector.draw(x, 0, w, h);
-        }
-        x += w;
-    }
     ofPopMatrix();
 }
 

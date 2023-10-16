@@ -8,6 +8,7 @@ int main( ){
     ofSetLogLevel("ofFbo", OF_LOG_NOTICE);
     ofSetLogLevel("ofShader", OF_LOG_NOTICE);
     ofSetLogLevel("ofxAssimpModelLoader", OF_LOG_NOTICE);
+    ofSetLogLevel("ofMaterial", OF_LOG_NOTICE);
 
     if(0)
     {

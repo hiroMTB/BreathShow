@@ -17,16 +17,16 @@ void ofApp::drawGui_ShowSettings()
         
         if(ImGui::CollapsingHeader("Human", flag)){
             
-            if(ImGui::SliderFloat3("position", (float*)&humanPosition.get().x, humanPosition.getMin().x, humanPosition.getMax().x)){
-                human.setPosition(humanPosition.get().x, humanPosition.get().y, humanPosition.get().z);
+            if(ImGui::SliderFloat3("position", (float*)&human.position.get().x, human.position.getMin().x, human.position.getMax().x)){
+                human.model.setPosition(human.position.get().x, human.position.get().y, human.position.get().z);
             }
 
-            if(ImGui::SliderFloat3("scale", (float*)&humanScale.get().x, humanScale.getMin().x, humanScale.getMax().x)){
-                human.setScale(humanScale.get().x, humanScale.get().y, humanScale.get().z) ;
+            if(ImGui::SliderFloat3("scale", (float*)&human.scale.get().x, human.scale.getMin().x, human.scale.getMax().x)){
+                human.model.setScale(human.scale.get().x, human.scale.get().y, human.scale.get().z) ;
             }
             
-            if(ImGui::SliderFloat("orientationY", (float*)&humanOrientationY.get(), humanOrientationY.getMin(), humanOrientationY.getMax())){
-                human.setRotation(0, humanOrientationY.get(), 0, 1, 0);
+            if(ImGui::SliderFloat("orientationY", (float*)&human.orientationY.get(), human.orientationY.getMin(), human.orientationY.getMax())){
+                human.model.setRotation(0, human.orientationY.get(), 0, 1, 0);
             }
         }
         ImGui::PopID();

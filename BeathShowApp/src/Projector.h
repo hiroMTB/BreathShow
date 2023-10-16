@@ -9,9 +9,9 @@ class Projector : public ofCamera, public Saveable
 public:
     Projector(const glm::vec2& resolution = glm::vec2(1920.f, 1080.0f));
 
-    void drawProjector(const ofColor& color = ofColor::gold);
+    void drawProjector(const ofColor& color = ofColor::gray);
     void drawCalibration() const;
-    void drawFrustum(const ofColor& color = ofColor(255, 255, 0, 50));
+    void drawFrustum(const ofColor& color = ofColor(255, 255, 0, 20));
 
     void beginFbo();
     void endFbo();
@@ -55,7 +55,7 @@ public:
     ofFbo fbo;
 
     ofParameterGroup parameters {
-        "projectorParameters",
+        "Projector",
         frustumVisible,
         projectorCalibration,
         position,

@@ -2,12 +2,12 @@
 
 #include "ofMain.h"
 #include "ofxImGui.h"
-#include "ofxAssimpModelLoader.h"
 #include "imgui_internal.h"
 #include "ImHelpers.h"
 #include "Projector.h"
 #include "RenderWindow.h"
 #include "Fan.h"
+#include "Human.h"
 
 using glm::vec2;
 using glm::vec3;
@@ -24,7 +24,8 @@ class ofApp : public ofBaseApp{
 		
         void drawProjector(ofEventArgs & args);
         void drawProjectorFbo();
-
+        void drawFloor();
+        
         void dialogueSaveProject();
         void dialogueLoadProject();
         bool saveProject(string dirpath);
@@ -57,12 +58,7 @@ class ofApp : public ofBaseApp{
         ofParameter<bool> bGuiOpen{"Gui Panel Open", true};
         ofParameter<bool> bWindowManagerOpen{"Window Manager Open", true};
     
-        ofxAssimpModelLoader human;
-        ofParameter<vec3> humanPosition{"position", vec3(0), vec3(-500), vec3(500)};
-        ofParameter<vec3> humanScale{"scale", vec3(0.1,-0.1,0.1), vec3(-3), vec3(3)};
-        ofParameter<float> humanOrientationY{"orientationY", 0, -360, 360};
-        ofParameterGroup grpHuman{"human", humanPosition, humanOrientationY, humanScale};
-
+        Human human;
         Fan fanL;
         Fan fanR;
     

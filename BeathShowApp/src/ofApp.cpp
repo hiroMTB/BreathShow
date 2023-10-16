@@ -18,20 +18,8 @@ void ofApp::setup()
     cam.setNearClip(1);
     cam.setFarClip(10000);
     
-    // 3d model
-    bool bOptimize = true;
-    bool bOk = human.loadModel("./3dModel/human.obj", bOptimize);
-    if(bOk){
-        ofLogNotice() << "OK! load human.obj";
-        human.setScale(humanScale.get().x, humanScale.get().y, humanScale.get().z) ;
-        human.setPosition(humanPosition.get().x, humanPosition.get().y, humanPosition.get().z);
-        human.setRotation(0, humanOrientationY, 0, 1, 0);
-    }else{
-        ofLogError() << "Can not load human.obj";
-    }
-    
     currentProjectPath = "./projects/testProject";
-    loadProject(currentProjectPath);
+    loadProject(currentProjectPath);    
 }
 
 void ofApp::update()
@@ -42,6 +30,8 @@ void ofApp::update()
 
 void ofApp::draw()
 {
+    drawProjectorFbo();
+
     ofBackground(0);
     gui.begin();
     

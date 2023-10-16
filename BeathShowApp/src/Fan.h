@@ -31,7 +31,7 @@ class Fan : public Saveable{
     ofParameter<float> openAngle{"openAngle", 90, 0, 180};
     ofParameter<float> resolution{"resolution", 32, 1, 72};
     ofParameter<int> direction{"direction", 1, -1, 1};
-    ofParameterGroup grp{"Fun", position, orientationY, scale, openAngle, resolution, direction};
+    ofParameterGroup grp{"Fun", position, orientationY, scale, openAngle, resolution, direction, length};
 
     private:
     ofMesh mesh;

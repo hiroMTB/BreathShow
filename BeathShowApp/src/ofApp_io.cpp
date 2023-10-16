@@ -35,13 +35,14 @@ bool ofApp::saveProject(string dirpath){
     
     dirpath = ofToDataPath(dirpath, true);
     bool bCamera = ofxSaveCamera(cam, dirpath + "/camera.settings");
+    bool bHuman = human.save(dirpath + "/human.json");
     bool bProjector = projector.save(dirpath + "/projector.json");
     bool bFanL = fanL.save(dirpath + "/fanL.json");
     bool bFanR = fanR.save(dirpath + "/fanR.json");
     bool bWin = mainWindow->save(dirpath + "/mainWindow.json");
     bool bPrj = projectorWindow->save(dirpath + "/projectorWindow.json");
     
-    return bCamera && bProjector && bFanL && bFanR && bWin && bPrj;
+    return bCamera && bHuman && bProjector && bFanL && bFanR && bWin && bPrj;
 }
 
 bool ofApp::loadProject(string dirpath){
@@ -58,11 +59,14 @@ bool ofApp::loadProject(string dirpath){
     ofSetWindowTitle(filename);
     
     bool bCamera = ofxLoadCamera(cam, dirpath + "/camera.settings");
+    bool bHuman = human.load(dirpath + "/human.json");
     bool bProjector = projector.load(dirpath + "/projector.json");
     bool bFanL = fanL.load(dirpath + "/fanL.json");
     bool bFanR = fanR.load(dirpath + "/fanR.json");
     bool bWin = mainWindow->load(dirpath + "/mainWindow.json");
     bool bPrj = projectorWindow->load(dirpath + "/projectorWindow.json");
+        
+    human.setup();
     
-    return bCamera && bProjector && bFanL && bFanR && bWin && bPrj;
+    return bCamera && bHuman && bProjector && bFanL && bFanR && bWin && bPrj;
 }

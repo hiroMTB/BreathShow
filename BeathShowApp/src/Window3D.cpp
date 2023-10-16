@@ -52,17 +52,13 @@ void ofApp::draw3DScene(){
     //
     ofDrawAxis(100);
 
-    // Grid
-    ofPushMatrix();
-    ofRotateZDeg(90);
-    ofSetColor(180);
-    ofDrawGridPlane(10, 10);
-    ofPopMatrix();
+    // Floor (Grid)
+    drawFloor();
     
     // human
     ofSetColor(180);
     ofPushMatrix();
-    human.drawWireframe();
+    human.model.drawWireframe();
     ofPopMatrix();
     
     // Fan
@@ -82,17 +78,13 @@ void ofApp::drawProjectorFbo(){
     
     projector.begin();
     
-    // Grid
-    ofPushMatrix();
-    ofRotateZDeg(90);
-    ofSetColor(180);
-    ofDrawGridPlane(10, 10);
-    ofPopMatrix();
+    // Floor (Grid)
+    drawFloor();
     
     // human
     ofSetColor(180);
     ofPushMatrix();
-    human.drawWireframe();
+    human.model.drawWireframe();
     ofPopMatrix();
     
     // Fan
@@ -105,11 +97,10 @@ void ofApp::drawProjectorFbo(){
     projector.end();
 }
 
-void ofApp::drawProjector(ofEventArgs & args){
-    drawProjectorFbo();
-    
-    ofRectangle v1 = ofGetCurrentViewport();
-    ofRectangle v2 = projector.getViewport();
-    v2.scaleTo(v1);
-    projector.draw(v2.x, v2.y, v2.width, v2.height);
+void ofApp::drawFloor(){
+    ofPushMatrix();
+    ofRotateZDeg(90);
+    ofSetColor(180);
+    ofDrawGridPlane(25, 4*2);   // 25cm, 2m x 2m grid
+    ofPopMatrix();
 }
