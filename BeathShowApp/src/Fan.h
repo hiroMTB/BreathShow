@@ -21,9 +21,11 @@ class Fan : public Saveable{
     void setup(float angle, float len=30, int direction=1, int res = 36);
     void update();
     void draw();
+    void loadVideo(string path);
     
     ofParameterGroup & getParametersRef() override { return grp; }
 
+    ofParameter<bool> bShowTest{"test texture", false};
     ofParameter<vec3> position{"position", vec3(5,36,0), vec3(-100), vec3(100)};
     ofParameter<vec3> scale{"scale", vec3(1), vec3(-2), vec3(2)};
     ofParameter<float> orientationY{"orientationY", 0, -180, 180};
@@ -31,12 +33,14 @@ class Fan : public Saveable{
     ofParameter<float> openAngle{"openAngle", 90, 0, 180};
     ofParameter<float> resolution{"resolution", 32, 1, 72};
     ofParameter<int> direction{"direction", 1, -1, 1};
-    ofParameterGroup grp{"Fun", position, orientationY, scale, openAngle, resolution, direction, length};
+
+    ofParameterGroup grp{"Fun", bShowTest, position, orientationY, scale, openAngle, resolution, direction, length};
 
     private:
     ofMesh mesh;
     
     ofImage img;
+    ofVideoPlayer vid;
 };
 
 #endif /* Fan_h */

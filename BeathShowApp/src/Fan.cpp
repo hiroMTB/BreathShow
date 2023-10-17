@@ -33,17 +33,39 @@ void Fan::setup(float angle, float len, int direction, int res){
         mesh.addVertex( vec3(len * cos(a1), len * sin(a1), 0) );
         mesh.addVertex( vec3(len * cos(a2), len * sin(a2), 0) );
         
-        float ty = 890.0 * (openAngle/180.0) / res;
-        mesh.addTexCoord( vec2(0, i*ty) );
-        mesh.addTexCoord( vec2(192, i*ty) );
-        mesh.addTexCoord( vec2(192, (i+1)*ty) );
-        
+        if(bShowTest){
+            float ty = 890.0 * (openAngle/180.0) / res;
+            mesh.addTexCoord( vec2(0, i*ty) );
+            mesh.addTexCoord( vec2(192, i*ty) );
+            mesh.addTexCoord( vec2(192, (i+1)*ty) );
+        }else{
+            if(vid.isLoaded()){
+                float ty = 1.0f / res;
+                mesh.addTexCoord( vec2(0, (res-i)*ty) );
+                mesh.addTexCoord( vec2(1, (res-i)*ty) );
+                mesh.addTexCoord( vec2(1, (res-i-1)*ty) );
+            }
+        }
         mesh.setMode(OF_PRIMITIVE_TRIANGLES );
+    }
+}
+
+void Fan::loadVideo(string path){
+
+    if( ofFile::doesFileExist(path)){
+        vid.load(path);
+        vid.setUseTexture(true);
+        vid.setLoopState(OF_LOOP_NORMAL);
+        vid.play();
+        ofLogNotice("Fan") << "Video file loaded: ";
+    }else{
+        ofLogError("Fan") << "Video file does not exist: " << path;
     }
 }
 
 void Fan::update(){
     setup(openAngle, length, direction, resolution);
+    vid.update();
 }
 
 void Fan::draw(){
@@ -51,9 +73,18 @@ void Fan::draw(){
     ofTranslate(position);
     //ofTranslate(scale);
     //mesh.drawWireframe();
-    ofTexture & tex = img.getTexture();
-    tex.bind();
-    mesh.draw();
-    tex.unbind();
+    if(bShowTest){
+        ofTexture & tex = img.getTexture();
+        tex.bind();
+        mesh.draw();
+        tex.unbind();
+    }else{
+        if(vid.isLoaded()){
+            ofTexture & tex = vid.getTexture();
+            tex.bind();
+            mesh.draw();
+            tex.unbind();
+        }
+    }
     ofPopMatrix();
 }

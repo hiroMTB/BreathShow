@@ -67,6 +67,7 @@ bool ofApp::loadProject(string dirpath){
     bool bPrj = projectorWindow->load(dirpath + "/projectorWindow.json");
         
     human.setup();
-    
+    fanL.loadVideo( "vid/fanL_proRes.mov" );
+    fanR.loadVideo( "vid/fanR_proRes.mov" );
     return bCamera && bHuman && bProjector && bFanL && bFanR && bWin && bPrj;
 }
