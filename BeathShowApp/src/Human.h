@@ -18,7 +18,11 @@ public:
     
     Human(){}
     bool setup(){
+#if OF_VERSION_MINOR >= 12
         bool bOk = model.load("./3dModel/human.obj", ofxAssimpModelLoader::OPTIMIZE_HIGH);
+#else
+        bool bOk = model.loadModel("./3dModel/human.obj", true);
+#endif
         if(bOk){
             ofLogNotice() << "OK! load human.obj";
             model.setScale(scale.get().x, scale.get().y, scale.get().z) ;

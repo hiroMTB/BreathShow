@@ -4,6 +4,9 @@
 
 int main( ){
 
+    // app packaging
+    ofSetDataPathRoot("../Resources/data/");
+    
     // Create main window
     ofSetLogLevel("ofFbo", OF_LOG_NOTICE);
     ofSetLogLevel("ofShader", OF_LOG_NOTICE);

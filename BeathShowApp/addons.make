@@ -1,3 +1,3 @@
 ofxAssimpModelLoader
 ofxCameraSaveLoad
-ofxImGui
+../local_addons/ofxImGui
