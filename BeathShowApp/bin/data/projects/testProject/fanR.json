@@ -6,6 +6,7 @@
         "orientationY": "0",
         "position": "17, 121, 0",
         "resolution": "32",
-        "scale": "1, 1, 1"
+        "scale": "1, 1, 1",
+        "test_texture": "0"
     }
 }
