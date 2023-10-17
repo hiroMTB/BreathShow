@@ -2,9 +2,12 @@
 
 void ofApp::drawGui()
 {
-    drawGui_WindowManager();
-    drawGui_ShowSettings();
-    drawGui_Sequencer();
+    if(bWindowManagerOpen) drawGui_WindowManager();
+    if(bGuiOpen) drawGui_ShowSettings();
+    if(bSeqOpen) drawGui_Sequencer();
+    if(b3dSceneOpen) draw3DWindow();
+    //ImGui::ShowDemoWindow();
+
 }
 
 void ofApp::drawGui_ShowSettings()

@@ -34,6 +34,7 @@ void ofApp::setup()
 
 void ofApp::update()
 {
+    drawProjectorFbo();
     fanL.update();
     fanR.update();
 }
@@ -44,8 +45,6 @@ void ofApp::draw()
     gui.begin();
     
     dock();
-    //ImGui::ShowDemoWindow();
-    draw3DWindow();
     drawGui();
      
     gui.end();
@@ -202,7 +201,6 @@ void ofApp::keyPressed(ofKeyEventArgs & args)
             break;
     }
 }
-
 
 void ofApp::mousePressed(ofMouseEventArgs & args){
 
