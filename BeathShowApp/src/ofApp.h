@@ -8,6 +8,7 @@
 #include "RenderWindow.h"
 #include "Fan.h"
 #include "Human.h"
+#include "MySequence.h"
 
 using glm::vec2;
 using glm::vec3;
@@ -45,6 +46,9 @@ class ofApp : public ofBaseApp{
         void drawGui_WindowManager();
         void drawGui_ShowSettings();
     
+        // WindowSequencer.cpp
+        void drawGui_Sequencer();
+    
         ofRectangle calcCameraControArea();
 
         ofFbo::Settings getFboSettings(int w, int h, bool bUseDepth=false, GLint glFormat=GL_RGBA8, GLenum glTexTarget=GL_TEXTURE_2D);
@@ -56,6 +60,7 @@ class ofApp : public ofBaseApp{
         ofParameter<bool> b3dSceneOpen{"3DScene Window Open", true};
         ofParameter<bool> bDemoOpen{"Demo Window Open", true};
         ofParameter<bool> bGuiOpen{"Gui Panel Open", true};
+        ofParameter<bool> bSeqOpen{"Sequencer Panel Open", true};
         ofParameter<bool> bWindowManagerOpen{"Window Manager Open", true};
     
         Human human;
@@ -68,4 +73,5 @@ class ofApp : public ofBaseApp{
         std::shared_ptr<MainWindow> mainWindow;
         std::shared_ptr<ProjectorWindow> projectorWindow;
         Projector projector;
+    	MySequence mySequence;
 };

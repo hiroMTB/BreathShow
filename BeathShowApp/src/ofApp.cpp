@@ -19,7 +19,17 @@ void ofApp::setup()
     cam.setFarClip(10000);
     
     currentProjectPath = "./projects/testProject";
-    loadProject(currentProjectPath);    
+    loadProject(currentProjectPath);
+    
+    
+    mySequence.mFrameMin = -100;
+    mySequence.mFrameMax = 1000;
+    mySequence.myItems.push_back(MySequence::MySequenceItem{0,10,30,false});
+    mySequence.myItems.push_back(MySequence::MySequenceItem{1,20,30,true});
+    mySequence.myItems.push_back(MySequence::MySequenceItem{3, 12, 60, false});
+    mySequence.myItems.push_back(MySequence::MySequenceItem{2, 61, 90, false});
+    mySequence.myItems.push_back(MySequence::MySequenceItem{4, 90, 99, false});
+
 }
 
 void ofApp::update()
@@ -30,8 +40,6 @@ void ofApp::update()
 
 void ofApp::draw()
 {
-    drawProjectorFbo();
-
     ofBackground(0);
     gui.begin();
     
@@ -154,7 +162,10 @@ ofRectangle ofApp::calcCameraControArea(){
     if(winPos.x >= 0 && winPos.y >= 0){
         // store actual canvas start position in order to calculate mouse action properly
         mouseOffset = vec2(min.x, min.y);
-        ofRectangle controlArea = ofRectangle(winPos.x, winPos.y, winSize.x, winSize.y);
+
+        // make it smaller to avoid moving camera while draging neiboring panel
+        int margin = 3;
+        ofRectangle controlArea = ofRectangle(winPos.x+margin, winPos.y+margin, winSize.x-margin*2, winSize.y-margin*2);
         return controlArea;
     }
     return ofRectangle(0, 0, 0, 0);
