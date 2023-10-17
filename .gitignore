@@ -143,3 +143,6 @@ Makefile
 *.make
 
 **/bin/data/render
+
+*.mov
+*.mp4
