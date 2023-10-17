@@ -60,7 +60,7 @@ class ofApp : public ofBaseApp{
         ofParameter<bool> b3dSceneOpen{"3DScene Window Open", true};
         ofParameter<bool> bDemoOpen{"Demo Window Open", true};
         ofParameter<bool> bGuiOpen{"Gui Panel Open", true};
-        ofParameter<bool> bSeqOpen{"Sequencer Panel Open", true};
+        ofParameter<bool> bSeqOpen{"Sequencer Panel Open", false};
         ofParameter<bool> bWindowManagerOpen{"Window Manager Open", true};
     
         Human human;
