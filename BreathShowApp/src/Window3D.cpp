@@ -78,14 +78,8 @@ void ofApp::drawProjectorFbo(){
     
     projector.begin();
     
-    // Floor (Grid)
-    drawFloor();
-    
-    // human
-    ofSetColor(180);
-    ofPushMatrix();
-    human.model.drawWireframe();
-    ofPopMatrix();
+    ofClear(0);
+    ofBackground(0);
     
     // Fan
     ofSetColor(255);
