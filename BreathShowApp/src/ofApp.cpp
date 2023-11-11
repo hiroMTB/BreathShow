@@ -205,6 +205,7 @@ void ofApp::keyPressed(ofKeyEventArgs & args)
             bPlayVideo = !bPlayVideo;
             fanL.setPlayVideo(bPlayVideo);
             fanR.setPlayVideo(bPlayVideo);
+            rectScreen.setPlayVideo(bPlayVideo);
             break;            
     }
 }
