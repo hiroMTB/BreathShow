@@ -89,6 +89,16 @@ void ofApp::drawGui_ShowSettings()
         }
         ImGui::PopID();
         
+        ImGui::PushID("RectScreen");
+        if(ImGui::CollapsingHeader("Rect Screen", flag)){
+            ImGui::Checkbox("ON", (bool*)&rectScreen.bOn.get());
+            ImGui::Checkbox("Test Texture", (bool*)&rectScreen.bShowTest.get());
+            ImGui::SliderFloat3("position", (float*)&rectScreen.position.get().x, rectScreen.position.getMin().x, rectScreen.position.getMax().x);
+            ImGui::SliderFloat2("size", (float*)&rectScreen.size.get().x, rectScreen.size.getMin().x, rectScreen.size.getMax().x);
+            ImGui::SliderFloat("orientationY", (float*)&rectScreen.orientationY.get(), rectScreen.orientationY.getMin(), rectScreen.orientationY.getMax());
+        }
+        ImGui::PopID();
+        
         ofxImGui::AddGroup(projector.getParametersRef(), settings);
         
     }

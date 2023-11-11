@@ -7,6 +7,7 @@
 #include "Projector.h"
 #include "RenderWindow.h"
 #include "Fan.h"
+#include "RectScreen.h"
 #include "Human.h"
 #include "MySequence.h"
 
@@ -66,6 +67,7 @@ class ofApp : public ofBaseApp{
         Human human;
         Fan fanL;
         Fan fanR;
+        RectScreen rectScreen;
     
         string currentProjectPath;
     

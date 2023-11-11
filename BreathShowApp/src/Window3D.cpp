@@ -65,6 +65,7 @@ void ofApp::draw3DScene(){
     ofPushMatrix();
     fanL.draw();
     fanR.draw();
+    rectScreen.draw();
     ofPopMatrix();
     
     // Projector
@@ -86,6 +87,7 @@ void ofApp::drawProjectorFbo(){
     ofPushMatrix();
     fanL.draw();
     fanR.draw();
+    rectScreen.draw();
     ofPopMatrix();
     
     projector.end();

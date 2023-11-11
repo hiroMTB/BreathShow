@@ -37,6 +37,7 @@ void ofApp::update()
     drawProjectorFbo();
     fanL.update();
     fanR.update();
+    rectScreen.update();
 }
 
 void ofApp::draw()

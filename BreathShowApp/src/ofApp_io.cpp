@@ -69,5 +69,6 @@ bool ofApp::loadProject(string dirpath){
     human.setup();
     fanL.loadVideo( "vid/fanL_h264.mp4" );
     fanR.loadVideo( "vid/fanR_h264.mp4" );
+    rectScreen.loadVideo( "vid/rectScreen_h264.mp4" );
     return bCamera && bHuman && bProjector && bFanL && bFanR && bWin && bPrj;
 }
