@@ -22,6 +22,7 @@ class Fan : public Saveable{
     void update();
     void draw();
     void loadVideo(string path);
+    void setPlayVideo(bool b);
     
     ofParameterGroup & getParametersRef() override { return grp; }
 
@@ -41,6 +42,7 @@ class Fan : public Saveable{
     
     ofImage img;
     ofVideoPlayer vid;
+    
 };
 
 #endif /* Fan_h */

@@ -68,6 +68,8 @@ class ofApp : public ofBaseApp{
         Fan fanR;
     
         string currentProjectPath;
+    
+        bool bPlayVideo{true};
 
     public:
         std::shared_ptr<MainWindow> mainWindow;

@@ -199,6 +199,12 @@ void ofApp::keyPressed(ofKeyEventArgs & args)
                 dialogueLoadProject();
             }
             break;
+            
+        case ' ':
+            bPlayVideo = !bPlayVideo;
+            fanL.setPlayVideo(bPlayVideo);
+            fanR.setPlayVideo(bPlayVideo);
+            break;            
     }
 }
 

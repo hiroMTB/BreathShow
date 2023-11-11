@@ -88,3 +88,7 @@ void Fan::draw(){
     }
     ofPopMatrix();
 }
+
+void Fan::setPlayVideo(bool b){
+    vid.setPaused(b);
+}
