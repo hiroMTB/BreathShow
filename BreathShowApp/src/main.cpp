@@ -13,6 +13,8 @@ int main( ){
     ofSetLogLevel("ofxAssimpModelLoader", OF_LOG_NOTICE);
     ofSetLogLevel("ofMaterial", OF_LOG_NOTICE);
 
+    ofSetEscapeQuitsApp(false);
+
     if(0)
     {
         ofGLFWWindowSettings mainWinSettings;
