@@ -39,10 +39,11 @@ bool ofApp::saveProject(string dirpath){
     bool bProjector = projector.save(dirpath + "/projector.json");
     bool bFanL = fanL.save(dirpath + "/fanL.json");
     bool bFanR = fanR.save(dirpath + "/fanR.json");
+    bool bRectScreen = rectScreen.save(dirpath + "/rectScreen.json");
     bool bWin = mainWindow->save(dirpath + "/mainWindow.json");
     bool bPrj = projectorWindow->save(dirpath + "/projectorWindow.json");
     
-    return bCamera && bHuman && bProjector && bFanL && bFanR && bWin && bPrj;
+    return bCamera && bHuman && bProjector && bFanL && bFanR && bWin && bPrj && bRectScreen;
 }
 
 bool ofApp::loadProject(string dirpath){
@@ -63,6 +64,7 @@ bool ofApp::loadProject(string dirpath){
     bool bProjector = projector.load(dirpath + "/projector.json");
     bool bFanL = fanL.load(dirpath + "/fanL.json");
     bool bFanR = fanR.load(dirpath + "/fanR.json");
+    bool bRectScreen = rectScreen.load(dirpath + "/rectScreen.json");
     bool bWin = mainWindow->load(dirpath + "/mainWindow.json");
     bool bPrj = projectorWindow->load(dirpath + "/projectorWindow.json");
         
@@ -70,5 +72,5 @@ bool ofApp::loadProject(string dirpath){
     fanL.loadVideo( "vid/fanL_h264.mp4" );
     fanR.loadVideo( "vid/fanR_h264.mp4" );
     rectScreen.loadVideo( "vid/rectScreen_h264.mp4" );
-    return bCamera && bHuman && bProjector && bFanL && bFanR && bWin && bPrj;
+    return bCamera && bHuman && bProjector && bFanL && bFanR && bWin && bPrj && bRectScreen;
 }

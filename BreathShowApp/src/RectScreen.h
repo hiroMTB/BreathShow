@@ -16,7 +16,7 @@ class RectScreen : public Saveable{
 public:
     RectScreen();
     
-    void setup(float w=10, int h=10);
+    void setup(float w, int h);
     void update();
     void draw();
     void loadVideo(string path);
@@ -24,7 +24,7 @@ public:
     
     ofParameter<bool> bOn{"On", true};
     ofParameter<bool> bShowTest{"test texture", true};
-    ofParameter<vec3> position{"position", vec3(0,80,0), vec3(-100), vec3(300)};
+    ofParameter<vec3> position{"position", vec3(0,100,0), vec3(-100), vec3(300)};
     ofParameter<vec2> size{"size", vec2(200), vec2(10), vec2(300)};
     ofParameter<float> orientationY{"orientationY", 0, -180, 180};
 
