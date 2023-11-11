@@ -26,6 +26,7 @@ class Fan : public Saveable{
     
     ofParameterGroup & getParametersRef() override { return grp; }
 
+    ofParameter<bool> bOn{"On", true};
     ofParameter<bool> bShowTest{"test texture", false};
     ofParameter<vec3> position{"position", vec3(5,36,0), vec3(-100), vec3(100)};
     ofParameter<vec3> scale{"scale", vec3(1), vec3(-2), vec3(2)};
@@ -35,7 +36,7 @@ class Fan : public Saveable{
     ofParameter<float> resolution{"resolution", 32, 1, 72};
     ofParameter<int> direction{"direction", 1, -1, 1};
 
-    ofParameterGroup grp{"Fun", bShowTest, position, orientationY, scale, openAngle, resolution, direction, length};
+    ofParameterGroup grp{"Fun", bOn, bShowTest, position, orientationY, scale, openAngle, resolution, direction, length};
 
     private:
     ofMesh mesh;

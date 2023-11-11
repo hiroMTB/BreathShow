@@ -38,8 +38,9 @@ void ofApp::drawGui_ShowSettings()
         
         ImGui::PushID("Fan L");
         if(ImGui::CollapsingHeader("Fan L", flag)){
-            if(ImGui::Checkbox("Test Texture", (bool*)&fanL.bShowTest.get())){
-            }
+            ImGui::Checkbox("ON", (bool*)&fanL.bOn.get());
+
+            ImGui::Checkbox("Test Texture", (bool*)&fanL.bShowTest.get());
 
             if(ImGui::SliderInt("direction", (int*)&fanL.direction.get(), fanL.direction.getMin(), fanL.direction.getMax())){
             }
@@ -64,9 +65,9 @@ void ofApp::drawGui_ShowSettings()
         
         ImGui::PushID("Fan R");
         if(ImGui::CollapsingHeader("Fan R", flag)){
+            ImGui::Checkbox("ON", (bool*)&fanR.bOn.get());
             
-            if(ImGui::Checkbox("Test Texture", (bool*)&fanR.bShowTest.get())){
-            }
+            ImGui::Checkbox("Test Texture", (bool*)&fanR.bShowTest.get());
             
             if(ImGui::SliderInt("direction", (int*)&fanR.direction.get(), fanR.direction.getMin(), fanR.direction.getMax())){
             }

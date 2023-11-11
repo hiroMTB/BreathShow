@@ -64,29 +64,33 @@ void Fan::loadVideo(string path){
 }
 
 void Fan::update(){
-    setup(openAngle, length, direction, resolution);
-    vid.update();
+    if(bOn){
+        setup(openAngle, length, direction, resolution); // TODO: Stop calling this
+        vid.update();
+    }
 }
 
 void Fan::draw(){
-    ofPushMatrix();
-    ofTranslate(position);
-    //ofTranslate(scale);
-    //mesh.drawWireframe();
-    if(bShowTest){
-        ofTexture & tex = img.getTexture();
-        tex.bind();
-        mesh.draw();
-        tex.unbind();
-    }else{
-        if(vid.isLoaded()){
-            ofTexture & tex = vid.getTexture();
+    if(bOn){
+        ofPushMatrix();
+        ofTranslate(position);
+        //ofTranslate(scale);
+        //mesh.drawWireframe();
+        if(bShowTest){
+            ofTexture & tex = img.getTexture();
             tex.bind();
             mesh.draw();
             tex.unbind();
+        }else{
+            if(vid.isLoaded()){
+                ofTexture & tex = vid.getTexture();
+                tex.bind();
+                mesh.draw();
+                tex.unbind();
+            }
         }
+        ofPopMatrix();
     }
-    ofPopMatrix();
 }
 
 void Fan::setPlayVideo(bool b){
