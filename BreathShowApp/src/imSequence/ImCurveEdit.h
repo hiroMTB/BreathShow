@@ -26,6 +26,7 @@
 #pragma once
 #include <stdint.h>
 #include "imgui.h"
+#include "imgui_internal.h"
 
 struct ImRect;
 
@@ -54,6 +55,12 @@ namespace ImCurveEdit {
          return false;
       }
    };
+
+    static float smoothstep(float edge0, float edge1, float x)
+    {
+       x = ImClamp((x - edge0) / (edge1 - edge0), 0.0f, 1.0f);
+       return x * x * (3 - 2 * x);
+    }
 
    struct Delegate{
       bool focused = false;

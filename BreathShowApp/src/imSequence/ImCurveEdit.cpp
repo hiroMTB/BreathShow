@@ -68,12 +68,6 @@ namespace ImCurveEdit
    }
 #endif
 
-   static float smoothstep(float edge0, float edge1, float x)
-   {
-      x = ImClamp((x - edge0) / (edge1 - edge0), 0.0f, 1.0f);
-      return x * x * (3 - 2 * x);
-   }
-
    static float distance(float x, float y, float x1, float y1, float x2, float y2)
    {
       float A = x - x1;
@@ -271,7 +265,7 @@ namespace ImCurveEdit
                      overCurve = int(c);
                      overCurveOrPoint = true;
                   }
-
+#pragma DRAW_CARVE
                   draw_list->AddLine(pos1, pos2, curveColor, 1.3f);
                } // substep
             }

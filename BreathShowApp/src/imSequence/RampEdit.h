@@ -22,7 +22,7 @@ public:
       mPts[0].emplace_back( 70.f, 0.4f );
       mPts[0].emplace_back( 120.f, 1.f );
 
-      mPts[1].emplace_back( -50.f, 0.2f );
+      mPts[1].emplace_back( 0.f, 0.2f );
       mPts[1].emplace_back( 82.f, 0.8f );
       mPts[1].emplace_back( 33.f, 0.7f );
       mPts[1].emplace_back( 80.f, 0.2f );
