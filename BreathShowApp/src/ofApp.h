@@ -58,12 +58,19 @@ class ofApp : public ofBaseApp{
         ofEasyCam cam;
     
         glm::vec2 mouseOffset{0,0};
+    
+        ofParameter<int> targetFps{"target fps", 60, 0, 120};
+        ofParameterGroup genGrp{"General", targetFps};
+
         ofParameter<bool> b3dSceneOpen{"3DScene Window Open", true};
         ofParameter<bool> bDemoOpen{"Demo Window Open", true};
         ofParameter<bool> bGuiOpen{"Gui Panel Open", true};
         ofParameter<bool> bSeqOpen{"Sequencer Panel Open", false};
         ofParameter<bool> bWindowManagerOpen{"Window Manager Open", true};
-    
+        ofParameterGroup panelGrp{"Panels", b3dSceneOpen, bDemoOpen, bGuiOpen, bSeqOpen, bWindowManagerOpen};
+        
+        ofParameterGroup grp{"app settings", genGrp, panelGrp};
+
         Human human;
         Fan fanL;
         Fan fanR;

@@ -6,8 +6,7 @@ void ofApp::drawGui()
     if(bGuiOpen) drawGui_ShowSettings();
     if(bSeqOpen) drawGui_Sequencer();
     if(b3dSceneOpen) draw3DWindow();
-    //ImGui::ShowDemoWindow();
-
+    if(bDemoOpen) ImGui::ShowDemoWindow();
 }
 
 void ofApp::drawGui_ShowSettings()
@@ -99,7 +98,7 @@ void ofApp::drawGui_ShowSettings()
         }
         ImGui::PopID();
         
-        ofxImGui::AddGroup(projector.getParametersRef(), settings);
+        ofxImGui::AddGroup(projector.grp, settings);
         
     }
     ofxImGui::EndWindow(settings);

@@ -127,6 +127,7 @@ void ofApp::menu(){
             ImGui::Checkbox("3D Scene", (bool *) &b3dSceneOpen.get());
             ImGui::Checkbox("Gui Panel", (bool *) &bGuiOpen.get());
             ImGui::Checkbox("Sequencer Panel", (bool *) &bSeqOpen.get());
+            ImGui::Checkbox("Window Manager Panel", (bool *) &bWindowManagerOpen.get());
             ImGui::EndMenu();
         }
         
