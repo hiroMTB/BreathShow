@@ -35,7 +35,7 @@ void Sequencer::update(){
         int end = item.mFrameEnd;
         int type = item.mType;
         
-        if(st <= currentFrame || currentFrame <= end){
+        if(st <= currentFrame && currentFrame <= end){
             std::cout << item.mType << std::endl;
         }
     }
