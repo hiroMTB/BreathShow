@@ -238,7 +238,7 @@ namespace ImCurveEdit
          CurveType curveType = delegate.GetCurveType(c);
          if (curveType == CurveNone)
             continue;
-         const ImVec2 *pts = delegate.GetPoints(c);
+         const std::vector<ImVec2> & pts = delegate.GetPoints(c);
          uint32_t curveColor = delegate.GetCurveColor(c);
          if ((c == highLightedCurveIndex && selection.empty() && !selectingQuad) || movingCurve == c)
             curveColor = 0xFFFFFFFF;
@@ -331,7 +331,7 @@ namespace ImCurveEdit
                int index = 0;
                for (auto &sel : selection)
                {
-                  const ImVec2 *pts = delegate.GetPoints(sel.curveIndex);
+                  const std::vector<ImVec2> & pts = delegate.GetPoints(sel.curveIndex);
                   originalPoints[index++] = pts[sel.pointIndex];
                }
             }
@@ -378,7 +378,7 @@ namespace ImCurveEdit
       if (movingCurve != -1)
       {
          const size_t ptCount = delegate.GetPointCount(movingCurve);
-         const ImVec2 *pts = delegate.GetPoints(movingCurve);
+         const std::vector<ImVec2> & pts = delegate.GetPoints(movingCurve);
          if (!pointsMoved)
          {
             mousePosOrigin = io.MousePos;
@@ -432,7 +432,7 @@ namespace ImCurveEdit
                if (ptCount < 1)
                   continue;
 
-               const ImVec2 *pts = delegate.GetPoints(c);
+               const std::vector<ImVec2> & pts = delegate.GetPoints(c);
                for (size_t p = 0; p < ptCount; p++)
                {
                   const ImVec2 center = pointToRange(pts[p]) * viewSize + offset;

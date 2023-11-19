@@ -112,7 +112,7 @@ public:
       draw_list->PushClipRect(clippingRect.Min, clippingRect.Max, true);
       for (int i = 0; i < 3; i++)
       {
-         for (int j = 0; j < rampEdit.mPointCount[i]; j++)
+         for (int j = 0; j < rampEdit.mPts.size(); j++)
          {
             float p = rampEdit.mPts[i][j].x;
             if (p < myItems[index].mFrameStart || p > myItems[index].mFrameEnd)
