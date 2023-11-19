@@ -49,7 +49,7 @@ void RectScreen::draw(){
         ofTranslate(position);
         //ofTranslate(scale);
         if(bShowTest){
-            plane.mapTexCoords(0, 0, img.getWidth(), img.getHeight());
+            plane.mapTexCoords(0, 0, 1, 1);
             const ofMesh & mesh = plane.getMesh();
             ofTexture & tex = img.getTexture();
             tex.bind();

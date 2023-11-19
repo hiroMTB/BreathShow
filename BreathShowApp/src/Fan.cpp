@@ -34,10 +34,10 @@ void Fan::setup(float angle, float len, int direction, int res){
         mesh.addVertex( vec3(len * cos(a2), len * sin(a2), 0) );
         
         if(bShowTest){
-            float ty = 890.0 * (openAngle/180.0) / res;
+            float ty = (openAngle/180.0) / res;
             mesh.addTexCoord( vec2(0, i*ty) );
-            mesh.addTexCoord( vec2(192, i*ty) );
-            mesh.addTexCoord( vec2(192, (i+1)*ty) );
+            mesh.addTexCoord( vec2(1, i*ty) );
+            mesh.addTexCoord( vec2(1, (i+1)*ty) );
         }else{
             if(vid.isLoaded()){
                 float ty = 1.0f / res;
