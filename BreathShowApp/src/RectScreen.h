@@ -6,12 +6,11 @@
 #define RectScreen_h
 
 #include "ofMain.h"
-#include "Saveable.h"
 
 using glm::vec2;
 using glm::vec3;
 
-class RectScreen : public Saveable{
+class RectScreen {
     
 public:
     RectScreen();
@@ -29,7 +28,6 @@ public:
     ofParameter<float> orientationY{"orientationY", 0, -180, 180};
 
     ofParameterGroup grp{"Rect", bOn, bShowTest, position, size, orientationY};
-    ofParameterGroup & getParametersRef() override { return grp; }
 
 private:
     ofPlanePrimitive plane;

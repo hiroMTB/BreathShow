@@ -1,10 +1,9 @@
 #pragma once
 
 #include "ofMain.h"
-#include "Saveable.h"
 #include <glm/gtx/euler_angles.hpp>
 
-class Projector : public ofCamera, public Saveable
+class Projector : public ofCamera
 {
 public:
     Projector(const glm::vec2& resolution = glm::vec2(1920.f, 1080.0f));
@@ -38,7 +37,6 @@ public:
     void onPrincipalPoint(glm::vec2& principalPoint);
     void onActivated(bool& activate);
 
-    ofParameterGroup& getParametersRef() override { return parameters; }
 public:
     ofFloatColor clearColor {ofFloatColor(0.f, 1.f)};
     ofParameter<bool> frustumVisible {"frustumVisible", false};
@@ -54,7 +52,7 @@ public:
 
     ofFbo fbo;
 
-    ofParameterGroup parameters {
+    ofParameterGroup grp {
         "Projector",
         frustumVisible,
         projectorCalibration,

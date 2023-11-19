@@ -9,12 +9,11 @@
 #define Fan_h
 
 #include "ofMain.h"
-#include "Saveable.h"
 
 using glm::vec2;
 using glm::vec3;
 
-class Fan : public Saveable{
+class Fan{
     
     public:
     Fan();    
@@ -24,8 +23,6 @@ class Fan : public Saveable{
     void loadVideo(string path);
     void setPlayVideo(bool b);
     
-    ofParameterGroup & getParametersRef() override { return grp; }
-
     ofParameter<bool> bOn{"On", true};
     ofParameter<bool> bShowTest{"test texture", false};
     ofParameter<vec3> position{"position", vec3(5,36,0), vec3(-100), vec3(100)};
