@@ -3,7 +3,6 @@
 void ofApp::setup()
 {
     ofSetLogLevel(OF_LOG_VERBOSE);
-    ofDisableArbTex();
     ofSetCircleResolution(64);
     
 #ifndef USE_MULTI_VIEWPORT

@@ -4,8 +4,10 @@
 
 int main( ){
 
+    ofDisableArbTex();
+
     // app packaging
-    ofSetDataPathRoot("../Resources/data/");
+    //ofSetDataPathRoot("../Resources/data/");
     
     // Create main window
     ofSetLogLevel("ofFbo", OF_LOG_NOTICE);
