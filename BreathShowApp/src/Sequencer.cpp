@@ -6,6 +6,8 @@
 #include "ofxImGui.h"
 #include "ImHelpers.h"
 #include "MySequence.h"
+#include "ImCurveEdit.h"
+#include "imgui_internal.h"
 
 Sequencer::Sequencer(){
     setup();
@@ -27,16 +29,47 @@ void Sequencer::setupTestSequences(){
 
 void Sequencer::update(){
 
-    const std::vector<MySequence::MySequenceItem> & items = mySequence.myItems;
+    std::vector<MySequence::MySequenceItem> & items = mySequence.myItems;
 
     for(int i=0; i<items.size(); i++){
-        const MySequence::MySequenceItem & item = items[i];
+        MySequence::MySequenceItem & item = items[i];
         int st = item.mFrameStart;
         int end = item.mFrameEnd;
         int type = item.mType;
-        
+        RampEdit & ramp = item.rampEdit;
         if(st <= currentFrame && currentFrame <= end){
             std::cout << item.mType << std::endl;
+
+            int cnt = ramp.GetCurveCount();
+            for(int j=0; j<cnt; j++){
+                std::vector<ImVec2> & pts = ramp.GetPoints(j);
+                if(pts.size() == 1){
+                    // only one points, value is the same
+                    std::cout << "y = " << pts[0].y << std::endl;
+                }
+                for(int k=0; k<pts.size()-1; k++){
+                    ImVec2 & p1 = pts[k];
+                    ImVec2 & p2 = pts[k+1];
+                    float x1 = p1.x;
+                    float x2 = p2.x;
+                    if( x1<=currentFrame && currentFrame<=x2){
+                        std::cout << "Between points " << x1 << " and " << x2 << std::endl;
+                        ImCurveEdit::CurveType ctype = ramp.GetCurveType(j);
+                        float t = (currentFrame-x1) / (x2 - x1);
+                        const ImVec2 sp1 = ImLerp(p1, p2, t);
+
+                        if(ctype == ImCurveEdit::CurveType::CurveSmooth){
+                            // calculate smooth value
+                            const float rt1 = ImCurveEdit::smoothstep(p1.x, p2.x, sp1.x);
+                            const float y = ImLerp(p1.y, p2.y, rt1);
+                            std::cout << y << std::endl;
+                        }else if(ctype == ImCurveEdit::CurveType::CurveLinear){
+                            // return sp1
+                        }
+                    }
+                }
+            }
+            
         }
     }
 }
