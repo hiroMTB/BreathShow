@@ -153,34 +153,6 @@ void ofApp::drawGui_WindowManager() {
 }
 
 void ofApp::drawGui_Sequencer(){
-
-    auto settings = ofxImGui::Settings();
-    
-    if(ofxImGui::BeginWindow("Sequencer", settings, false, (bool*)&bSeqOpen.get())) {
-
-        // let's create the sequencer
-        static int selectedEntry = -1;
-        static int firstFrame = 0;
-        static bool expanded = false;
-        static int currentFrame = 100;
-
-        ImGui::PushItemWidth(130);
-        ImGui::InputInt("Frame Min", &mySequence.mFrameMin);
-        ImGui::SameLine();
-        ImGui::InputInt("Frame ", &currentFrame);
-        ImGui::SameLine();
-        ImGui::InputInt("Frame Max", &mySequence.mFrameMax);
-        ImGui::PopItemWidth();
-        Sequencer(&mySequence, &currentFrame, &expanded, &selectedEntry, &firstFrame, ImSequencer::SEQUENCER_EDIT_STARTEND | ImSequencer::SEQUENCER_ADD | ImSequencer::SEQUENCER_DEL | ImSequencer::SEQUENCER_COPYPASTE | ImSequencer::SEQUENCER_CHANGE_FRAME);
-        // add a UI to edit that particular item
-        if (selectedEntry != -1)
-        {
-            const MySequence::MySequenceItem &item = mySequence.myItems[selectedEntry];
-            ImGui::Text("Draw Custom GUI here for %s \nAAA\nBBB\nCCC\nDDD", SequencerItemTypeNames[item.mType]);
-            // switch (type) ....
-        }
-    }
-    ofxImGui::EndWindow(settings);
-
+    sequencer.draw( (bool*)&bSeqOpen.get() );
 }
 

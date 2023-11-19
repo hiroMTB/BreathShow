@@ -9,7 +9,7 @@
 #include "Fan.h"
 #include "RectScreen.h"
 #include "Human.h"
-#include "MySequence.h"
+#include "Sequencer.h"
 
 using glm::vec2;
 using glm::vec3;
@@ -77,5 +77,5 @@ class ofApp : public ofBaseApp{
         std::shared_ptr<MainWindow> mainWindow;
         std::shared_ptr<ProjectorWindow> projectorWindow;
         Projector projector;
-    	MySequence mySequence;
+        Sequencer sequencer;
 };

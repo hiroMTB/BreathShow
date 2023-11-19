@@ -51,7 +51,7 @@ namespace ImSequencer
       return overDel;
    }
 
-   bool Sequencer(SequenceInterface *sequence, int *currentFrame, bool *expanded, int *selectedEntry, int *firstFrame, int sequenceOptions)
+   bool SequencerGui(SequenceInterface *sequence, int *currentFrame, bool *expanded, int *selectedEntry, int *firstFrame, int sequenceOptions)
    {
       bool ret = false;
       ImGuiIO &io = ImGui::GetIO();

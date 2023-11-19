@@ -19,20 +19,13 @@ void ofApp::setup()
     
     currentProjectPath = "./projects/testProject";
     loadProject(currentProjectPath);
-    
-    
-    mySequence.mFrameMin = -100;
-    mySequence.mFrameMax = 1000;
-    mySequence.myItems.push_back(MySequence::MySequenceItem{0,10,30,false});
-    mySequence.myItems.push_back(MySequence::MySequenceItem{1,20,30,true});
-    mySequence.myItems.push_back(MySequence::MySequenceItem{3, 12, 60, false});
-    mySequence.myItems.push_back(MySequence::MySequenceItem{2, 61, 90, false});
-    mySequence.myItems.push_back(MySequence::MySequenceItem{4, 90, 99, false});
 
 }
 
 void ofApp::update()
 {
+    sequencer.update();
+    
     drawProjectorFbo();
     fanL.update();
     fanR.update();

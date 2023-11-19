@@ -1,14 +1,13 @@
 //
 //  MySequence.h
-//  ImSequenceTest
-//
-//  Created by Hiroshi Matoba on 17.09.22.
 //
 
 #ifndef MySequence_h
 #define MySequence_h
 
+//#include "imgui.h"
 #include "ImSequencer.h"
+#include "imgui_internal.h"
 #include "RampEdit.h"
 #include "ImCurveEdit.h"
 
