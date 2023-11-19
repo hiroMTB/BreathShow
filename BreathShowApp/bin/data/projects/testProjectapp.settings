@@ -1,0 +1,14 @@
+{
+    "app_settings": {
+        "General": {
+            "target_fps": "60"
+        },
+        "Panels": {
+            "3DScene_Window_Open": "1",
+            "Demo_Window_Open": "0",
+            "Gui_Panel_Open": "1",
+            "Sequencer_Panel_Open": "1",
+            "Window_Manager_Open": "0"
+        }
+    }
+}

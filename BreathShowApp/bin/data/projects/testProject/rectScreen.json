@@ -1,0 +1,9 @@
+{
+    "Rect": {
+        "On": "1",
+        "orientationY": "0",
+        "position": "0, 100, 0",
+        "size": "200, 200",
+        "test_texture": "1"
+    }
+}
