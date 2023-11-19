@@ -16,7 +16,7 @@ void Sequencer::setup(){
 }
 
 void Sequencer::setupTestSequences(){
-    mySequence.mFrameMin = -100;
+    mySequence.mFrameMin = 0;
     mySequence.mFrameMax = 1000;
     mySequence.myItems.push_back(MySequence::MySequenceItem{0,10,30,false});
     mySequence.myItems.push_back(MySequence::MySequenceItem{1,20,30,true});
