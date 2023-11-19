@@ -62,9 +62,9 @@ public:
       int mType;
       int mFrameStart, mFrameEnd;
       bool mExpanded;
+      RampEdit rampEdit;
    };
    std::vector<MySequenceItem> myItems;
-   RampEdit rampEdit;
 
    virtual void DoubleClick(int index)
    {
@@ -81,7 +81,8 @@ public:
    virtual void CustomDraw(int index, ImDrawList *draw_list, const ImRect &rc, const ImRect &legendRect, const ImRect &clippingRect, const ImRect &legendClippingRect)
    {
       static const char *labels[] = {"Translation", "Rotation", "Scale"};
-
+      RampEdit & rampEdit = myItems[index].rampEdit;
+       
       rampEdit.mMax = ImVec2(float(mFrameMax), 1.f);
       rampEdit.mMin = ImVec2(float(mFrameMin), 0.f);
       draw_list->PushClipRect(legendClippingRect.Min, legendClippingRect.Max, true);
@@ -104,6 +105,8 @@ public:
 
    virtual void CustomDrawCompact(int index, ImDrawList *draw_list, const ImRect &rc, const ImRect &clippingRect)
    {
+      RampEdit & rampEdit = myItems[index].rampEdit;
+       
       rampEdit.mMax = ImVec2(float(mFrameMax), 1.f);
       rampEdit.mMin = ImVec2(float(mFrameMin), 0.f);
       draw_list->PushClipRect(clippingRect.Min, clippingRect.Max, true);
