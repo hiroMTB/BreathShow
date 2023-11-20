@@ -79,7 +79,7 @@ bool ofApp::loadProject(string dirpath){
     fanL.loadVideo( "vid/fanL_h264.mp4" );
     fanR.loadVideo( "vid/fanR_h264.mp4" );
     rectScreen.loadVideo( "vid/rectScreen_h264.mp4" );
-    elipse.loadVideo( "vid/fanL_h264.mp4" );
+    elipse.loadVideo( "vid/elipse_h264.mp4" );
     
     return bApp && bCamera && bHuman && bProjector && bFanL && bFanR && bElipse && bWin && bPrj && bRectScreen;
 }
