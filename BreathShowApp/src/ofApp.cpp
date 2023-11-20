@@ -30,6 +30,7 @@ void ofApp::update()
     fanL.update();
     fanR.update();
     rectScreen.update();
+    elipse.update();
 }
 
 void ofApp::draw()
@@ -199,7 +200,8 @@ void ofApp::keyPressed(ofKeyEventArgs & args)
             fanL.setPlayVideo(bPlayVideo);
             fanR.setPlayVideo(bPlayVideo);
             rectScreen.setPlayVideo(bPlayVideo);
-            break;            
+            elipse.setPlayVideo(bPlayVideo);
+            break;
     }
 }
 

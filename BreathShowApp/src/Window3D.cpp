@@ -49,6 +49,8 @@ void ofApp::draw3DScene(){
     ofBackground(50);
     cam.begin();
     
+    ofEnableDepthTest();
+    
     //
     ofDrawAxis(100);
 
@@ -56,20 +58,22 @@ void ofApp::draw3DScene(){
     drawFloor();
     
     // human
-    ofSetColor(180);
     ofPushMatrix();
-    human.model.drawWireframe();
+    human.draw();
     ofPopMatrix();
     
-    // Fan
+    // Fan, RectScreen, Elipse
     ofPushMatrix();
     fanL.draw();
     fanR.draw();
     rectScreen.draw();
+    elipse.draw();
     ofPopMatrix();
     
     // Projector
     projector.drawProjector();
+    
+    ofDisableDepthTest();
     cam.end();
 }
 
@@ -88,6 +92,7 @@ void ofApp::drawProjectorFbo(){
     fanL.draw();
     fanR.draw();
     rectScreen.draw();
+    elipse.draw();
     ofPopMatrix();
     
     projector.end();

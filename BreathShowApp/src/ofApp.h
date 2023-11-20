@@ -8,6 +8,7 @@
 #include "RenderWindow.h"
 #include "Fan.h"
 #include "RectScreen.h"
+#include "Elipse.h"
 #include "Human.h"
 #include "Sequencer.h"
 
@@ -75,6 +76,7 @@ class ofApp : public ofBaseApp{
         Fan fanL;
         Fan fanR;
         RectScreen rectScreen;
+        Elipse elipse;
     
         string currentProjectPath;
     

@@ -43,10 +43,11 @@ bool ofApp::saveProject(string dirpath){
     bool bFanL = Serializer::save(fanL.grp, dirpath + "/fanL.json");
     bool bFanR = Serializer::save(fanR.grp, dirpath + "/fanR.json");
     bool bRectScreen = Serializer::save(rectScreen.grp, dirpath + "/rectScreen.json");
+    bool bElipse = Serializer::save(elipse.grp, dirpath + "/elipse.json");
     bool bWin = mainWindow->save(dirpath + "/mainWindow.json");
     bool bPrj = projectorWindow->save(dirpath + "/projectorWindow.json");
     
-    return bApp && bCamera && bHuman && bProjector && bFanL && bFanR && bWin && bPrj && bRectScreen;
+    return bApp && bCamera && bHuman && bProjector && bFanL && bFanR && bElipse && bWin && bPrj && bRectScreen;
 }
 
 bool ofApp::loadProject(string dirpath){
@@ -69,6 +70,8 @@ bool ofApp::loadProject(string dirpath){
     bool bFanL = Serializer::load(fanL.grp, dirpath + "/fanL.json");
     bool bFanR = Serializer::load(fanR.grp, dirpath + "/fanR.json");
     bool bRectScreen = Serializer::load(rectScreen.grp, dirpath + "/rectScreen.json");
+    bool bElipse = Serializer::load(elipse.grp, dirpath + "/elipse.json");
+
     bool bWin = mainWindow->load(dirpath + "/mainWindow.json");
     bool bPrj = projectorWindow->load(dirpath + "/projectorWindow.json");
         
@@ -76,5 +79,7 @@ bool ofApp::loadProject(string dirpath){
     fanL.loadVideo( "vid/fanL_h264.mp4" );
     fanR.loadVideo( "vid/fanR_h264.mp4" );
     rectScreen.loadVideo( "vid/rectScreen_h264.mp4" );
-    return bApp && bCamera && bHuman && bProjector && bFanL && bFanR && bWin && bPrj && bRectScreen;
+    elipse.loadVideo( "vid/fanL_h264.mp4" );
+    
+    return bApp && bCamera && bHuman && bProjector && bFanL && bFanR && bElipse && bWin && bPrj && bRectScreen;
 }
