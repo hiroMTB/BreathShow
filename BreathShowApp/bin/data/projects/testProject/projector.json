@@ -3,7 +3,7 @@
         "calibration": "0",
         "farClip": "500",
         "fbo_offset_position": "0, 0",
-        "frustumVisible": "1",
+        "frustumVisible": "0",
         "naerClip": "1",
         "position": "0, 235, 480",
         "principalPoint": "960, 0",

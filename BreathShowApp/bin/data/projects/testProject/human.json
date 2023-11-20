@@ -1,5 +1,6 @@
 {
     "human": {
+        "ON": "1",
         "orientationY": "0",
         "position": "0, 0, 0",
         "scale": "0.65, -0.65, -0.65"
