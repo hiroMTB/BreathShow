@@ -33,10 +33,18 @@ public:
         return bOk;
     }
     
+    void draw(){
+        if(bOn){
+            ofSetColor(180);
+            model.drawWireframe();
+        }
+    }
+    
     ofxAssimpModelLoader model;
+    ofParameter<bool> bOn{"ON", true};
     ofParameter<glm::vec3> position{"position", vec3(0), vec3(-500), vec3(500)};
     ofParameter<glm::vec3> scale{"scale", vec3(1), vec3(-3), vec3(3)};
     ofParameter<float> orientationY{"orientationY", 0, -360, 360};
-    ofParameterGroup grp{"human", position, orientationY, scale};        
+    ofParameterGroup grp{"human", bOn, position, orientationY, scale};
 };
 #endif /* Human_h */
