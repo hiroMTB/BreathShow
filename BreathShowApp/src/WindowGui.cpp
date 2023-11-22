@@ -37,17 +37,18 @@ void ofApp::drawGui_ShowSettings()
         
         ImGui::PushID("Fan L");
         if(ImGui::CollapsingHeader("Fan L", flag)){
-            ImGui::Checkbox("ON", (bool*)&fanL.bOn.get());
+            ImGui::Checkbox("ON", (bool*)&fanL.bOn.get() );
 
-            ImGui::Checkbox("Test Texture", (bool*)&fanL.bShowTest.get());
+            if(ImGui::Checkbox("Test Texture", (bool*)&fanL.bShowTest.get())){
+                fanL.setup();
+            }
 
             if(ImGui::SliderInt("direction", (int*)&fanL.direction.get(), fanL.direction.getMin(), fanL.direction.getMax())){
             }
 
             if(ImGui::SliderFloat3("position", (float*)&fanL.position.get().x, fanL.position.getMin().x, fanL.position.getMax().x)){
             }
-    
-            
+                
             if(ImGui::SliderFloat("orientationY", (float*)&fanL.orientationY.get(), fanL.orientationY.getMin(), fanL.orientationY.getMax())){
             }
 
@@ -64,7 +65,9 @@ void ofApp::drawGui_ShowSettings()
         if(ImGui::CollapsingHeader("Fan R", flag)){
             ImGui::Checkbox("ON", (bool*)&fanR.bOn.get());
             
-            ImGui::Checkbox("Test Texture", (bool*)&fanR.bShowTest.get());
+            if(ImGui::Checkbox("Test Texture", (bool*)&fanR.bShowTest.get())){
+                fanR.setup();
+            }
             
             if(ImGui::SliderInt("direction", (int*)&fanR.direction.get(), fanR.direction.getMin(), fanR.direction.getMax())){
             }
@@ -86,7 +89,9 @@ void ofApp::drawGui_ShowSettings()
         ImGui::PushID("RectScreen");
         if(ImGui::CollapsingHeader("Rect Screen", flag)){
             ImGui::Checkbox("ON", (bool*)&rectScreen.bOn.get());
-            ImGui::Checkbox("Test Texture", (bool*)&rectScreen.bShowTest.get());
+            if(ImGui::Checkbox("Test Texture", (bool*)&rectScreen.bShowTest.get())){
+                rectScreen.setup();
+            };
             ImGui::SliderFloat3("position", (float*)&rectScreen.position.get().x, rectScreen.position.getMin().x, rectScreen.position.getMax().x);
             ImGui::SliderFloat2("size", (float*)&rectScreen.size.get().x, rectScreen.size.getMin().x, rectScreen.size.getMax().x);
             ImGui::SliderFloat("orientationY", (float*)&rectScreen.orientationY.get(), rectScreen.orientationY.getMin(), rectScreen.orientationY.getMax());
@@ -96,7 +101,9 @@ void ofApp::drawGui_ShowSettings()
         ImGui::PushID("Ellipse");
         if(ImGui::CollapsingHeader("Ellipse", flag)){
             ImGui::Checkbox("ON", (bool*)&ellipse.bOn.get());
-            ImGui::Checkbox("Test Texture", (bool*)&ellipse.bShowTest.get());
+            if(ImGui::Checkbox("Test Texture", (bool*)&ellipse.bShowTest.get())){
+                ellipse.setup();
+            }
             ImGui::SliderFloat3("position", (float*)&ellipse.position.get().x, rectScreen.position.getMin().x, rectScreen.position.getMax().x);
             ImGui::SliderFloat("radius", (float*)&ellipse.radius.get(), ellipse.radius.getMin(), ellipse.radius.getMax());
             ImGui::SliderFloat("center Width", (float*)&ellipse.centerWidth.get(), ellipse.centerWidth.getMin(), ellipse.centerWidth.getMax());
