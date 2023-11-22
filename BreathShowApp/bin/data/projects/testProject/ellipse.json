@@ -1,12 +1,11 @@
 {
-    "Elipse": {
-        "On": "1",
+    "Ellipse": {
+        "On": "0",
         "center_width": "40",
         "orientationY": "0",
-        "position": "0, 121, 0",
+        "position": "0, 100, 0",
         "radius": "98.5",
         "resolution": "32",
-        "scale": "1, 1, 1",
         "test_texture": "0"
     }
 }
