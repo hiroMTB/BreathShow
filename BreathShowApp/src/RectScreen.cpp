@@ -4,20 +4,21 @@ RectScreen::RectScreen(){
 
     grp.setName("Rect");
     grp.add(size);
-    setup(size.get().x, size.get().y);
+    setup();
     
     loadTestImage();
 }
 
 
-void RectScreen::setup(float w, int h){
+void RectScreen::setup(){
+    float w = size.get().x;
+    float h = size.get().y;
     plane.set( w, h, 2, 2, OF_PRIMITIVE_TRIANGLE_STRIP );
     plane.mapTexCoords(0, 0, 1, 1);
 }
 
 void RectScreen::update(){
     if(bOn){
-        setup(size.get().x, size.get().y); // TODO: Stop calling this
         vid.update();
     }
 }

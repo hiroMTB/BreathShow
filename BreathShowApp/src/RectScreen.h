@@ -12,9 +12,9 @@ class RectScreen : public Shape{
 public:
     RectScreen();
     
-    void setup(float w, int h);
-    void update();
-    void draw();
+    void setup() override;
+    void update() override;
+    void draw() override;
     ofParameter<vec2> size{"size", vec2(200), vec2(10), vec2(300)};
 
 private:
