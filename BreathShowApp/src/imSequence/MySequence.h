@@ -11,7 +11,8 @@
 #include "RampEdit.h"
 #include "ImCurveEdit.h"
 
-static const char *SequencerItemTypeNames[] = {"Camera", "Music", "ScreenEffect", "FadeIn", "Animation"};
+static const char *SequencerItemTypeNames[] = {"Fan L", "Fan R", "Rect", "Ellipse"};
+
 class MySequence : public ImSequencer::SequenceInterface{
    
 public:

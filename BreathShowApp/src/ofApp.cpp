@@ -1,5 +1,7 @@
 #include "ofApp.h"
 
+shared_ptr<ofApp> ofApp::app = nullptr;
+
 void ofApp::setup()
 {
     ofSetLogLevel(OF_LOG_VERBOSE);
@@ -30,7 +32,7 @@ void ofApp::update()
     fanL.update();
     fanR.update();
     rectScreen.update();
-    elipse.update();
+    ellipse.update();
 }
 
 void ofApp::draw()
@@ -134,8 +136,17 @@ void ofApp::menu(){
         
         ImGui::Spacing(); ImGui::Separator(); ImGui::Spacing();
         ImGui::Text("%3.1f fps", ofGetFrameRate());
+        ImGui::Spacing(); ImGui::Separator(); ImGui::Spacing();
+
+        ImGui::PushItemWidth(50);
+        if(ImGui::DragInt("Target fps", (int*)&app->targetFps.get(), 1, 1, 200, "%2d fps")){
+           ofSetFrameRate(app->targetFps);
+        }
         
         ImGui::Spacing(); ImGui::Separator(); ImGui::Spacing();
+        if(ImGui::Checkbox("Play", &bPlay)){
+            setPlay(bPlay);
+        }
         
         ImGui::EndMenuBar();
     }
@@ -177,6 +188,15 @@ ofFbo::Settings ofApp::getFboSettings(int w, int h, bool bUseDepth, GLint glForm
     return fboSettings;
 }
 
+void ofApp::setPlay( bool b){
+    bPlay = b;
+    fanL.pause(!bPlay);
+    fanR.pause(!bPlay);
+    rectScreen.pause(!bPlay);
+    ellipse.pause(!bPlay);
+    sequencer.bPlay = bPlay;
+}
+
 void ofApp::keyPressed(ofKeyEventArgs & args)
 {
     switch(args.key){
@@ -196,11 +216,7 @@ void ofApp::keyPressed(ofKeyEventArgs & args)
             break;
             
         case ' ':
-            bPlayVideo = !bPlayVideo;
-            fanL.setPlayVideo(bPlayVideo);
-            fanR.setPlayVideo(bPlayVideo);
-            rectScreen.setPlayVideo(bPlayVideo);
-            elipse.setPlayVideo(bPlayVideo);
+            setPlay(!bPlay);
             break;
     }
 }

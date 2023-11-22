@@ -46,9 +46,7 @@ void ofApp::drawGui_ShowSettings()
 
             if(ImGui::SliderFloat3("position", (float*)&fanL.position.get().x, fanL.position.getMin().x, fanL.position.getMax().x)){
             }
-            
-            if(ImGui::SliderFloat3("scale", (float*)&fanL.scale.get().x, fanL.scale.getMin().x, fanL.scale.getMax().x)){
-            }
+    
             
             if(ImGui::SliderFloat("orientationY", (float*)&fanL.orientationY.get(), fanL.orientationY.getMin(), fanL.orientationY.getMax())){
             }
@@ -56,7 +54,7 @@ void ofApp::drawGui_ShowSettings()
             if(ImGui::SliderFloat("openAngle", (float*)&fanL.openAngle.get(), fanL.openAngle.getMin(), fanL.openAngle.getMax())){
             }
             
-            if(ImGui::SliderFloat("length", (float*)&fanL.length.get(), fanL.length.getMin(), fanL.length.getMax())){
+            if(ImGui::SliderFloat("radius", (float*)&fanL.radius.get(), fanL.radius.getMin(), fanL.radius.getMax())){
             }
         }
         ImGui::PopID();
@@ -74,16 +72,13 @@ void ofApp::drawGui_ShowSettings()
             if(ImGui::SliderFloat3("position", (float*)&fanR.position.get().x, fanR.position.getMin().x, fanR.position.getMax().x)){
             }
             
-            if(ImGui::SliderFloat3("scale", (float*)&fanR.scale.get().x, fanR.scale.getMin().x, fanR.scale.getMax().x)){
-            }
-            
             if(ImGui::SliderFloat("orientationY", (float*)&fanR.orientationY.get(), fanR.orientationY.getMin(), fanR.orientationY.getMax())){
             }
             
             if(ImGui::SliderFloat("openAngle", (float*)&fanR.openAngle.get(), fanR.openAngle.getMin(), fanR.openAngle.getMax())){
             }
 
-            if(ImGui::SliderFloat("length", (float*)&fanR.length.get(), fanR.length.getMin(), fanR.length.getMax())){
+            if(ImGui::SliderFloat("radius", (float*)&fanR.radius.get(), fanR.radius.getMin(), fanR.radius.getMax())){
             }
         }
         ImGui::PopID();
@@ -98,13 +93,13 @@ void ofApp::drawGui_ShowSettings()
         }
         ImGui::PopID();
 
-        ImGui::PushID("Elipse");
-        if(ImGui::CollapsingHeader("Elipse", flag)){
-            ImGui::Checkbox("ON", (bool*)&elipse.bOn.get());
-            ImGui::Checkbox("Test Texture", (bool*)&elipse.bShowTest.get());
-            ImGui::SliderFloat3("position", (float*)&elipse.position.get().x, rectScreen.position.getMin().x, rectScreen.position.getMax().x);
-            ImGui::SliderFloat("radius", (float*)&elipse.radius.get(), elipse.radius.getMin(), elipse.radius.getMax());
-            ImGui::SliderFloat("center Width", (float*)&elipse.centerWidth.get(), elipse.centerWidth.getMin(), elipse.centerWidth.getMax());
+        ImGui::PushID("Ellipse");
+        if(ImGui::CollapsingHeader("Ellipse", flag)){
+            ImGui::Checkbox("ON", (bool*)&ellipse.bOn.get());
+            ImGui::Checkbox("Test Texture", (bool*)&ellipse.bShowTest.get());
+            ImGui::SliderFloat3("position", (float*)&ellipse.position.get().x, rectScreen.position.getMin().x, rectScreen.position.getMax().x);
+            ImGui::SliderFloat("radius", (float*)&ellipse.radius.get(), ellipse.radius.getMin(), ellipse.radius.getMax());
+            ImGui::SliderFloat("center Width", (float*)&ellipse.centerWidth.get(), ellipse.centerWidth.getMin(), ellipse.centerWidth.getMax());
             ImGui::SliderFloat("orientationY", (float*)&rectScreen.orientationY.get(), rectScreen.orientationY.getMin(), rectScreen.orientationY.getMax());
         }
         ImGui::PopID();

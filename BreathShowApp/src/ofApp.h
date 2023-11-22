@@ -8,7 +8,7 @@
 #include "RenderWindow.h"
 #include "Fan.h"
 #include "RectScreen.h"
-#include "Elipse.h"
+#include "Ellipse.h"
 #include "Human.h"
 #include "Sequencer.h"
 
@@ -18,6 +18,12 @@ using glm::vec3;
 class ofApp : public ofBaseApp{
 
 	public:
+        
+        static shared_ptr<ofApp> app;
+        static shared_ptr<ofApp> & get(){
+            if(app==nullptr) app = make_shared<ofApp>();
+            return app;
+        }
     
 		void setup();
 		void update();
@@ -33,7 +39,9 @@ class ofApp : public ofBaseApp{
         void dialogueLoadProject();
         bool saveProject(string dirpath);
         bool loadProject(string dirpath);
-
+    
+        void setPlay(bool b);
+    
         void exit();
     private:
         void dock();
@@ -72,15 +80,16 @@ class ofApp : public ofBaseApp{
         
         ofParameterGroup grp{"app settings", genGrp, panelGrp};
 
+public:
         Human human;
         Fan fanL;
         Fan fanR;
         RectScreen rectScreen;
-        Elipse elipse;
+        Ellipse ellipse;
     
         string currentProjectPath;
     
-        bool bPlayVideo{true};
+        bool bPlay{true};
 
     public:
         std::shared_ptr<MainWindow> mainWindow;

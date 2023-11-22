@@ -45,7 +45,7 @@ int main( ){
         shared_ptr<MainWindow> mainWindow = std::make_shared<MainWindow>();
         mainWindow->create("Main Window", nullptr, nullptr);
         
-        shared_ptr<ofApp> app = make_shared<ofApp>();
+        shared_ptr<ofApp> & app = ofApp::get();
         shared_ptr<ProjectorWindow> prjWindow = std::make_shared<ProjectorWindow>();
         
         prjWindow->create("Projector Window", mainWindow->ofBaseWindow, app);

@@ -62,12 +62,12 @@ void ofApp::draw3DScene(){
     human.draw();
     ofPopMatrix();
     
-    // Fan, RectScreen, Elipse
+    // Fan, RectScreen, Ellipse
     ofPushMatrix();
     fanL.draw();
     fanR.draw();
     rectScreen.draw();
-    elipse.draw();
+    ellipse.draw();
     ofPopMatrix();
     
     // Projector
@@ -92,7 +92,7 @@ void ofApp::drawProjectorFbo(){
     fanL.draw();
     fanR.draw();
     rectScreen.draw();
-    elipse.draw();
+    ellipse.draw();
     ofPopMatrix();
     
     projector.end();

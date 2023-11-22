@@ -14,12 +14,14 @@ public:
     void setupTestSequences();
     void update();
     void draw(bool * bOpen);
-    
+
+    bool bPlay{true};
+
 private:    
     MySequence mySequence;
-
-    int currentFrame = 100;
-
+    
+    int currentFrame = 0;
+    bool bLoop{true};
 };
 
 
