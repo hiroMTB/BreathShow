@@ -1,21 +1,22 @@
 //
-//  Elipse.cpp
+//  Ellipse.cpp
 //
 
-#include "Elipse.h"
+#include "Ellipse.h"
 
-Elipse::Elipse(){
+Ellipse::Ellipse(){
+
+    grp.setName("Ellipse");
+    grp.add(centerWidth);
+    grp.add(resolution);
+    grp.add(radius);
+    
     setup(30, 40);
     
-    bool ok = img.load("./tex/test2.jpg");
-    if(ok){
-        ofLogNotice("Fan") << "OK loading texture";
-    }else{
-        ofLogError("Fan") << "Can not load texture";
-    }
+    loadTestImage();
 }
 
-void Elipse::setup(float r, float centerWidth, int res){
+void Ellipse::setup(float r, float centerWidth, int res){
     mesh.clear();
     
     
@@ -193,14 +194,14 @@ void Elipse::setup(float r, float centerWidth, int res){
     mesh.setMode(OF_PRIMITIVE_TRIANGLES );
 }
 
-void Elipse::update(){
+void Ellipse::update(){
     if(bOn){
         setup(radius, centerWidth, resolution); // TODO: Stop calling this
         vid.update();
     }
 }
 
-void Elipse::draw(){
+void Ellipse::draw(){
     if(bOn){
         ofPushMatrix();
         ofTranslate(position);
@@ -215,28 +216,13 @@ void Elipse::draw(){
         }else{
             if(vid.isLoaded()){
                 ofTexture & tex = vid.getTexture();
-                tex.bind();
-                mesh.draw();
-                tex.unbind();
+                if(tex.isAllocated()){
+                    tex.bind();
+                    mesh.draw();
+                    tex.unbind();
+                }
             }
         }
         ofPopMatrix();
-    }
-}
-
-void Elipse::setPlayVideo(bool b){
-    vid.setPaused(b);
-}
-
-void Elipse::loadVideo(string path){
-
-    if( ofFile::doesFileExist(path)){
-        vid.load(path);
-        vid.setUseTexture(true);
-        vid.setLoopState(OF_LOOP_NORMAL);
-        vid.play();
-        ofLogNotice("Fan") << "Video file loaded: ";
-    }else{
-        ofLogError("Fan") << "Video file does not exist: " << path;
     }
 }

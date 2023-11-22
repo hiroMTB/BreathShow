@@ -8,15 +8,13 @@
 #include "Fan.h"
 
 Fan::Fan(){
-    setup(180);
+    grp.add(radius);
+    grp.add(openAngle);
+    grp.add(resolution);
+    grp.add(direction);
     
-    //bool ok = img.load("./tex/test.png");
-    bool ok = img.load("./tex/test2.jpg");
-    if(ok){
-        ofLogNotice("Fan") << "OK loading texture";
-    }else{
-        ofLogError("Fan") << "Can not load texture";
-    }
+    setup(180);
+    loadTestImage();
 };
 
 void Fan::setup(float angle, float len, int direction, int res){
@@ -50,22 +48,10 @@ void Fan::setup(float angle, float len, int direction, int res){
     }
 }
 
-void Fan::loadVideo(string path){
-
-    if( ofFile::doesFileExist(path)){
-        vid.load(path);
-        vid.setUseTexture(true);
-        vid.setLoopState(OF_LOOP_NORMAL);
-        vid.play();
-        ofLogNotice("Fan") << "Video file loaded: ";
-    }else{
-        ofLogError("Fan") << "Video file does not exist: " << path;
-    }
-}
 
 void Fan::update(){
     if(bOn){
-        setup(openAngle, length, direction, resolution); // TODO: Stop calling this
+        setup(openAngle, radius, direction, resolution); // TODO: Stop calling this
         vid.update();
     }
 }
@@ -84,15 +70,14 @@ void Fan::draw(){
         }else{
             if(vid.isLoaded()){
                 ofTexture & tex = vid.getTexture();
-                tex.bind();
-                mesh.draw();
-                tex.unbind();
+                if(tex.isAllocated()){
+                    tex.bind();
+                    mesh.draw();
+                    tex.unbind();
+                }
             }
         }
         ofPopMatrix();
     }
 }
 
-void Fan::setPlayVideo(bool b){
-    vid.setPaused(b);
-}
