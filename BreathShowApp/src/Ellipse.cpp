@@ -11,14 +11,16 @@ Ellipse::Ellipse(){
     grp.add(resolution);
     grp.add(radius);
     
-    setup(30, 40);
+    setup();
     
     loadTestImage();
 }
 
-void Ellipse::setup(float r, float centerWidth, int res){
+void Ellipse::setup(){
     mesh.clear();
     
+    float r = radius.get();
+    int res = resolution.get();
     
     float ch = centerWidth * 0.5;
     float halfCircleLen = PI * r;
@@ -196,7 +198,6 @@ void Ellipse::setup(float r, float centerWidth, int res){
 
 void Ellipse::update(){
     if(bOn){
-        setup(radius, centerWidth, resolution); // TODO: Stop calling this
         vid.update();
     }
 }

@@ -13,13 +13,17 @@ Fan::Fan(){
     grp.add(resolution);
     grp.add(direction);
     
-    setup(180);
     loadTestImage();
+    setup();
 };
 
-void Fan::setup(float angle, float len, int direction, int res){
+void Fan::setup(){
     
     mesh.clear();
+
+    float angle = openAngle.get();
+    float len = radius.get();
+    int res = resolution.get();
     
     float dA = direction * angle / (float)res;
     float start = ofDegToRad(-90);
@@ -51,7 +55,6 @@ void Fan::setup(float angle, float len, int direction, int res){
 
 void Fan::update(){
     if(bOn){
-        setup(openAngle, radius, direction, resolution); // TODO: Stop calling this
         vid.update();
     }
 }

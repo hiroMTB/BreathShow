@@ -18,9 +18,9 @@ class Fan : public Shape{
     public:
     Fan();
     virtual ~Fan(){}
-    void setup(float angle, float len=30, int direction=1, int res = 36);
-    void update();
-    void draw();
+    void setup() override;
+    void update() override;
+    void draw() override;
     
     ofParameter<float> radius{"radius", 30, 0, 150};
     ofParameter<float> openAngle{"openAngle", 90, 0, 180};

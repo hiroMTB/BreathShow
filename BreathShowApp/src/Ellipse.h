@@ -11,9 +11,9 @@ class Ellipse : public Shape{
   
 public:
     Ellipse();
-    void setup(float radius, float centerWidth, int res=32);
-    void update();
-    void draw();
+    void setup() override;
+    void update() override;
+    void draw() override;
 
     ofParameter<float> centerWidth{"center width", 40, 0, 100};
     ofParameter<float> radius{"radius", 30, 0, 60};

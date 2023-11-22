@@ -18,6 +18,10 @@ public:
     
     virtual ~Shape(){};
 
+    virtual void setup() = 0;
+    virtual void update() = 0;
+    virtual void draw() = 0;
+    
     void loadTestImage(){
         bool ok = img.load("./tex/test2.jpg");
         if(ok){
@@ -44,18 +48,28 @@ public:
         vid.setPaused(b);
     }
 
-    void start(int frame = 0){
-        if(vid.getCurrentFrame() != frame){
-            vid.setFrame(frame);
+    void setLoop(bool b){
+        if(b){
+            vid.setLoopState(OF_LOOP_NORMAL);
+        }else{
+            vid.setLoopState(OF_LOOP_NONE);
         }
+    }
+    
+    void start(int frame = 0){ 
         if(!vid.isPlaying()){
             vid.play();
         }
+        
+        if(vid.getCurrentFrame() != frame){
+            vid.setFrame(frame);
+        }
+        
         bOn = true;
     }
     
     void stop(){
-        //vid.setPosition(0);
+        vid.setPosition(0);
         vid.stop();
         bOn = false;
     }
