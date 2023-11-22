@@ -144,10 +144,13 @@ void ofApp::menu(){
         }
         
         ImGui::Spacing(); ImGui::Separator(); ImGui::Spacing();
-        if(ImGui::Checkbox("Play", &bPlay)){
+        if(ImGui::Checkbox("Play", (bool*)&bPlay.get())){
             setPlay(bPlay);
         }
-        
+        ImGui::Spacing(); ImGui::Separator(); ImGui::Spacing();
+        if(ImGui::Checkbox("Loop", (bool*)&bLoop.get())){
+            setLoop(bLoop);
+        }
         ImGui::EndMenuBar();
     }
 }
@@ -194,7 +197,14 @@ void ofApp::setPlay( bool b){
     fanR.pause(!bPlay);
     rectScreen.pause(!bPlay);
     ellipse.pause(!bPlay);
-    sequencer.bPlay = bPlay;
+}
+
+void ofApp::setLoop( bool b){
+    bLoop = b;
+    fanL.setLoop(bLoop);
+    fanR.setLoop(bLoop);
+    rectScreen.setLoop(bLoop);
+    ellipse.setLoop(bLoop);
 }
 
 void ofApp::keyPressed(ofKeyEventArgs & args)

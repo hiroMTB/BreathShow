@@ -41,6 +41,7 @@ class ofApp : public ofBaseApp{
         bool loadProject(string dirpath);
     
         void setPlay(bool b);
+        void setLoop(bool b);
     
         void exit();
     private:
@@ -68,8 +69,11 @@ class ofApp : public ofBaseApp{
     
         glm::vec2 mouseOffset{0,0};
     
+    public:
         ofParameter<int> targetFps{"target fps", 60, 0, 120};
-        ofParameterGroup genGrp{"General", targetFps};
+        ofParameter<bool> bPlay{"Play", true};
+        ofParameter<bool> bLoop{"Loop", true};
+        ofParameterGroup genGrp{"General", targetFps, bPlay, bLoop};
 
         ofParameter<bool> b3dSceneOpen{"3DScene Window Open", true};
         ofParameter<bool> bDemoOpen{"Demo Window Open", true};
@@ -80,7 +84,6 @@ class ofApp : public ofBaseApp{
         
         ofParameterGroup grp{"app settings", genGrp, panelGrp};
 
-public:
         Human human;
         Fan fanL;
         Fan fanR;
@@ -89,7 +92,6 @@ public:
     
         string currentProjectPath;
     
-        bool bPlay{true};
 
     public:
         std::shared_ptr<MainWindow> mainWindow;
