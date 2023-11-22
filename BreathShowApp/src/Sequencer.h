@@ -15,13 +15,11 @@ public:
     void update();
     void draw(bool * bOpen);
 
-    bool bPlay{true};
-
-private:    
+private:
     MySequence mySequence;
     
     int currentFrame = 0;
-    bool bLoop{true};
+
 };
 
 

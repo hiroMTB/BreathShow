@@ -36,6 +36,10 @@ void Sequencer::setupTestSequences(){
 
 void Sequencer::update(){
 
+    shared_ptr<ofApp> & app = ofApp::get();
+    bool bPlay = app->bPlay.get();
+    bool bLoop = app->bLoop.get();
+    
     if(bPlay){
         int max = mySequence.GetFrameMax();
         
@@ -45,7 +49,8 @@ void Sequencer::update(){
             if(bLoop){
                 currentFrame = currentFrame % max;
             }else{
-                currentFrame = max;
+                currentFrame = 0;
+                app->bPlay = false;
             }
         }
     }
