@@ -27,16 +27,17 @@ void ofApp::setup()
 void ofApp::update()
 {
     sequencer.update();
-    
-    drawProjectorFbo();
     fanL.update();
     fanR.update();
     rectScreen.update();
     ellipse.update();
+    
 }
 
 void ofApp::draw()
 {
+    drawProjectorFbo();
+
     ofBackground(0);
     gui.begin();
     

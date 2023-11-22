@@ -78,9 +78,7 @@ void ofApp::draw3DScene(){
 }
 
 void ofApp::drawProjectorFbo(){
-    
-    ofSetBackgroundColor(0);
-    
+        
     projector.begin();
     
     ofClear(0);
