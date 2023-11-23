@@ -57,8 +57,7 @@ namespace ImSequencer
       ImGuiIO &io = ImGui::GetIO();
       int cx = (int)(io.MousePos.x);
       int cy = (int)(io.MousePos.y);
-      static float framePixelWidth = 10.f;
-      static float framePixelWidthTarget = 10.f;
+        
       int legendWidth = 200;
 
       static int movingEntry = -1;
@@ -96,11 +95,16 @@ namespace ImSequencer
       };
       ImVector<CustomDraw> customDraws;
       ImVector<CustomDraw> compactCustomDraws;
-      // zoom in/out
+
+       // zoom in/out
+      // Adjust zoom scroll bar to show entire sequence at the beginning
+      static float framePixelWidth = 10.f;  // pixels for each frame
       const int visibleFrameCount = (int)floorf((canvas_size.x - legendWidth) / framePixelWidth);
       const float barWidthRatio = ImMin(visibleFrameCount / (float)frameCount, 1.f);
       const float barWidthInPixels = barWidthRatio * (canvas_size.x - legendWidth);
-
+      float ratio = (canvas_size.x - legendWidth) / barWidthInPixels;
+      static float framePixelWidthTarget = framePixelWidth / ratio;
+                                               
       ImRect regionRect(canvas_pos, canvas_pos + canvas_size);
 
       static bool panningView = false;
