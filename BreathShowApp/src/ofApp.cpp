@@ -26,12 +26,11 @@ void ofApp::setup()
 
 void ofApp::update()
 {
-    sequencer.update();
+
     fanL.update();
     fanR.update();
     rectScreen.update();
-    ellipse.update();
-    
+    ellipse.update();    
 }
 
 void ofApp::draw()
@@ -46,6 +45,9 @@ void ofApp::draw()
      
     gui.end();
     gui.draw();
+    
+    // update sequencer at last as video needs time to update texture
+    sequencer.update();
 }
 
 void ofApp::dock(){
