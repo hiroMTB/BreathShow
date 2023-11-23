@@ -61,9 +61,10 @@ void Sequencer::update(){
     shared_ptr<ofApp> & app = ofApp::get();
     bool bPlay = app->bPlay.get();
     bool bLoop = app->bLoop.get();
+    int max = mySequence.GetFrameMax();
+    int min = mySequence.GetFrameMin();
     
     if(bPlay){
-        int max = mySequence.GetFrameMax();
         uint64_t diff = ofGetCurrentTime().getAsMilliseconds() - lastUpdateMs;
         diffFrame += diff / float(1000.0 / 30.0);
         if(diffFrame<1){
@@ -73,11 +74,12 @@ void Sequencer::update(){
             diffFrame -= floor(diffFrame);
         }
         
-        if(max < currentFrame){
+        if(max <= currentFrame){
             if(bLoop){
-                currentFrame = currentFrame % max;
+                //currentFrame = currentFrame % max;
+                currentFrame = min;
             }else{
-                currentFrame = 0;
+                currentFrame = min;
                 app->bPlay = false;
             }
         }
@@ -94,27 +96,22 @@ void Sequencer::update(){
         int type = item.mType;
         
         if(st == currentFrame){
-            int frame = 1;
-            shared_ptr<ofApp> & app = ofApp::get();
-            switch(item.mType){
-                case 0: app->fanL.start(frame); break;
-                case 1: app->fanR.start(frame); break;
-                case 2: app->rectScreen.start(frame); break;
-                case 3: app->ellipse.start(frame); break;
-                default: ofLogError("Sequencer") << "Unknow Sequence Type!!"; break;
-            }
+            startTrack(type, 0);
         }
-        if(st <= currentFrame && currentFrame <= end){
+        if(st <= currentFrame && currentFrame < end){
             // we can not call start too often
-        }else{
-            shared_ptr<ofApp> & app = ofApp::get();
-            switch(item.mType){
-                case 0: app->fanL.stop(); break;
-                case 1: app->fanR.stop(); break;
-                case 2: app->rectScreen.stop(); break;
-                case 3: app->ellipse.stop(); break;
-                default: ofLogError("Sequencer") << "Unknow Sequence Type!!"; break;
+            //startTrack(type, currentFrame);
+        }else if(end == currentFrame){
+            if(bLoop && st == min && end == max){
+                // special case
+                // we have to start movie immediately after finish
+                startTrack(type, 0);
+            }else{
+                // otherwise stop it
+                stopTrack(type);
             }
+        }else{
+            stopTrack(type);
         }
         
         if(0){
