@@ -160,8 +160,8 @@ void RenderWindow::create(string title, shared_ptr<ofAppBaseWindow> mainWindow, 
         settings.windowMode = bFull ? OF_FULLSCREEN : OF_WINDOW;
 
         ofBaseWindow = ofCreateWindow(settings);
-        // ofBaseWindow->setVerticalSync(false);
-        ofBaseWindow->setVerticalSync(true);
+         ofBaseWindow->setVerticalSync(false);
+//        ofBaseWindow->setVerticalSync(true);
 
         if(bOpen) addListeners();
         ofWindow = std::dynamic_pointer_cast<ofAppGLFWWindow>(ofBaseWindow);
