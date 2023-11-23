@@ -111,9 +111,9 @@ public:
       rampEdit.mMax = ImVec2(float(mFrameMax), 1.f);
       rampEdit.mMin = ImVec2(float(mFrameMin), 0.f);
       draw_list->PushClipRect(clippingRect.Min, clippingRect.Max, true);
-      for (int i = 0; i < 3; i++)
+      for (int i = 0; i < rampEdit.mPts.size(); i++)
       {
-         for (int j = 0; j < rampEdit.mPts.size(); j++)
+         for (int j = 0; j < rampEdit.mPts[i].size(); j++)
          {
             float p = rampEdit.mPts[i][j].x;
             if (p < myItems[index].mFrameStart || p > myItems[index].mFrameEnd)
