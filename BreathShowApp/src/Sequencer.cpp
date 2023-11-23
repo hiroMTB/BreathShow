@@ -50,6 +50,7 @@ void Sequencer::update(){
                 currentFrame = currentFrame % max;
             }else{
                 currentFrame = 0;
+                resetTimeMs = ofGetCurrentTime();
                 app->bPlay = false;
             }
         }

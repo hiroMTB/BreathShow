@@ -18,7 +18,8 @@ public:
 private:
     MySequence mySequence;
     
-    int currentFrame = 0;
+    int currentFrame{0};
+    double resetTimeMs{0};
 
 };
 
