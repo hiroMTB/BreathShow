@@ -359,7 +359,8 @@ namespace ImSequencer
             }
             if (ImRect(slotP1, slotP2).Contains(io.MousePos) && io.MouseDoubleClicked[0])
             {
-               sequence->DoubleClick(i);
+                // TODO: temporaly disabled!
+                //sequence->DoubleClick(i);
             }
             // Ensure grabbable handles
             const float max_handle_width = slotP2.x - slotP1.x / 3.0f;
