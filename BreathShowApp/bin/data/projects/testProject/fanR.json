@@ -2,12 +2,11 @@
     "Fun": {
         "On": "0",
         "direction": "1",
-        "radius": "98.5",
         "openAngle": "180",
         "orientationY": "0",
         "position": "17, 121, 0",
+        "radius": "98.5",
         "resolution": "32",
-        "scale": "1, 1, 1",
         "test_texture": "0"
     }
 }
