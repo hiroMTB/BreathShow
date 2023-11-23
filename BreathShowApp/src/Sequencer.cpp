@@ -34,6 +34,28 @@ void Sequencer::setupTestSequences(){
     }
 }
 
+void Sequencer::startTrack(int type, int frame){
+    shared_ptr<ofApp> & app = ofApp::get();
+    switch(type){
+        case 0: app->fanL.start(frame); break;
+        case 1: app->fanR.start(frame); break;
+        case 2: app->rectScreen.start(frame); break;
+        case 3: app->ellipse.start(frame); break;
+        default: ofLogError("Sequencer") << "Unknow Sequence Type!!"; break;
+    }
+}
+
+void Sequencer::stopTrack(int type){
+    shared_ptr<ofApp> & app = ofApp::get();
+    switch(type){
+        case 0: app->fanL.stop(); break;
+        case 1: app->fanR.stop(); break;
+        case 2: app->rectScreen.stop(); break;
+        case 3: app->ellipse.stop(); break;
+        default: ofLogError("Sequencer") << "Unknow Sequence Type!!"; break;
+    }
+}
+
 void Sequencer::update(){
 
     shared_ptr<ofApp> & app = ofApp::get();

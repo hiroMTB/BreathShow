@@ -16,6 +16,10 @@ public:
     void draw(bool * bOpen);
 
 private:
+    
+    void startTrack(int type, int frame);
+    void stopTrack(int type);
+    
     MySequence mySequence;
     
     int currentFrame{0};
