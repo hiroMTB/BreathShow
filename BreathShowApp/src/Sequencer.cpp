@@ -42,19 +42,26 @@ void Sequencer::update(){
     
     if(bPlay){
         int max = mySequence.GetFrameMax();
-        
-        currentFrame++;
+        uint64_t diff = ofGetCurrentTime().getAsMilliseconds() - lastUpdateMs;
+        diffFrame += diff / float(1000.0 / 30.0);
+        if(diffFrame<1){
+            
+        }else{
+            currentFrame += floor(diffFrame);
+            diffFrame -= floor(diffFrame);
+        }
         
         if(max < currentFrame){
             if(bLoop){
                 currentFrame = currentFrame % max;
             }else{
                 currentFrame = 0;
-                resetTimeMs = ofGetCurrentTime();
                 app->bPlay = false;
             }
         }
     }
+    lastUpdateMs = ofGetCurrentTime().getAsMilliseconds();
+
     
     std::vector<MySequence::MySequenceItem> & items = mySequence.myItems;
 

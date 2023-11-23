@@ -19,8 +19,8 @@ private:
     MySequence mySequence;
     
     int currentFrame{0};
-    double resetTimeMs{0};
-
+    float diffFrame{0.0f};
+    uint64_t lastUpdateMs{0};
 };
 
 
