@@ -26,7 +26,7 @@ void ofApp::setup()
 
 void ofApp::update()
 {
-
+    ofSetFrameRate(app->targetFps);
     fanL.update();
     fanR.update();
     rectScreen.update();
@@ -143,7 +143,6 @@ void ofApp::menu(){
 
         ImGui::PushItemWidth(50);
         if(ImGui::DragInt("Target fps", (int*)&app->targetFps.get(), 1, 1, 200, "%2d fps")){
-           ofSetFrameRate(app->targetFps);
         }
         
         ImGui::Spacing(); ImGui::Separator(); ImGui::Spacing();

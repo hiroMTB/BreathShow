@@ -74,8 +74,9 @@ bool ofApp::loadProject(string dirpath){
 
     bool bWin = mainWindow->load(dirpath + "/mainWindow.json");
     bool bPrj = projectorWindow->load(dirpath + "/projectorWindow.json");
-        
-    ofSetFrameRate(targetFps);
+    
+    // This limits fps under 30 somehow
+    // ofSetFrameRate(targetFps);
     human.setup();
     fanL.loadVideo( "vid/fanL_h264.mp4" );
     fanR.loadVideo( "vid/fanR_h264.mp4" );
