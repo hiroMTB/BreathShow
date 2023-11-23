@@ -144,7 +144,12 @@ void Sequencer::draw(bool * bOpen){
         ImGui::SameLine();
         ImGui::InputInt("Frame Max", &mySequence.mFrameMax);
         ImGui::PopItemWidth();
-        SequencerGui(&mySequence, &currentFrame, &expanded, &selectedEntry, &firstFrame, ImSequencer::SEQUENCER_EDIT_STARTEND | ImSequencer::SEQUENCER_ADD | ImSequencer::SEQUENCER_DEL | ImSequencer::SEQUENCER_COPYPASTE | ImSequencer::SEQUENCER_CHANGE_FRAME);
+        SequencerGui(&mySequence, &currentFrame, &expanded, &selectedEntry, &firstFrame,
+                     ImSequencer::SEQUENCER_EDIT_STARTEND
+                     | ImSequencer::SEQUENCER_ADD
+                     | ImSequencer::SEQUENCER_DEL
+                     //| ImSequencer::SEQUENCER_COPYPASTE
+                     | ImSequencer::SEQUENCER_CHANGE_FRAME);
         // add a UI to edit that particular item
 //        if (selectedEntry != -1)
 //        {
