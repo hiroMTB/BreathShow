@@ -129,7 +129,7 @@ void ofApp::menu(){
         ImGui::Spacing(); ImGui::Separator(); ImGui::Spacing();
         
         if (ImGui::BeginMenu("Panel")) {
-            ImGui::Checkbox("Demo", (bool *) &bDemoOpen.get());
+            //ImGui::Checkbox("Demo", (bool *) &bDemoOpen.get());
             ImGui::Checkbox("3D Scene", (bool *) &b3dSceneOpen.get());
             ImGui::Checkbox("Gui Panel", (bool *) &bGuiOpen.get());
             ImGui::Checkbox("Sequencer Panel", (bool *) &bSeqOpen.get());

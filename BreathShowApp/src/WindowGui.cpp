@@ -6,7 +6,7 @@ void ofApp::drawGui()
     if(bGuiOpen) drawGui_ShowSettings();
     if(bSeqOpen) drawGui_Sequencer();
     if(b3dSceneOpen) draw3DWindow();
-    if(bDemoOpen) ImGui::ShowDemoWindow();
+    //if(bDemoOpen) ImGui::ShowDemoWindow();
 }
 
 void ofApp::drawGui_ShowSettings()
