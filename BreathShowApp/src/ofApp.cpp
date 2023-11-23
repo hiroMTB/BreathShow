@@ -4,7 +4,7 @@ shared_ptr<ofApp> ofApp::app = nullptr;
 
 void ofApp::setup()
 {
-    ofSetLogLevel(OF_LOG_VERBOSE);
+    ofSetLogLevel(OF_LOG_NOTICE);
     ofSetCircleResolution(64);
     
 #ifndef USE_MULTI_VIEWPORT
