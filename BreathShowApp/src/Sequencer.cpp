@@ -15,7 +15,7 @@ Sequencer::Sequencer(){
 }
 
 void Sequencer::setup(){
-    setupTestSequences();
+    //setupTestSequences();
 }
 
 void Sequencer::setupTestSequences(){
@@ -26,7 +26,7 @@ void Sequencer::setupTestSequences(){
     int offset = fps * 1;
     int duration = fps * 30;
     int pause = fps * 2;
-    
+
     for(int i=0; i<4; i++){
         int st = offset+duration*i+pause*i;
         int end = st + duration;
@@ -56,7 +56,82 @@ void Sequencer::stopTrack(int type){
     }
 }
 
-void Sequencer::update(){
+void Sequencer::updateSequenceItem(int entry, bool bNeedUpdateVidFrame){
+    std::vector<MySequence::MySequenceItem> & items = mySequence.myItems;
+    int max = mySequence.GetFrameMax();
+    int min = mySequence.GetFrameMin();
+    bool bLoop = ofApp::get()->bLoop.get();
+
+    /// TODO: null check
+    //if(items.find()
+    MySequence::MySequenceItem & item = items[entry];
+    int st = item.mFrameStart;
+    int end = item.mFrameEnd;
+    int type = item.mType;
+    
+    if(st == currentFrame){
+        startTrack(type, 0);
+    }
+    if(st <= currentFrame && currentFrame < end){
+        // we can not call start too often
+        if(bNeedUpdateVidFrame){
+            int frame = currentFrame - st;
+            startTrack(type, frame);
+        }
+    }else if(end == currentFrame){
+        if(bLoop && st == min && end == max){
+            // special case
+            // we have to start movie immediately after finish
+            startTrack(type, 0);
+        }else{
+            // otherwise stop it
+            stopTrack(type);
+        }
+    }else{
+        stopTrack(type);
+    }
+    
+    if(0){
+        /// TODO: Read Curve Value
+        if(st <= currentFrame && currentFrame <= end){
+            
+            RampEdit & ramp = item.rampEdit;
+            int cnt = ramp.GetCurveCount();
+            for(int j=0; j<cnt; j++){
+                std::vector<ImVec2> & pts = ramp.GetPoints(j);
+                if(pts.size() == 1){
+                    // only one points, value is the same
+                    std::cout << "y = " << pts[0].y << std::endl;
+                }
+                for(int k=0; k<pts.size()-1; k++){
+                    ImVec2 & p1 = pts[k];
+                    ImVec2 & p2 = pts[k+1];
+                    float x1 = p1.x;
+                    float x2 = p2.x;
+                    
+                    if( x1<=currentFrame && currentFrame<=x2){
+                        //std::cout << "Between points " << x1 << " and " << x2 << std::endl;
+                        ImCurveEdit::CurveType ctype = ramp.GetCurveType(j);
+                        float t = (currentFrame-x1) / (x2 - x1);
+                        const ImVec2 sp1 = ImLerp(p1, p2, t);
+                        
+                        if(ctype == ImCurveEdit::CurveType::CurveSmooth){
+                            // calculate smooth value
+                            const float rt1 = ImCurveEdit::smoothstep(p1.x, p2.x, sp1.x);
+                            const float y = ImLerp(p1.y, p2.y, rt1);
+                            //std::cout << y << std::endl;
+                        }else if(ctype == ImCurveEdit::CurveType::CurveLinear){
+                            // return sp1
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+void Sequencer::update(bool bNeedUpdateVidFrame){
 
     shared_ptr<ofApp> & app = ofApp::get();
     bool bPlay = app->bPlay.get();
@@ -86,71 +161,9 @@ void Sequencer::update(){
     }
     lastUpdateMs = ofGetCurrentTime().getAsMilliseconds();
 
-    
     std::vector<MySequence::MySequenceItem> & items = mySequence.myItems;
-
     for(int i=0; i<items.size(); i++){
-        MySequence::MySequenceItem & item = items[i];
-        int st = item.mFrameStart;
-        int end = item.mFrameEnd;
-        int type = item.mType;
-        
-        if(st == currentFrame){
-            startTrack(type, 0);
-        }
-        if(st <= currentFrame && currentFrame < end){
-            // we can not call start too often
-            //startTrack(type, currentFrame);
-        }else if(end == currentFrame){
-            if(bLoop && st == min && end == max){
-                // special case
-                // we have to start movie immediately after finish
-                startTrack(type, 0);
-            }else{
-                // otherwise stop it
-                stopTrack(type);
-            }
-        }else{
-            stopTrack(type);
-        }
-        
-        if(0){
-            /// TODO: Read Curve Value
-            if(st <= currentFrame && currentFrame <= end){
-                
-                RampEdit & ramp = item.rampEdit;
-                int cnt = ramp.GetCurveCount();
-                for(int j=0; j<cnt; j++){
-                    std::vector<ImVec2> & pts = ramp.GetPoints(j);
-                    if(pts.size() == 1){
-                        // only one points, value is the same
-                        std::cout << "y = " << pts[0].y << std::endl;
-                    }
-                    for(int k=0; k<pts.size()-1; k++){
-                        ImVec2 & p1 = pts[k];
-                        ImVec2 & p2 = pts[k+1];
-                        float x1 = p1.x;
-                        float x2 = p2.x;
-                        
-                        if( x1<=currentFrame && currentFrame<=x2){
-                            //std::cout << "Between points " << x1 << " and " << x2 << std::endl;
-                            ImCurveEdit::CurveType ctype = ramp.GetCurveType(j);
-                            float t = (currentFrame-x1) / (x2 - x1);
-                            const ImVec2 sp1 = ImLerp(p1, p2, t);
-                            
-                            if(ctype == ImCurveEdit::CurveType::CurveSmooth){
-                                // calculate smooth value
-                                const float rt1 = ImCurveEdit::smoothstep(p1.x, p2.x, sp1.x);
-                                const float y = ImLerp(p1.y, p2.y, rt1);
-                                //std::cout << y << std::endl;
-                            }else if(ctype == ImCurveEdit::CurveType::CurveLinear){
-                                // return sp1
-                            }
-                        }
-                    }
-                }
-            }            
-        }
+        updateSequenceItem(i);
     }
 }
 
@@ -171,20 +184,49 @@ void Sequencer::draw(bool * bOpen){
         ImGui::SameLine();
         ImGui::InputInt("Frame Max", &mySequence.mFrameMax);
         ImGui::PopItemWidth();
-        SequencerGui(&mySequence, &currentFrame, &expanded, &selectedEntry, &firstFrame,
-                     ImSequencer::SEQUENCER_EDIT_STARTEND
-                     | ImSequencer::SEQUENCER_ADD
-                     | ImSequencer::SEQUENCER_DEL
-                     //| ImSequencer::SEQUENCER_COPYPASTE
-                     | ImSequencer::SEQUENCER_CHANGE_FRAME);
+        
+        int prevCurrentFrame = currentFrame;
+        int options = ImSequencer::SEQUENCER_EDIT_STARTEND
+                                    | ImSequencer::SEQUENCER_ADD
+                                    | ImSequencer::SEQUENCER_DEL
+                                    //| ImSequencer::SEQUENCER_COPYPASTE
+                                    | ImSequencer::SEQUENCER_CHANGE_FRAME;
+
+        auto onIndicatorMoveCb = [&](){
+            //std::cout << "OnIndicatorMoveCb" << std::endl;
+            update(true);
+        };
+        
+        auto onSequenceMoveCb = [&](int movedEntry){
+            //std::cout << "onSequenceMoveCb: " << movedEntry << std::endl;
+            updateSequenceItem(movedEntry, true);
+        };
+        
+        SequencerGui(&mySequence,
+                     &currentFrame,
+                     &expanded,
+                     &selectedEntry,
+                     &firstFrame,
+                     options,
+                     onIndicatorMoveCb,
+                     onSequenceMoveCb);
+
+        
         // add a UI to edit that particular item
-//        if (selectedEntry != -1)
-//        {
-//            const MySequence::MySequenceItem &item = mySequence.myItems[selectedEntry];
-//            ImGui::Text("Draw Custom GUI here for %s \nAAA\nBBB\nCCC\nDDD", SequencerItemTypeNames[item.mType]);
-//            ImGui::Text("%d", selectedEntry);
-//            // switch (type) ....
-//        }
+        if (selectedEntry != -1)
+        {
+            const MySequence::MySequenceItem &item = mySequence.myItems[selectedEntry];
+            int type = item.mType;
+            int start = item.mFrameStart;
+            int end = item.mFrameEnd;
+            int total = end - start;
+            ImGui::Text("%s: %df -> %df, total %d frames (%0.2f sec)",
+                        SequencerItemTypeNames[type],
+                        start,
+                        end,
+                        total,
+                        total/30.0f);
+        }
     }
     ofxImGui::EndWindow(settings);
 }
