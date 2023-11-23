@@ -20,12 +20,12 @@ void Sequencer::setup(){
 
 void Sequencer::setupTestSequences(){
     mySequence.mFrameMin = 0;
-    mySequence.mFrameMax = 30 * 20;
+    mySequence.mFrameMax = 30 * 60 * 3;
 
     int fps = 30;
     int offset = fps * 1;
-    int duration = fps * 3;
-    int pause = fps * 1;
+    int duration = fps * 30;
+    int pause = fps * 2;
     
     for(int i=0; i<4; i++){
         int st = offset+duration*i+pause*i;
