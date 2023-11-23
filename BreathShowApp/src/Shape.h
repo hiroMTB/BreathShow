@@ -69,8 +69,10 @@ public:
     }
     
     void stop(){
-        vid.setPosition(0);
-        vid.stop();
+        if(vid.isPlaying()){
+            vid.setPosition(0);
+            vid.stop();
+        }
         bOn = false;
     }
 
