@@ -64,7 +64,7 @@ void Sequencer::update(){
         int type = item.mType;
         
         if(st == currentFrame){
-            int frame = 0;
+            int frame = 1;
             shared_ptr<ofApp> & app = ofApp::get();
             switch(item.mType){
                 case 0: app->fanL.start(frame); break;
