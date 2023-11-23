@@ -51,7 +51,15 @@ namespace ImSequencer
       return overDel;
    }
 
-   bool SequencerGui(SequenceInterface *sequence, int *currentFrame, bool *expanded, int *selectedEntry, int *firstFrame, int sequenceOptions)
+  
+   bool SequencerGui(SequenceInterface *sequence,
+                     int *currentFrame,
+                     bool *expanded,
+                     int *selectedEntry,
+                     int *firstFrame,
+                     int sequenceOptions,
+                     std::function<void(void)> onIndicatorMoveCb,
+                     std::function<void(int)> onSequenceMoveCb)
    {
       bool ret = false;
       ImGuiIO &io = ImGui::GetIO();
@@ -190,6 +198,8 @@ namespace ImSequencer
                   *currentFrame = sequence->GetFrameMin();
                if (*currentFrame >= sequence->GetFrameMax())
                   *currentFrame = sequence->GetFrameMax();
+                
+                onIndicatorMoveCb();
             }
             if (!io.MouseDown[0])
                MovingCurrentFrame = false;
@@ -429,7 +439,7 @@ namespace ImSequencer
          if (/*backgroundRect.Contains(io.MousePos) && */ movingEntry >= 0)
          {
             ImGui::CaptureMouseFromApp();
-            float diffFrame = (cx - movingPos) / framePixelWidth;
+            float diffFrame = round((cx - movingPos) / framePixelWidth);
              
             if (std::abs(diffFrame) > 0)
             {
@@ -453,7 +463,9 @@ namespace ImSequencer
                   l = r;
                if (movingPart & 2 && r < l)
                   r = l;
-               movingPos += diffFrame * (float)framePixelWidth;
+               movingPos += round(diffFrame * (float)framePixelWidth);
+                
+                onSequenceMoveCb(movingEntry);
             }
             if (!io.MouseDown[0])
             {
