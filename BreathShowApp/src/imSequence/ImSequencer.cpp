@@ -429,7 +429,8 @@ namespace ImSequencer
          if (/*backgroundRect.Contains(io.MousePos) && */ movingEntry >= 0)
          {
             ImGui::CaptureMouseFromApp();
-            int diffFrame = int((cx - movingPos) / framePixelWidth);
+            float diffFrame = (cx - movingPos) / framePixelWidth;
+             
             if (std::abs(diffFrame) > 0)
             {
                int *start, *end;
@@ -452,7 +453,7 @@ namespace ImSequencer
                   l = r;
                if (movingPart & 2 && r < l)
                   r = l;
-               movingPos += int(diffFrame * framePixelWidth);
+               movingPos += diffFrame * (float)framePixelWidth;
             }
             if (!io.MouseDown[0])
             {
