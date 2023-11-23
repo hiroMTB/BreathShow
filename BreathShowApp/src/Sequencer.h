@@ -14,6 +14,9 @@ public:
     void setupTestSequences();
     void update();
     void draw(bool * bOpen);
+    
+    bool save(const std::string & filepath);
+    bool load(const std::string & filepath);
 
 private:
     

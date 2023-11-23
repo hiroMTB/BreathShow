@@ -46,7 +46,8 @@ bool ofApp::saveProject(string dirpath){
     bool bEllipse = Serializer::save(ellipse.grp, dirpath + "/ellipse.json");
     bool bWin = mainWindow->save(dirpath + "/mainWindow.json");
     bool bPrj = projectorWindow->save(dirpath + "/projectorWindow.json");
-    
+    bool bSeq = sequencer.save(dirpath + "/sequencer.json");
+
     return bApp && bCamera && bHuman && bProjector && bFanL && bFanR && bEllipse && bWin && bPrj && bRectScreen;
 }
 
@@ -74,7 +75,8 @@ bool ofApp::loadProject(string dirpath){
 
     bool bWin = mainWindow->load(dirpath + "/mainWindow.json");
     bool bPrj = projectorWindow->load(dirpath + "/projectorWindow.json");
-    
+    bool bSeq = sequencer.load(dirpath + "/sequencer.json");
+
     // This limits fps under 30 somehow
     // ofSetFrameRate(targetFps);
     human.setup();
@@ -87,5 +89,5 @@ bool ofApp::loadProject(string dirpath){
     fanR.setup();
     rectScreen.setup();
     ellipse.setup();
-    return bApp && bCamera && bHuman && bProjector && bFanL && bFanR && bEllipse && bWin && bPrj && bRectScreen;
+    return bApp && bCamera && bHuman && bProjector && bFanL && bFanR && bEllipse && bWin && bPrj && bRectScreen && bSeq;
 }

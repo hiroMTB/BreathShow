@@ -188,3 +188,62 @@ void Sequencer::draw(bool * bOpen){
     }
     ofxImGui::EndWindow(settings);
 }
+
+
+bool Sequencer::save(const std::string & filepath){
+    ofJson json;
+    int min = mySequence.GetFrameMin();
+    int max = mySequence.GetFrameMax();
+    json["min"] = ofToString(min);
+    json["max"] = ofToString(max);
+    
+    std::vector<MySequence::MySequenceItem> & items = mySequence.myItems;
+
+    ofJson tracks = ofJson::array();
+    for(int i=0; i<items.size(); i++){
+        MySequence::MySequenceItem & item = items[i];
+        int st = item.mFrameStart;
+        int end = item.mFrameEnd;
+        int type = item.mType;
+     
+        ofJson t;
+        t["start"] = ofToString(st);
+        t["end"] = ofToString(end);
+        t["type"] = ofToString(type);
+        tracks.push_back(t);
+    }
+    
+    json["tracks"] = tracks;
+    
+    bool ok = ofSavePrettyJson(filepath, json);
+    
+    return ok;
+}
+
+bool Sequencer::load(const std::string & filepath){
+    
+    if(ofFile::doesFileExist(filepath)){
+        
+        ofJson json = ofLoadJson(filepath);
+        if(!json.is_null()){
+            int min = ofToInt(json.value("min", "0"));
+            int max = ofToInt(json.value("max", "1000"));
+            
+            mySequence.mFrameMin = min;
+            mySequence.mFrameMax = max;
+            
+            ofJson tracks = json["tracks"];
+            
+            for( auto it = tracks.begin(); it!=tracks.end(); ++it){
+                const ofJson & j = it.value();
+                int type = ofToInt(j.value("type", "0"));
+                int st = ofToInt(j.value("start", "0"));
+                int end = ofToInt(j.value("end", "1000"));
+                mySequence.myItems.push_back(MySequence::MySequenceItem{type, st, end, false});
+            }
+            return true;
+        }
+    }
+    return false;
+}
+
