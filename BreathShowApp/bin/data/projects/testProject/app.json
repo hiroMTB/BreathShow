@@ -1,6 +1,8 @@
 {
     "app_settings": {
         "General": {
+            "Loop": "1",
+            "Play": "1",
             "target_fps": "120"
         },
         "Panels": {
