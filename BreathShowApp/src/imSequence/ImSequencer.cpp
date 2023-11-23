@@ -508,6 +508,8 @@ namespace ImSequencer
 
          ImGui::EndChildFrame();
          ImGui::PopStyleColor();
+          
+#pragma ZOOM_IN_OUT_BAR
          if (hasScrollBar)
          {
             ImGui::InvisibleButton("scrollBar", scrollBarSize);
@@ -519,16 +521,18 @@ namespace ImSequencer
             float startFrameOffset = ((float)(firstFrameUsed - sequence->GetFrameMin()) / (float)frameCount) * (canvas_size.x - legendWidth);
             ImVec2 scrollBarA(scrollBarMin.x + legendWidth, scrollBarMin.y - 2);
             ImVec2 scrollBarB(scrollBarMin.x + canvas_size.x, scrollBarMax.y - 1);
-            draw_list->AddRectFilled(scrollBarA, scrollBarB, 0xFF222222, 0);
+             /// light gray scroll bar background, don know why need this
+             draw_list->AddRectFilled(scrollBarA, scrollBarB, 0xFF222222, 0);
 
             ImRect scrollBarRect(scrollBarA, scrollBarB);
             bool inScrollBar = scrollBarRect.Contains(io.MousePos);
-
+             /// dark scroll bar background
             draw_list->AddRectFilled(scrollBarA, scrollBarB, 0xFF101010, 8);
 
             ImVec2 scrollBarC(scrollBarMin.x + legendWidth + startFrameOffset, scrollBarMin.y);
             ImVec2 scrollBarD(scrollBarMin.x + legendWidth + barWidthInPixels + startFrameOffset, scrollBarMax.y - 2);
-            draw_list->AddRectFilled(scrollBarC, scrollBarD, (inScrollBar || MovingScrollBar) ? 0xFF606060 : 0xFF505050, 6);
+            /// Actual scroll bar
+             draw_list->AddRectFilled(scrollBarC, scrollBarD, (inScrollBar || MovingScrollBar) ? 0xFF606060 : 0xFF505050, 6);
 
             ImRect barHandleLeft(scrollBarC, ImVec2(scrollBarC.x + 14, scrollBarD.y));
             ImRect barHandleRight(ImVec2(scrollBarD.x - 14, scrollBarC.y), scrollBarD);
