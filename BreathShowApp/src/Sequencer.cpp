@@ -168,7 +168,7 @@ void Sequencer::update(bool bNeedUpdateVidFrame){
 
     std::vector<MySequence::MySequenceItem> & items = mySequence.myItems;
     for(int i=0; i<items.size(); i++){
-        updateSequenceItem(i);
+        updateSequenceItem(i, bNeedUpdateVidFrame);
     }
 }
 
