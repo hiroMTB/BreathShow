@@ -71,23 +71,28 @@ void Sequencer::updateSequenceItem(int entry, bool bNeedUpdateVidFrame){
     
     if(st == currentFrame){
         startTrack(type, 0);
+        cout << entry << " : start" << endl;
     }
-    if(st <= currentFrame && currentFrame < end){
+    if(st < currentFrame && currentFrame < end){
         // we can not call start too often
         if(bNeedUpdateVidFrame){
             int frame = currentFrame - st;
             startTrack(type, frame);
+            //cout << entry << " : seek, frame=" << frame << endl;
         }
     }else if(end == currentFrame){
         if(bLoop && st == min && end == max){
             // special case
             // we have to start movie immediately after finish
             startTrack(type, 0);
+            //cout << entry << " : Loop back" << endl;
         }else{
             // otherwise stop it
+            //cout << entry << " : stop" << endl;
             stopTrack(type);
         }
     }else{
+        //cout << entry << " : stop" << endl;
         stopTrack(type);
     }
     
