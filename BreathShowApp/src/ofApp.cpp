@@ -4,7 +4,8 @@ shared_ptr<ofApp> ofApp::app = nullptr;
 
 void ofApp::setup()
 {
-    ofSetLogLevel(OF_LOG_NOTICE);
+//    ofSetLogLevel(OF_LOG_NOTICE);
+    ofSetLogLevel(OF_LOG_VERBOSE);
     ofSetCircleResolution(64);
     
 #ifndef USE_MULTI_VIEWPORT
@@ -21,7 +22,6 @@ void ofApp::setup()
     
     currentProjectPath = "./projects/testProject";
     loadProject(currentProjectPath);
-
 }
 
 void ofApp::update()
@@ -199,6 +199,10 @@ void ofApp::setPlay( bool b){
     fanR.pause(!bPlay);
     rectScreen.pause(!bPlay);
     ellipse.pause(!bPlay);
+    
+    if(bPlay){
+        sequencer.updateSequenceItemAll(true);
+    }
 }
 
 void ofApp::setLoop( bool b){
