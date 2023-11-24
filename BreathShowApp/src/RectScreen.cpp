@@ -29,6 +29,7 @@ void RectScreen::draw(){
         ofPushMatrix();
         ofTranslate(position);
         //ofTranslate(scale);
+        ofRotateYDeg(orientationY);
         if(bShowTest){
             plane.mapTexCoords(0, 0, 1, 1);
             const ofMesh & mesh = plane.getMesh();
@@ -36,6 +37,8 @@ void RectScreen::draw(){
             tex.bind();
             mesh.draw();
             tex.unbind();
+            
+            mesh.drawWireframe();
         }else{
             if(vid.isLoaded()){
                 ofTexture & tex = vid.getTexture();

@@ -207,6 +207,8 @@ void Ellipse::draw(){
         ofPushMatrix();
         ofTranslate(position);
         //ofTranslate(scale);
+        ofRotateYDeg(orientationY);
+
         if(bShowTest){
             ofTexture & tex = img.getTexture();
             tex.bind();

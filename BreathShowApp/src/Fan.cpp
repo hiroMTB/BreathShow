@@ -64,12 +64,14 @@ void Fan::draw(){
         ofPushMatrix();
         ofTranslate(position);
         //ofTranslate(scale);
-        //mesh.drawWireframe();
+        ofRotateYDeg(orientationY);
         if(bShowTest){
             ofTexture & tex = img.getTexture();
             tex.bind();
             mesh.draw();
             tex.unbind();
+            
+            mesh.drawWireframe();
         }else{
             if(vid.isLoaded()){
                 ofTexture & tex = vid.getTexture();

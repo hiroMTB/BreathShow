@@ -33,7 +33,6 @@ void ofApp::drawGui_ShowSettings()
             }
         }
         ImGui::PopID();
-
         
         ImGui::PushID("Fan L");
         if(ImGui::CollapsingHeader("Fan L", flag)){
@@ -44,6 +43,7 @@ void ofApp::drawGui_ShowSettings()
             }
 
             if(ImGui::SliderInt("direction", (int*)&fanL.direction.get(), fanL.direction.getMin(), fanL.direction.getMax())){
+                fanL.setup();
             }
 
             if(ImGui::SliderFloat3("position", (float*)&fanL.position.get().x, fanL.position.getMin().x, fanL.position.getMax().x)){
@@ -53,9 +53,15 @@ void ofApp::drawGui_ShowSettings()
             }
 
             if(ImGui::SliderFloat("openAngle", (float*)&fanL.openAngle.get(), fanL.openAngle.getMin(), fanL.openAngle.getMax())){
+                fanL.setup();
             }
             
             if(ImGui::SliderFloat("radius", (float*)&fanL.radius.get(), fanL.radius.getMin(), fanL.radius.getMax())){
+                fanL.setup();
+            }
+            
+            if(ImGui::SliderInt("resolution", (int*)&fanL.resolution.get(), fanL.resolution.getMin(), fanL.resolution.getMax())){
+                fanL.setup();
             }
         }
         ImGui::PopID();
@@ -71,6 +77,7 @@ void ofApp::drawGui_ShowSettings()
             }
             
             if(ImGui::SliderInt("direction", (int*)&fanR.direction.get(), fanR.direction.getMin(), fanR.direction.getMax())){
+                fanR.setup();
             }
 
             if(ImGui::SliderFloat3("position", (float*)&fanR.position.get().x, fanR.position.getMin().x, fanR.position.getMax().x)){
@@ -80,10 +87,17 @@ void ofApp::drawGui_ShowSettings()
             }
             
             if(ImGui::SliderFloat("openAngle", (float*)&fanR.openAngle.get(), fanR.openAngle.getMin(), fanR.openAngle.getMax())){
+                fanR.setup();
             }
 
             if(ImGui::SliderFloat("radius", (float*)&fanR.radius.get(), fanR.radius.getMin(), fanR.radius.getMax())){
+                fanR.setup();
             }
+            
+            if(ImGui::SliderInt("resolution", (int*)&fanR.resolution.get(), fanR.resolution.getMin(), fanR.resolution.getMax())){
+                fanR.setup();
+            }
+
         }
         ImGui::PopID();
         
@@ -94,10 +108,15 @@ void ofApp::drawGui_ShowSettings()
 
             if(ImGui::Checkbox("Test Texture", (bool*)&rectScreen.bShowTest.get())){
                 rectScreen.setup();
-            };
-            ImGui::SliderFloat3("position", (float*)&rectScreen.position.get().x, rectScreen.position.getMin().x, rectScreen.position.getMax().x);
-            ImGui::SliderFloat2("size", (float*)&rectScreen.size.get().x, rectScreen.size.getMin().x, rectScreen.size.getMax().x);
-            ImGui::SliderFloat("orientationY", (float*)&rectScreen.orientationY.get(), rectScreen.orientationY.getMin(), rectScreen.orientationY.getMax());
+            }
+            if(ImGui::SliderFloat3("position", (float*)&rectScreen.position.get().x, rectScreen.position.getMin().x, rectScreen.position.getMax().x)){
+            }
+            if(ImGui::SliderFloat2("size", (float*)&rectScreen.size.get().x, rectScreen.size.getMin().x, rectScreen.size.getMax().x)){
+                rectScreen.setup();
+            }
+            
+            if(ImGui::SliderFloat("orientationY", (float*)&rectScreen.orientationY.get(), rectScreen.orientationY.getMin(), rectScreen.orientationY.getMax())){
+            }
         }
         ImGui::PopID();
 
@@ -109,10 +128,18 @@ void ofApp::drawGui_ShowSettings()
             if(ImGui::Checkbox("Test Texture", (bool*)&ellipse.bShowTest.get())){
                 ellipse.setup();
             }
-            ImGui::SliderFloat3("position", (float*)&ellipse.position.get().x, rectScreen.position.getMin().x, rectScreen.position.getMax().x);
-            ImGui::SliderFloat("radius", (float*)&ellipse.radius.get(), ellipse.radius.getMin(), ellipse.radius.getMax());
-            ImGui::SliderFloat("center Width", (float*)&ellipse.centerWidth.get(), ellipse.centerWidth.getMin(), ellipse.centerWidth.getMax());
-            ImGui::SliderFloat("orientationY", (float*)&rectScreen.orientationY.get(), rectScreen.orientationY.getMin(), rectScreen.orientationY.getMax());
+            if(ImGui::SliderFloat3("position", (float*)&ellipse.position.get().x, rectScreen.position.getMin().x, rectScreen.position.getMax().x)){
+            }
+            if(ImGui::SliderFloat("radius", (float*)&ellipse.radius.get(), ellipse.radius.getMin(), ellipse.radius.getMax())){
+                ellipse.setup();
+            }
+            
+            if(ImGui::SliderFloat("center Width", (float*)&ellipse.centerWidth.get(), ellipse.centerWidth.getMin(), ellipse.centerWidth.getMax())){
+                ellipse.setup();
+            }
+            
+            if(ImGui::SliderFloat("orientationY", (float*)&rectScreen.orientationY.get(), rectScreen.orientationY.getMin(), rectScreen.orientationY.getMax())){
+            }
         }
         ImGui::PopID();
         
