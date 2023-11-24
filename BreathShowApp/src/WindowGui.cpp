@@ -38,7 +38,7 @@ void ofApp::drawGui_ShowSettings()
         ImGui::PushID("Fan L");
         if(ImGui::CollapsingHeader("Fan L", flag)){
             ImGui::Checkbox("ON", (bool*)&fanL.bOn.get() );
-
+            ImGui::SameLine();
             if(ImGui::Checkbox("Test Texture", (bool*)&fanL.bShowTest.get())){
                 fanL.setup();
             }
@@ -64,7 +64,8 @@ void ofApp::drawGui_ShowSettings()
         ImGui::PushID("Fan R");
         if(ImGui::CollapsingHeader("Fan R", flag)){
             ImGui::Checkbox("ON", (bool*)&fanR.bOn.get());
-            
+            ImGui::SameLine();
+
             if(ImGui::Checkbox("Test Texture", (bool*)&fanR.bShowTest.get())){
                 fanR.setup();
             }
@@ -89,6 +90,8 @@ void ofApp::drawGui_ShowSettings()
         ImGui::PushID("RectScreen");
         if(ImGui::CollapsingHeader("Rect Screen", flag)){
             ImGui::Checkbox("ON", (bool*)&rectScreen.bOn.get());
+            ImGui::SameLine();
+
             if(ImGui::Checkbox("Test Texture", (bool*)&rectScreen.bShowTest.get())){
                 rectScreen.setup();
             };
@@ -101,6 +104,8 @@ void ofApp::drawGui_ShowSettings()
         ImGui::PushID("Ellipse");
         if(ImGui::CollapsingHeader("Ellipse", flag)){
             ImGui::Checkbox("ON", (bool*)&ellipse.bOn.get());
+            ImGui::SameLine();
+
             if(ImGui::Checkbox("Test Texture", (bool*)&ellipse.bShowTest.get())){
                 ellipse.setup();
             }
