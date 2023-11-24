@@ -12,8 +12,10 @@ public:
     Sequencer();
     void setup();
     void setupTestSequences();
-    void update(bool bNeedUpdateVidFrame=false);
-    void updateSequenceItem(int entry, bool bNeedUpdateVidFrame=false);
+    void update();
+    void updateCurrentFrame();
+    void updateSequenceItemAll(bool bSeek);
+    void updateSequenceItem(int entry, bool bSeek);
     void draw(bool * bOpen);
     
     bool save(const std::string & filepath);

@@ -56,7 +56,51 @@ void Sequencer::stopTrack(int type){
     }
 }
 
-void Sequencer::updateSequenceItem(int entry, bool bNeedUpdateVidFrame){
+void Sequencer::update(){
+    updateCurrentFrame();
+    
+    bool bPlay = ofApp::get()->bPlay.get();
+    if(bPlay){ updateSequenceItemAll(false); }
+}
+
+void Sequencer::updateCurrentFrame(){
+    shared_ptr<ofApp> & app = ofApp::get();
+    bool bPlay = app->bPlay.get();
+    bool bLoop = app->bLoop.get();
+    int max = mySequence.GetFrameMax();
+    int min = mySequence.GetFrameMin();
+    
+    if(bPlay){
+        uint64_t diff = ofGetCurrentTime().getAsMilliseconds() - lastUpdateMs;
+        diffFrame += diff / float(1000.0 / 30.0);
+        if(diffFrame<1){
+            
+        }else{
+            currentFrame += floor(diffFrame);
+            diffFrame -= floor(diffFrame);
+        }
+        
+        if(max <= currentFrame){
+            if(bLoop){
+                //currentFrame = currentFrame % max;
+                currentFrame = min;
+            }else{
+                currentFrame = min;
+                app->bPlay = false;
+            }
+        }
+    }
+    lastUpdateMs = ofGetCurrentTime().getAsMilliseconds();
+}
+
+void Sequencer::updateSequenceItemAll(bool bSeek){
+    std::vector<MySequence::MySequenceItem> & items = mySequence.myItems;
+    for(int i=0; i<items.size(); i++){
+        updateSequenceItem(i, bSeek);
+    }
+}
+
+void Sequencer::updateSequenceItem(int entry, bool bSeek){
     std::vector<MySequence::MySequenceItem> & items = mySequence.myItems;
     int max = mySequence.GetFrameMax();
     int min = mySequence.GetFrameMin();
@@ -71,28 +115,28 @@ void Sequencer::updateSequenceItem(int entry, bool bNeedUpdateVidFrame){
     
     if(st == currentFrame){
         startTrack(type, 0);
-        cout << entry << " : start" << endl;
+        ofLogVerbose("Sequencer") << entry << " : start";
     }
-    if(st < currentFrame && currentFrame < end){
+    else if(st < currentFrame && currentFrame < end){
         // we can not call start too often
-        if(bNeedUpdateVidFrame){
+        if(bSeek){
             int frame = currentFrame - st;
             startTrack(type, frame);
-            //cout << entry << " : seek, frame=" << frame << endl;
+            ofLogVerbose("Sequencer") << entry << " : seek, frame=" << frame;
         }
     }else if(end == currentFrame){
         if(bLoop && st == min && end == max){
             // special case
             // we have to start movie immediately after finish
             startTrack(type, 0);
-            //cout << entry << " : Loop back" << endl;
+            ofLogVerbose("Sequencer") << entry << " : Loop back";
         }else{
             // otherwise stop it
-            //cout << entry << " : stop" << endl;
+            ofLogVerbose("Sequencer") << entry << " : stop";
             stopTrack(type);
         }
     }else{
-        //cout << entry << " : stop" << endl;
+        ofLogVerbose("Sequencer") << entry << " : stop";
         stopTrack(type);
     }
     
@@ -135,43 +179,6 @@ void Sequencer::updateSequenceItem(int entry, bool bNeedUpdateVidFrame){
     }
 }
 
-
-void Sequencer::update(bool bNeedUpdateVidFrame){
-
-    shared_ptr<ofApp> & app = ofApp::get();
-    bool bPlay = app->bPlay.get();
-    bool bLoop = app->bLoop.get();
-    int max = mySequence.GetFrameMax();
-    int min = mySequence.GetFrameMin();
-    
-    if(bPlay){
-        uint64_t diff = ofGetCurrentTime().getAsMilliseconds() - lastUpdateMs;
-        diffFrame += diff / float(1000.0 / 30.0);
-        if(diffFrame<1){
-            
-        }else{
-            currentFrame += floor(diffFrame);
-            diffFrame -= floor(diffFrame);
-        }
-        
-        if(max <= currentFrame){
-            if(bLoop){
-                //currentFrame = currentFrame % max;
-                currentFrame = min;
-            }else{
-                currentFrame = min;
-                app->bPlay = false;
-            }
-        }
-    }
-    lastUpdateMs = ofGetCurrentTime().getAsMilliseconds();
-
-    std::vector<MySequence::MySequenceItem> & items = mySequence.myItems;
-    for(int i=0; i<items.size(); i++){
-        updateSequenceItem(i, bNeedUpdateVidFrame);
-    }
-}
-
 void Sequencer::draw(bool * bOpen){
     auto settings = ofxImGui::Settings();
     
@@ -199,7 +206,7 @@ void Sequencer::draw(bool * bOpen){
 
         auto onIndicatorMoveCb = [&](){
             //std::cout << "OnIndicatorMoveCb" << std::endl;
-            update(true);
+            updateSequenceItemAll(true);
         };
         
         auto onSequenceMoveCb = [&](int movedEntry){
