@@ -22,6 +22,14 @@ void ofApp::setup()
     
     currentProjectPath = "./projects/testProject";
     loadProject(currentProjectPath);
+    
+    ///
+    /// ofNode link
+    ///
+    fanL.setParent(human.node);
+    fanR.setParent(human.node);
+    rectScreen.setParent(human.node);
+    ellipse.setParent(human.node);
 }
 
 void ofApp::update()
