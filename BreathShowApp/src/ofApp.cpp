@@ -26,10 +26,10 @@ void ofApp::setup()
     ///
     /// ofNode link
     ///
-    fanL.setParent(human.node);
-    fanR.setParent(human.node);
-    rectScreen.setParent(human.node);
-    ellipse.setParent(human.node);
+    fanL.setParent(human.root);
+    fanR.setParent(human.root);
+    rectScreen.setParent(human.root);
+    ellipse.setParent(human.root);
 }
 
 void ofApp::update()
