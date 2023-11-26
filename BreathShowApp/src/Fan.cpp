@@ -35,28 +35,19 @@ void Fan::setup(){
         mesh.addVertex( vec3(0) );
         mesh.addVertex( vec3(len * cos(a1), len * sin(a1), 0) );
         mesh.addVertex( vec3(len * cos(a2), len * sin(a2), 0) );
-        
-        if(bShowTest){
-            float ty = (openAngle/180.0) / res;
-            mesh.addTexCoord( vec2(0, i*ty) );
-            mesh.addTexCoord( vec2(1, i*ty) );
-            mesh.addTexCoord( vec2(1, (i+1)*ty) );
+             
+        float ty = 1.0f / res;
+        bool bLcenter = (!bFlipX && (direction>0)) || (bFlipX && (direction<0));
+        if(bLcenter){
+            // texture L is center of Fan
+            mesh.addTexCoord( vec2(0, (res-i)*ty) );
+            mesh.addTexCoord( vec2(1, (res-i)*ty) );
+            mesh.addTexCoord( vec2(1, (res-i-1)*ty) );
         }else{
-            if(vid.isLoaded()){
-                float ty = 1.0f / res;
-                bool bLcenter = (!bFlipX && (direction>0)) || (bFlipX && (direction<0));
-                if(bLcenter){
-                    // texture L is center of Fan
-                    mesh.addTexCoord( vec2(0, (res-i)*ty) );
-                    mesh.addTexCoord( vec2(1, (res-i)*ty) );
-                    mesh.addTexCoord( vec2(1, (res-i-1)*ty) );
-                }else{
-                    // texture R is center of Fan
-                    mesh.addTexCoord( vec2(1, (res-i)*ty) );
-                    mesh.addTexCoord( vec2(0, (res-i)*ty) );
-                    mesh.addTexCoord( vec2(0, (res-i-1)*ty) );
-                }
-            }
+            // texture R is center of Fan
+            mesh.addTexCoord( vec2(1, (res-i)*ty) );
+            mesh.addTexCoord( vec2(0, (res-i)*ty) );
+            mesh.addTexCoord( vec2(0, (res-i-1)*ty) );
         }
         mesh.setMode(OF_PRIMITIVE_TRIANGLES );
     }
