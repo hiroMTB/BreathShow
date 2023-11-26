@@ -38,10 +38,10 @@ void ofApp::drawGui_ShowSettings()
         if(ImGui::CollapsingHeader("Fan L", flag)){
             ImGui::Checkbox("ON", (bool*)&fanL.bOn.get() );
             ImGui::SameLine();
-            if(ImGui::Checkbox("Test Texture", (bool*)&fanL.bShowTest.get())){
+            if(ImGui::Checkbox("Test", (bool*)&fanL.bShowTest.get())){
                 fanL.setup();
             }
-
+            ImGui::SameLine();
             if(ImGui::Checkbox("Flip X", (bool*)&fanL.bFlipX.get())){
                 fanL.setup();
             }
@@ -76,10 +76,10 @@ void ofApp::drawGui_ShowSettings()
             ImGui::Checkbox("ON", (bool*)&fanR.bOn.get());
             ImGui::SameLine();
 
-            if(ImGui::Checkbox("Test Texture", (bool*)&fanR.bShowTest.get())){
+            if(ImGui::Checkbox("Test", (bool*)&fanR.bShowTest.get())){
                 fanR.setup();
             }
- 
+            ImGui::SameLine();
             if(ImGui::Checkbox("Flip X", (bool*)&fanR.bFlipX.get())){
                 fanR.setup();
             }
@@ -114,10 +114,10 @@ void ofApp::drawGui_ShowSettings()
             ImGui::Checkbox("ON", (bool*)&rectScreen.bOn.get());
             ImGui::SameLine();
 
-            if(ImGui::Checkbox("Test Texture", (bool*)&rectScreen.bShowTest.get())){
+            if(ImGui::Checkbox("Test", (bool*)&rectScreen.bShowTest.get())){
                 rectScreen.setup();
             }
-            
+            ImGui::SameLine();
             if(ImGui::Checkbox("Flip X", (bool*)&rectScreen.bFlipX.get())){
                 rectScreen.setup();
             }
@@ -138,7 +138,7 @@ void ofApp::drawGui_ShowSettings()
             ImGui::Checkbox("ON", (bool*)&ellipse.bOn.get());
             ImGui::SameLine();
 
-            if(ImGui::Checkbox("Test Texture", (bool*)&ellipse.bShowTest.get())){
+            if(ImGui::Checkbox("Test", (bool*)&ellipse.bShowTest.get())){
                 ellipse.setup();
             }
             ImGui::SameLine();
