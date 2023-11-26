@@ -51,24 +51,17 @@ void ofApp::draw3DScene(){
     
     ofEnableDepthTest();
     
-    //
     ofDrawAxis(100);
 
     // Floor (Grid)
     drawFloor();
     
-    // human
-    ofPushMatrix();
-    human.draw();
-    ofPopMatrix();
-    
     // Fan, RectScreen, Ellipse
-    ofPushMatrix();
+    human.draw();
     fanL.draw();
     fanR.draw();
     rectScreen.draw();
     ellipse.draw();
-    ofPopMatrix();
     
     // Projector
     projector.drawProjector();
