@@ -32,28 +32,28 @@ void Ellipse::setup(){
     mesh.addVertex( vec3(0, r, 0) );
     mesh.addVertex( vec3(ch, 0, 0) );
 
-    if(bShowTest){
+    if(bFlipX){
+        mesh.addTexCoord( vec2(1, 0) );
+        mesh.addTexCoord( vec2(0, 0) );
+        mesh.addTexCoord( vec2(1, ch/totalLen) );
+    }else{
         mesh.addTexCoord( vec2(0, 0) );
         mesh.addTexCoord( vec2(1, 0) );
         mesh.addTexCoord( vec2(0, ch/totalLen) );
-    }else{
-        mesh.addTexCoord( vec2(0, 1) );
-        mesh.addTexCoord( vec2(1, 1) );
-        mesh.addTexCoord( vec2(0, 1-ch/totalLen) );
     }
     
     mesh.addVertex( vec3(ch, 0, 0) );
     mesh.addVertex( vec3(0, r, 0) );
     mesh.addVertex( vec3(ch, r, 0) );
 
-    if(bShowTest){
+    if(bFlipX){
+        mesh.addTexCoord( vec2(1, ch/totalLen) );
+        mesh.addTexCoord( vec2(0, 0) );
+        mesh.addTexCoord( vec2(0, ch/totalLen) );
+    }else{
         mesh.addTexCoord( vec2(0, ch/totalLen) );
         mesh.addTexCoord( vec2(1, 0) );
         mesh.addTexCoord( vec2(1, ch/totalLen) );
-    }else{
-        mesh.addTexCoord( vec2(0, 1-ch/totalLen) );
-        mesh.addTexCoord( vec2(1, 1) );
-        mesh.addTexCoord( vec2(1, 1-ch/totalLen) );
     }
 
     vec3 offset = {ch, 0, 0};
@@ -70,18 +70,15 @@ void Ellipse::setup(){
             mesh.addVertex( offset + vec3(r * cos(a1), r * sin(a1), 0) );
             mesh.addVertex( offset + vec3(r * cos(a2), r * sin(a2), 0) );
             
-            if(bShowTest){
-                float ty = 1.0f / (float)res * halfCircleLen/totalLen;
+            float ty = 1.0f / (float)res * halfCircleLen/totalLen;
+            if(bFlipX){
+                mesh.addTexCoord( offsetCoord + vec2(1, i*ty) );
+                mesh.addTexCoord( offsetCoord + vec2(0, i*ty) );
+                mesh.addTexCoord( offsetCoord + vec2(0, (i+1)*ty) );
+            }else{
                 mesh.addTexCoord( offsetCoord + vec2(0, i*ty) );
                 mesh.addTexCoord( offsetCoord + vec2(1, i*ty) );
                 mesh.addTexCoord( offsetCoord + vec2(1, (i+1)*ty) );
-            }else{
-                if(vid.isLoaded()){
-                    float ty = 1.0f / (float)res * halfCircleLen/totalLen;
-                    mesh.addTexCoord( vec2(offsetCoord.x + 0, 1.0f-(offsetCoord.y+i*ty) ));
-                    mesh.addTexCoord( vec2(offsetCoord.x + 1, 1.0f-(offsetCoord.y+i*ty) ));
-                    mesh.addTexCoord( vec2(offsetCoord.x + 1, 1.0f-(offsetCoord.y+(i+1)*ty)) );
-                }
             }
         }
     }
@@ -96,20 +93,20 @@ void Ellipse::setup(){
     mesh.addVertex( vec3(0, -r, 0) );
     offsetCoord = {0, (ch+halfCircleLen)/totalLen};
 
-    if(bShowTest){
+    if(bFlipX){
+        mesh.addTexCoord( offsetCoord + vec2(1, 0) );
+        mesh.addTexCoord( offsetCoord + vec2(0, 0) );
+        mesh.addTexCoord( offsetCoord + vec2(1, ch/totalLen) );
+        mesh.addTexCoord( offsetCoord + vec2(1, ch/totalLen) );
+        mesh.addTexCoord( offsetCoord + vec2(0, 0) );
+        mesh.addTexCoord( offsetCoord + vec2(0, ch/totalLen) );
+    }else{
         mesh.addTexCoord( offsetCoord + vec2(0, 0) );
         mesh.addTexCoord( offsetCoord + vec2(1, 0) );
         mesh.addTexCoord( offsetCoord + vec2(0, ch/totalLen) );
         mesh.addTexCoord( offsetCoord + vec2(0, ch/totalLen) );
         mesh.addTexCoord( offsetCoord + vec2(1, 0) );
         mesh.addTexCoord( offsetCoord + vec2(1, ch/totalLen) );
-    }else{    
-        mesh.addTexCoord( vec2(offsetCoord.x + 0, 1.0f - (offsetCoord.y + 0)) );
-        mesh.addTexCoord( vec2(offsetCoord.x + 1, 1.0f - (offsetCoord.y + 0)) );
-        mesh.addTexCoord( vec2(offsetCoord.x + 0, 1.0f - (offsetCoord.y + ch/totalLen)) );
-        mesh.addTexCoord( vec2(offsetCoord.x + 0, 1.0f - (offsetCoord.y + ch/totalLen)) );
-        mesh.addTexCoord( vec2(offsetCoord.x + 1, 1.0f - (offsetCoord.y + 0)) );
-        mesh.addTexCoord( vec2(offsetCoord.x + 1, 1.0f - (offsetCoord.y + ch/totalLen)) );
     }
 
     // Left bottom rect
@@ -122,20 +119,20 @@ void Ellipse::setup(){
 
     offsetCoord = {0, (ch+halfCircleLen+ch)/totalLen};
 
-    if(bShowTest){
+    if(bFlipX){
+        mesh.addTexCoord( offsetCoord + vec2(1, 0) );
+        mesh.addTexCoord( offsetCoord + vec2(0, 0) );
+        mesh.addTexCoord( offsetCoord + vec2(1, ch/totalLen) );
+        mesh.addTexCoord( offsetCoord + vec2(1, ch/totalLen) );
+        mesh.addTexCoord( offsetCoord + vec2(0, 0) );
+        mesh.addTexCoord( offsetCoord + vec2(0, ch/totalLen) );
+    }else{
         mesh.addTexCoord( offsetCoord + vec2(0, 0) );
         mesh.addTexCoord( offsetCoord + vec2(1, 0) );
         mesh.addTexCoord( offsetCoord + vec2(0, ch/totalLen) );
         mesh.addTexCoord( offsetCoord + vec2(0, ch/totalLen) );
         mesh.addTexCoord( offsetCoord + vec2(1, 0) );
         mesh.addTexCoord( offsetCoord + vec2(1, ch/totalLen) );
-    }else{
-        mesh.addTexCoord( vec2(offsetCoord.x + 0, 1.0f - (offsetCoord.y + 0)) );
-        mesh.addTexCoord( vec2(offsetCoord.x + 1, 1.0f - (offsetCoord.y + 0)) );
-        mesh.addTexCoord( vec2(offsetCoord.x + 0, 1.0f - (offsetCoord.y + ch/totalLen)) );
-        mesh.addTexCoord( vec2(offsetCoord.x + 0, 1.0f - (offsetCoord.y + ch/totalLen)) );
-        mesh.addTexCoord( vec2(offsetCoord.x + 1, 1.0f - (offsetCoord.y + 0)) );
-        mesh.addTexCoord( vec2(offsetCoord.x + 1, 1.0f - (offsetCoord.y + ch/totalLen)) );
     }
     
     {
@@ -153,18 +150,15 @@ void Ellipse::setup(){
             mesh.addVertex( offset + vec3(r * cos(a1), r * sin(a1), 0) );
             mesh.addVertex( offset + vec3(r * cos(a2), r * sin(a2), 0) );
             
-            if(bShowTest){
-                float ty = 1.0f / (float)res * halfCircleLen/totalLen;
+            float ty = 1.0f / (float)res * halfCircleLen/totalLen;
+            if(bFlipX){
+                mesh.addTexCoord( offsetCoord + vec2(1, i*ty) );
+                mesh.addTexCoord( offsetCoord + vec2(0, i*ty) );
+                mesh.addTexCoord( offsetCoord + vec2(0, (i+1)*ty) );
+            }else{
                 mesh.addTexCoord( offsetCoord + vec2(0, i*ty) );
                 mesh.addTexCoord( offsetCoord + vec2(1, i*ty) );
                 mesh.addTexCoord( offsetCoord + vec2(1, (i+1)*ty) );
-            }else{
-                if(vid.isLoaded()){
-                    float ty = 1.0f / (float)res * halfCircleLen/totalLen;
-                    mesh.addTexCoord( vec2(offsetCoord.x + 0, 1.0f - (offsetCoord.y + i*ty)) );
-                    mesh.addTexCoord( vec2(offsetCoord.x + 1, 1.0f - (offsetCoord.y + i*ty)) );
-                    mesh.addTexCoord( vec2(offsetCoord.x + 1, 1.0f - (offsetCoord.y + (i+1)*ty)) );
-                }
             }
         }
     }
@@ -178,20 +172,20 @@ void Ellipse::setup(){
     mesh.addVertex( vec3(0, r, 0));  
     
     offsetCoord = {0, (ch+halfCircleLen+ch+ch+halfCircleLen)/totalLen};
-    if(bShowTest){
+    if(bFlipX){
+        mesh.addTexCoord( offsetCoord + vec2(1, 0) );
+        mesh.addTexCoord( offsetCoord + vec2(0, 0) );
+        mesh.addTexCoord( offsetCoord + vec2(1, ch/totalLen) );
+        mesh.addTexCoord( offsetCoord + vec2(1, ch/totalLen) );
+        mesh.addTexCoord( offsetCoord + vec2(0, 0) );
+        mesh.addTexCoord( offsetCoord + vec2(0, ch/totalLen) );
+    }else{
         mesh.addTexCoord( offsetCoord + vec2(0, 0) );
         mesh.addTexCoord( offsetCoord + vec2(1, 0) );
         mesh.addTexCoord( offsetCoord + vec2(0, ch/totalLen) );
         mesh.addTexCoord( offsetCoord + vec2(0, ch/totalLen) );
         mesh.addTexCoord( offsetCoord + vec2(1, 0) );
         mesh.addTexCoord( offsetCoord + vec2(1, ch/totalLen) );
-    }else{
-        mesh.addTexCoord( vec2(offsetCoord.x + 0, 1.0f - (offsetCoord.y )) );
-        mesh.addTexCoord( vec2(offsetCoord.x + 1, 1.0f - (offsetCoord.y )) );
-        mesh.addTexCoord( vec2(offsetCoord.x + 0, 1.0f - (offsetCoord.y + ch/totalLen)) );
-        mesh.addTexCoord( vec2(offsetCoord.x + 0, 1.0f - (offsetCoord.y + ch/totalLen)) );
-        mesh.addTexCoord( vec2(offsetCoord.x + 1, 1.0f - (offsetCoord.y )) );
-        mesh.addTexCoord( vec2(offsetCoord.x + 1, 1.0f - (offsetCoord.y + ch/totalLen)) );
     }
     mesh.setMode(OF_PRIMITIVE_TRIANGLES );
 }

@@ -141,6 +141,11 @@ void ofApp::drawGui_ShowSettings()
             if(ImGui::Checkbox("Test Texture", (bool*)&ellipse.bShowTest.get())){
                 ellipse.setup();
             }
+            ImGui::SameLine();
+            if(ImGui::Checkbox("Flip X", (bool*)&ellipse.bFlipX.get())){
+                ellipse.setup();
+            }
+            
             if(ImGui::SliderFloat3("position", (float*)&ellipse.position.get().x, rectScreen.position.getMin().x, rectScreen.position.getMax().x)){
             }
             if(ImGui::SliderFloat("radius", (float*)&ellipse.radius.get(), ellipse.radius.getMin(), ellipse.radius.getMax())){
