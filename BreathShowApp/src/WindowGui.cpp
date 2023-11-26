@@ -117,6 +117,11 @@ void ofApp::drawGui_ShowSettings()
             if(ImGui::Checkbox("Test Texture", (bool*)&rectScreen.bShowTest.get())){
                 rectScreen.setup();
             }
+            
+            if(ImGui::Checkbox("Flip X", (bool*)&rectScreen.bFlipX.get())){
+                rectScreen.setup();
+            }
+
             if(ImGui::SliderFloat3("position", (float*)&rectScreen.position.get().x, rectScreen.position.getMin().x, rectScreen.position.getMax().x)){
             }
             if(ImGui::SliderFloat2("size", (float*)&rectScreen.size.get().x, rectScreen.size.getMin().x, rectScreen.size.getMax().x)){

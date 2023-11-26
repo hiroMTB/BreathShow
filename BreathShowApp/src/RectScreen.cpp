@@ -14,7 +14,11 @@ void RectScreen::setup(){
     float w = size.get().x;
     float h = size.get().y;
     plane.set( w, h, 2, 2, OF_PRIMITIVE_TRIANGLE_STRIP );
-    plane.mapTexCoords(0, 0, 1, 1);
+    if(bFlipX){
+        plane.mapTexCoords(1, 0, 0, 1);
+    }else{
+        plane.mapTexCoords(0, 0, 1, 1);
+    }
 }
 
 void RectScreen::update(){
@@ -31,7 +35,6 @@ void RectScreen::draw(){
         //ofTranslate(scale);
         ofRotateYDeg(orientationY);
         if(bShowTest){
-            plane.mapTexCoords(0, 0, 1, 1);
             const ofMesh & mesh = plane.getMesh();
             ofTexture & tex = img.getTexture();
             tex.bind();
