@@ -1,13 +1,8 @@
 //
 //  Human.h
-//  BeathShowApp
-//
-//  Created by Hiroshi Matoba on 16.10.23.
 //
 
-#ifndef Human_h
-#define Human_h
-
+#pragma once
 #include "ofParameter.h"
 #include "ofxAssimpModelLoader.h"
 
@@ -17,9 +12,9 @@ public:
     
     Human(){
         root.position.setName("position");
-        root.position.setMin(vec3(-500));
-        root.position.setMax(vec3(500));
-        root.position = vec3(0);
+        root.position.setMin(glm::vec3(-500));
+        root.position.setMax(glm::vec3(500));
+        root.position = glm::vec3(0);
         grp.add(root.position);
         
     }
@@ -57,8 +52,7 @@ public:
     ofxAssimpModelLoader model;
     ofParameter<bool> bOn{"ON", true};
     //ofParameter<glm::vec3> position{"position", vec3(0), vec3(-500), vec3(500)};
-    ofParameter<glm::vec3> scale{"scale", vec3(1), vec3(-3), vec3(3)};
+    ofParameter<glm::vec3> scale{"scale", glm::vec3(1), glm::vec3(-3), glm::vec3(3)};
     ofParameter<float> orientationY{"orientationY", 0, -360, 360};
     ofParameterGroup grp{"human", bOn, scale, orientationY};
 };
-#endif /* Human_h */
