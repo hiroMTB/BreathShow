@@ -42,6 +42,10 @@ void ofApp::drawGui_ShowSettings()
                 fanL.setup();
             }
 
+            if(ImGui::Checkbox("Flip X", (bool*)&fanL.bFlipX.get())){
+                fanL.setup();
+            }
+
             if(ImGui::SliderInt("direction", (int*)&fanL.direction.get(), fanL.direction.getMin(), fanL.direction.getMax())){
                 fanL.setup();
             }
@@ -73,6 +77,10 @@ void ofApp::drawGui_ShowSettings()
             ImGui::SameLine();
 
             if(ImGui::Checkbox("Test Texture", (bool*)&fanR.bShowTest.get())){
+                fanR.setup();
+            }
+ 
+            if(ImGui::Checkbox("Flip X", (bool*)&fanR.bFlipX.get())){
                 fanR.setup();
             }
             

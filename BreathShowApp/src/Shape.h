@@ -77,6 +77,7 @@ public:
     }
 
     ofParameter<bool> bOn{"On", true};
+    ofParameter<bool> bFlipX{"Flip X", false};
     ofParameter<bool> bShowTest{"test texture", false};
     ofParameter<vec3> position{"position", vec3(5,36,0), vec3(-100), vec3(100)};
     ofParameter<float> orientationY{"orientationY", 0, -180, 180};
