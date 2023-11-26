@@ -20,16 +20,17 @@ void ofApp::drawGui_ShowSettings()
         
         if(ImGui::CollapsingHeader("Human", flag)){
             ImGui::Checkbox("ON", (bool*)&human.bOn.get());
-            if(ImGui::SliderFloat3("position", (float*)&human.position.get().x, human.position.getMin().x, human.position.getMax().x)){
-                human.model.setPosition(human.position.get().x, human.position.get().y, human.position.get().z);
+            if(ImGui::SliderFloat3("position", (float*)&human.root.position.get().x, human.root.position.getMin().x, human.root.position.getMax().x)){
+                human.root.setPosition(human.root.position);
             }
 
             if(ImGui::SliderFloat3("scale", (float*)&human.scale.get().x, human.scale.getMin().x, human.scale.getMax().x)){
                 human.model.setScale(human.scale.get().x, human.scale.get().y, human.scale.get().z) ;
             }
             
-            if(ImGui::SliderFloat("orientationY", (float*)&human.orientationY.get(), human.orientationY.getMin(), human.orientationY.getMax())){
-                human.model.setRotation(0, human.orientationY.get(), 0, 1, 0);
+            if(ImGui::SliderFloat("orientation Y", (float*)&human.orientationY.get(), -360, 360)){
+                glm::quat q = glm::angleAxis(glm::radians(human.orientationY.get()), vec3(0,1,0));
+                human.root.setOrientation(q);
             }
         }
         ImGui::PopID();
@@ -50,10 +51,13 @@ void ofApp::drawGui_ShowSettings()
                 fanL.setup();
             }
 
-            if(ImGui::SliderFloat3("position", (float*)&fanL.position.get().x, fanL.position.getMin().x, fanL.position.getMax().x)){
+            if(ImGui::SliderFloat3("position", (float*)&fanL.position.get().x, fanL.position.getMin().x, fanL.position.getMax().x)){                
+                fanL.setPosition(fanL.position);
             }
                 
             if(ImGui::SliderFloat("orientationY", (float*)&fanL.orientationY.get(), fanL.orientationY.getMin(), fanL.orientationY.getMax())){
+                glm::quat q = glm::angleAxis(glm::radians(fanL.orientationY.get()), vec3(0,1,0));
+                fanL.setOrientation(q);
             }
 
             if(ImGui::SliderFloat("openAngle", (float*)&fanL.openAngle.get(), fanL.openAngle.getMin(), fanL.openAngle.getMax())){
@@ -92,6 +96,8 @@ void ofApp::drawGui_ShowSettings()
             }
             
             if(ImGui::SliderFloat("orientationY", (float*)&fanR.orientationY.get(), fanR.orientationY.getMin(), fanR.orientationY.getMax())){
+                glm::quat q = glm::angleAxis(glm::radians(fanR.orientationY.get()), vec3(0,1,0));
+                fanR.setOrientation(q);
             }
             
             if(ImGui::SliderFloat("openAngle", (float*)&fanR.openAngle.get(), fanR.openAngle.getMin(), fanR.openAngle.getMax())){
@@ -123,12 +129,16 @@ void ofApp::drawGui_ShowSettings()
             }
 
             if(ImGui::SliderFloat3("position", (float*)&rectScreen.position.get().x, rectScreen.position.getMin().x, rectScreen.position.getMax().x)){
+                rectScreen.setPosition(rectScreen.position);
             }
+            
             if(ImGui::SliderFloat2("size", (float*)&rectScreen.size.get().x, rectScreen.size.getMin().x, rectScreen.size.getMax().x)){
                 rectScreen.setup();
             }
             
             if(ImGui::SliderFloat("orientationY", (float*)&rectScreen.orientationY.get(), rectScreen.orientationY.getMin(), rectScreen.orientationY.getMax())){
+                glm::quat q = glm::angleAxis(glm::radians(rectScreen.orientationY.get()), vec3(0,1,0));
+                rectScreen.setOrientation(q);
             }
         }
         ImGui::PopID();
@@ -147,7 +157,9 @@ void ofApp::drawGui_ShowSettings()
             }
             
             if(ImGui::SliderFloat3("position", (float*)&ellipse.position.get().x, rectScreen.position.getMin().x, rectScreen.position.getMax().x)){
+                ellipse.setPosition(ellipse.position);
             }
+            
             if(ImGui::SliderFloat("radius", (float*)&ellipse.radius.get(), ellipse.radius.getMin(), ellipse.radius.getMax())){
                 ellipse.setup();
             }
@@ -156,7 +168,9 @@ void ofApp::drawGui_ShowSettings()
                 ellipse.setup();
             }
             
-            if(ImGui::SliderFloat("orientationY", (float*)&rectScreen.orientationY.get(), rectScreen.orientationY.getMin(), rectScreen.orientationY.getMax())){
+            if(ImGui::SliderFloat("orientationY", (float*)&ellipse.orientationY.get(), ellipse.orientationY.getMin(), ellipse.orientationY.getMax())){
+                glm::quat q = glm::angleAxis(glm::radians(ellipse.orientationY.get()), vec3(0,1,0));
+                ellipse.setOrientation(q);
             }
         }
         ImGui::PopID();
