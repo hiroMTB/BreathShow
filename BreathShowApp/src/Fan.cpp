@@ -8,6 +8,12 @@
 #include "Fan.h"
 
 Fan::Fan(){
+    
+    position.setMin(vec3(-200));
+    position.setMax(vec3(200));
+    position.setName("position");
+    
+    grp.add(position);
     grp.add(radius);
     grp.add(openAngle);
     grp.add(resolution);
@@ -18,6 +24,9 @@ Fan::Fan(){
 };
 
 void Fan::setup(){
+    
+    setPosition(position);
+    setOrientation(orientation);
     
     mesh.clear();
 
@@ -53,8 +62,8 @@ void Fan::setup(){
     }
 }
 
-
 void Fan::update(){
+    
     if(bOn){
         vid.update();
     }
@@ -62,10 +71,9 @@ void Fan::update(){
 
 void Fan::draw(){
     if(bOn){
-        ofPushMatrix();
-        ofTranslate(position);
+        transformGL();
         //ofTranslate(scale);
-        ofRotateYDeg(orientationY);
+        //ofRotateYDeg(orientationY);
         if(bShowTest){
             ofTexture & tex = img.getTexture();
             tex.bind();
@@ -83,7 +91,7 @@ void Fan::draw(){
                 }
             }
         }
-        ofPopMatrix();
+        restoreTransformGL();
     }
 }
 

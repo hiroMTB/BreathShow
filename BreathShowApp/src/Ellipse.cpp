@@ -6,17 +6,24 @@
 
 Ellipse::Ellipse(){
 
+    position.setMin(vec3(-200));
+    position.setMax(vec3(200));
+    position.setName("position");
+
     grp.setName("Ellipse");
     grp.add(centerWidth);
     grp.add(resolution);
     grp.add(radius);
-    
-    setup();
-    
+    grp.add(position);
+        
     loadTestImage();
+    setup();
 }
 
 void Ellipse::setup(){
+    setPosition(position);
+    setOrientation(orientation);
+    
     mesh.clear();
     
     float r = radius.get();
@@ -198,10 +205,7 @@ void Ellipse::update(){
 
 void Ellipse::draw(){
     if(bOn){
-        ofPushMatrix();
-        ofTranslate(position);
-        //ofTranslate(scale);
-        ofRotateYDeg(orientationY);
+        transformGL();
 
         if(bShowTest){
             ofTexture & tex = img.getTexture();
@@ -220,6 +224,6 @@ void Ellipse::draw(){
                 }
             }
         }
-        ofPopMatrix();
+        restoreTransformGL();
     }
 }

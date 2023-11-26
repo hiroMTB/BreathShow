@@ -5,7 +5,7 @@
 using glm::vec2;
 using glm::vec3;
 
-class Shape{
+class Shape : public ofNode{
     
 public:
     
@@ -38,6 +38,7 @@ public:
             vid.setUseTexture(true);
             vid.setLoopState(OF_LOOP_NORMAL);
             vid.play();
+            vid.setVolume(0);
             ofLogNotice("Fan") << "Video file loaded: ";
         }else{
             ofLogError("Fan") << "Video file does not exist: " << path;
@@ -79,10 +80,10 @@ public:
     ofParameter<bool> bOn{"On", true};
     ofParameter<bool> bFlipX{"Flip X", false};
     ofParameter<bool> bShowTest{"test texture", false};
-    ofParameter<vec3> position{"position", vec3(5,36,0), vec3(-100), vec3(100)};
+    //ofParameter<vec3> position{"position", vec3(5,36,0), vec3(-100), vec3(100)};
     ofParameter<float> orientationY{"orientationY", 0, -180, 180};
 
-    ofParameterGroup grp{"Fun", bOn, bShowTest, position, orientationY };
+    ofParameterGroup grp{"Fun", bOn, bShowTest, orientationY };
     
 protected:
     ofMesh mesh;

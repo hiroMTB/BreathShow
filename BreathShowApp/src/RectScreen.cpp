@@ -1,16 +1,24 @@
 #include "RectScreen.h"
 
 RectScreen::RectScreen(){
-
-    grp.setName("Rect");
+    position.setMin(vec3(-200));
+    position.setMax(vec3(200));
+    position.setName("position");
+    
+    grp.add(position);
     grp.add(size);
-    setup();
+    
+    grp.setName("Rect");
     
     loadTestImage();
+    setup();    
 }
 
 
 void RectScreen::setup(){
+    setPosition(position);
+    setOrientation(orientation);
+    
     float w = size.get().x;
     float h = size.get().y;
     plane.set( w, h, 2, 2, OF_PRIMITIVE_TRIANGLE_STRIP );
@@ -30,10 +38,7 @@ void RectScreen::update(){
 void RectScreen::draw(){
     if(bOn){
         
-        ofPushMatrix();
-        ofTranslate(position);
-        //ofTranslate(scale);
-        ofRotateYDeg(orientationY);
+        transformGL();
         if(bShowTest){
             const ofMesh & mesh = plane.getMesh();
             ofTexture & tex = img.getTexture();
@@ -53,6 +58,6 @@ void RectScreen::draw(){
                 }
             }
         }
-        ofPopMatrix();
+        restoreTransformGL();
     }
 }
