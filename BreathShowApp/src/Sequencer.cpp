@@ -348,15 +348,20 @@ void Sequencer::draw(bool * bOpen){
                      onSequenceDup);
         
         
+        ImGui::Dummy({0, 15});
+        
         // add a UI to edit that particular item
-        if (selectedEntry != -1)
+        if (selectedEntry == -1)
+        {
+            ImGui::Text("%s", "No Sequence Item selected");
+        }else
         {
             MySequence::MySequenceItem &item = mySequence.myItems[selectedEntry];
             int type = item.mType;
             int start = item.mFrameStart;
             int end = item.mFrameEnd;
             int total = end - start;
-            ImGui::Text("%s", SequencerItemTypeNames[type]);
+            ImGui::Text("[%02d] %s", selectedEntry, SequencerItemTypeNames[type]);
             auto shape = item.shape;
                         
             if(shape){
@@ -364,10 +369,11 @@ void Sequencer::draw(bool * bOpen){
                 static bool disable_menu = false;
                 static bool bordar = false;
                 ImGuiWindowFlags window_flags = ImGuiWindowFlags_HorizontalScrollbar;
+                float height = 250;
                 
                 {
                     // Left Gui Area
-                    ImGui::BeginChild("ChildL", ImVec2(ImGui::GetContentRegionAvail().x * 0.5f, 250), bordar, window_flags);
+                    ImGui::BeginChild("ChildL", ImVec2(ImGui::GetContentRegionAvail().x * 0.5f, height), bordar, window_flags);
                     
                     if(type != (int)shape->type ){
                         ofLogError("Sequencer::draw()") << "Something went wrong about ShapeType";
@@ -391,7 +397,7 @@ void Sequencer::draw(bool * bOpen){
                 
                 {
                     /// Right Gui Area
-                    ImGui::BeginChild("ChildR", ImVec2(0, 260), true, window_flags);
+                    ImGui::BeginChild("ChildR", ImVec2(0, height), true, window_flags);
 
                     int min = mySequence.mFrameMin;
                     int max = mySequence.mFrameMax;
