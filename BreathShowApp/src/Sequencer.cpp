@@ -325,8 +325,14 @@ void Sequencer::draw(bool * bOpen){
             MySequence::MySequenceItem & item = mySequence.myItems[index];
             int st = item.mFrameStart;
             int end = item.mFrameEnd;
-            int type = item.mType;
-            addTrack((ShapeType)type, st, end);
+            ShapeType type = (ShapeType)item.mType;
+            
+            if(item.shape){
+//                shared_ptr<Shape> s = duplicateTrack(item.shape, st, end, false);
+//                s->position.setMin(vec3(-200));
+//                s->position.setMax(vec3(200));
+                addTrack(type, st, end, false);
+            }
         };
 
         SequencerGui(&mySequence,
