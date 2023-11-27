@@ -5,6 +5,13 @@
 using glm::vec2;
 using glm::vec3;
 
+enum ShapeType{
+    NONE = -1,
+    FAN = 0,
+    RECT_SCREEN = 1,
+    ELLIPSE = 2
+};
+
 class Shape : public ofNode{
     
 public:
