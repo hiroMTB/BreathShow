@@ -8,13 +8,10 @@ using glm::vec3;
 class Shape : public ofNode{
     
 public:
+ 
+    ShapeType type;
     
-    Shape(){
-//        ofTexture & tex = img.getTexture();
-//        tex.bind();
-//        mesh.draw();
-//        tex.unbind();
-    }
+    Shape();
     
     virtual ~Shape(){};
 
