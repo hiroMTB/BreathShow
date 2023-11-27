@@ -546,11 +546,17 @@ bool Sequencer::save(const std::string & filepath){
         int st = item.mFrameStart;
         int end = item.mFrameEnd;
         int type = item.mType;
-     
+        auto & shape = item.shape;
+        
         ofJson t;
         t["start"] = ofToString(st);
         t["end"] = ofToString(end);
         t["type"] = ofToString(type);
+
+        ofJson shapeJson;
+        ofSerialize(shapeJson, shape->grp);
+        t["shape"] = shapeJson;
+
         tracks.push_back(t);
     }
     
@@ -580,9 +586,16 @@ bool Sequencer::load(const std::string & filepath){
                 int type = ofToInt(j.value("type", "0"));
                 int st = ofToInt(j.value("start", "0"));
                 int end = ofToInt(j.value("end", "1000"));
-                addTrack((ShapeType)type, st, end, false);
+                                
+                shared_ptr<Shape> s = addTrack((ShapeType)type, st, end, false);
                 
-                //mySequence.myItems.push_back(MySequence::MySequenceItem{type, st, end, false});
+                if(s && s->grp){
+                    ofJson shapeJson = j["shape"];
+                    ofDeserialize(shapeJson, s->grp);
+                    //mySequence.myItems.push_back(MySequence::MySequenceItem{type, st, end, false});
+                }else{
+                    ofLogError("Sequencer::load()") << "Sequence Track Load Error";
+                }
             }
             return true;
         }
