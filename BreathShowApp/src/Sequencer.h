@@ -34,6 +34,13 @@ private:
     
     void startTrack(const shared_ptr<Shape> & shape, int frame);
     void stopTrack(const shared_ptr<Shape> & shape);
+
+    // Gui helper
+    void drawGui_Fan(shared_ptr<Shape> & s);
+    void drawGui_RectScreen(shared_ptr<Shape> & s);
+    void drawGui_Ellipse(shared_ptr<Shape> & s);
+    void videoSection(shared_ptr<Shape> s);
+
     
     MySequence mySequence;
     

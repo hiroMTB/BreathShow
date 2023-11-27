@@ -394,6 +394,8 @@ void Sequencer::drawGui_Fan(shared_ptr<Shape> & shape){
         if(ImGui::SliderInt("resolution", (int*)&fan->resolution.get(), fan->resolution.getMin(), fan->resolution.getMax())){
             fan->setup();
         }
+        
+        videoSection(fan);
     }
     ImGui::PopID();
 }
@@ -428,6 +430,8 @@ void Sequencer::drawGui_RectScreen(shared_ptr<Shape> & shape){
             glm::quat q = glm::angleAxis(glm::radians(rectScreen->orientationY.get()), vec3(0,1,0));
             rectScreen->setOrientation(q);
         }
+        
+        videoSection(rectScreen);
     }
     ImGui::PopID();
 }
@@ -466,6 +470,8 @@ void Sequencer::drawGui_Ellipse(shared_ptr<Shape> & shape){
             glm::quat q = glm::angleAxis(glm::radians(ellipse->orientationY.get()), vec3(0,1,0));
             ellipse->setOrientation(q);
         }
+        
+        videoSection(ellipse);
     }
     ImGui::PopID();
 }
@@ -529,3 +535,35 @@ bool Sequencer::load(const std::string & filepath){
     return false;
 }
 
+void Sequencer::videoSection(shared_ptr<Shape> s){
+
+    ImGui::Dummy({0, 10});
+
+    ImGui::Text("Video");
+
+    string filepath = ofToDataPath(s->videoPath.get(), true);
+    filesystem::path p(filepath);
+    ImGui::TextWrapped("File Name: %s", p.filename().c_str());
+    {
+        ImGui::SameLine();
+        ImGui::TextDisabled("(path)");
+        if (ImGui::IsItemHovered(ImGuiHoveredFlags_DelayShort) && ImGui::BeginTooltip())
+        {
+            ImGui::PushTextWrapPos(ImGui::GetFontSize() * 35.0f);
+            ImGui::TextUnformatted(filepath.c_str());
+            ImGui::PopTextWrapPos();
+            ImGui::EndTooltip();
+        }
+    }
+    
+    ImGui::Text("%s", s->getVideoInfo());
+    
+    ImGui::Dummy({0, 10});
+
+    if(ImGui::Button("Load Video")){
+        string filepath = ofApp::get()->dialogueLoadVideo();
+        if( filepath != ""){
+            s->loadVideo(filepath);
+        }
+    }
+}
