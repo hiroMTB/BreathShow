@@ -7,6 +7,10 @@
 
 #include "Fan.h"
 
+//Fan::Fan(const Fan & f){
+//    construct();
+//}
+
 Fan::Fan(){
     type = ShapeType::FAN;
     position.setMin(vec3(-200));
