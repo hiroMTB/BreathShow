@@ -40,10 +40,6 @@ bool ofApp::saveProject(string dirpath){
     bool bCamera = ofxSaveCamera(cam, dirpath + "/camera.settings");
     bool bHuman = Serializer::save(human.grp, dirpath + "/human.json");
     bool bProjector = Serializer::save(projector.grp, dirpath + "/projector.json");
-//    bool bFanL = Serializer::save(fanL.grp, dirpath + "/fanL.json");
-//    bool bFanR = Serializer::save(fanR.grp, dirpath + "/fanR.json");
-//    bool bRectScreen = Serializer::save(rectScreen.grp, dirpath + "/rectScreen.json");
-//    bool bEllipse = Serializer::save(ellipse.grp, dirpath + "/ellipse.json");
     bool bWin = mainWindow->save(dirpath + "/mainWindow.json");
     bool bPrj = projectorWindow->save(dirpath + "/projectorWindow.json");
     bool bSeq = sequencer.save(dirpath + "/sequencer.json");
@@ -68,10 +64,6 @@ bool ofApp::loadProject(string dirpath){
     bool bCamera = ofxLoadCamera(cam, dirpath + "/camera.settings");
     bool bHuman = Serializer::load(human.grp, dirpath + "/human.json");
     bool bProjector = Serializer::load(projector.grp, dirpath + "/projector.json");
-//    bool bFanL = Serializer::load(fanL.grp, dirpath + "/fanL.json");
-//    bool bFanR = Serializer::load(fanR.grp, dirpath + "/fanR.json");
-//    bool bRectScreen = Serializer::load(rectScreen.grp, dirpath + "/rectScreen.json");
-//    bool bEllipse = Serializer::load(ellipse.grp, dirpath + "/ellipse.json");
 
     bool bWin = mainWindow->load(dirpath + "/mainWindow.json");
     bool bPrj = projectorWindow->load(dirpath + "/projectorWindow.json");
