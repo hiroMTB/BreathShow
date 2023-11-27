@@ -22,8 +22,8 @@ class Fan : public Shape{
     void update() override;
     void draw() override;
     
-    ofParameter<float> radius{"radius", 30, 0, 150};
-    ofParameter<float> openAngle{"openAngle", 90, 0, 180};
+    ofParameter<float> radius{"radius", 100, 0, 150};
+    ofParameter<float> openAngle{"openAngle", 180, -360, 360};
     ofParameter<int> resolution{"resolution", 60, 2, 180};
     ofParameter<int> direction{"direction", 1, -1, 1};
 

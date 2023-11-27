@@ -16,7 +16,7 @@ public:
     void draw() override;
 
     ofParameter<float> centerWidth{"center width", 40, 0, 100};
-    ofParameter<float> radius{"radius", 30, 0, 60};
-    ofParameter<float> resolution{"resolution", 32, 1, 72};
+    ofParameter<float> radius{"radius", 100, 0, 60};
+    ofParameter<int> resolution{"resolution", 60, 2, 180};
 
 };
