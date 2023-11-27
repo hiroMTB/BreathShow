@@ -9,6 +9,10 @@
 #include "ImCurveEdit.h"
 #include "imgui_internal.h"
 #include "ofApp.h"
+#include "Shape.h"
+#include "Fan.h"
+#include "RectScreen.h"
+#include "Ellipse.h"
 
 Sequencer::Sequencer(){
     setup();
@@ -34,25 +38,69 @@ void Sequencer::setupTestSequences(){
     }
 }
 
-void Sequencer::startTrack(int type, int frame){
-    shared_ptr<ofApp> & app = ofApp::get();
-    switch(type){
-        case 0: app->fanL.start(frame); break;
-        case 1: app->fanR.start(frame); break;
-        case 2: app->rectScreen.start(frame); break;
-        case 3: app->ellipse.start(frame); break;
-        default: ofLogError("Sequencer") << "Unknow Sequence Type!!"; break;
+void Sequencer::addTrack( ShapeType type, int st, int end, bool bExpanded ){
+    
+    //vector<shared_ptr<Shape>> & shapes = ofApp::get()->shapes;
+    
+    switch (type){
+        case ShapeType::FAN:
+        {
+            auto shape = make_shared<Fan>();
+            //shapes.emplace_back( shape );
+            mySequence.myItems.push_back(MySequence::MySequenceItem{ type, st, end, bExpanded, shape});
+            ofLogNotice("Sequencer::AddTrack() - ") << "Fan";
+        }
+            break;
+        case ShapeType::RECT_SCREEN:
+        {
+            auto shape = make_shared<RectScreen>();
+            //shapes.emplace_back( shape );
+            mySequence.myItems.push_back(MySequence::MySequenceItem{ type, st, end, bExpanded, shape});
+            ofLogNotice("Sequencer::AddTrack() - ") << "RECT_SCREEN";
+        }
+            break;
+        case ShapeType::ELLIPSE:
+        {
+            auto shape = make_shared<Ellipse>();
+            //shapes.emplace_back( shape );
+            mySequence.myItems.push_back(MySequence::MySequenceItem{ type, st, end, bExpanded, shape});
+            ofLogNotice("Sequencer::AddTrack() - ") << "ELLIPSE";
+        }
+            break;
+        case ShapeType::NONE:
+            ofLogError("Sequencer::AddTrack() - ") << "ShapeType::NONE";
+            break;
+        default:
+            ofLogError("Sequencer::AddTrack() - ") << "Unknown ShapeType" << type;
+            break;
+    }
+    
+}
+
+
+void Sequencer::deleteTrack(int index){
+    
+    mySequence.myItems.erase(mySequence.myItems.begin() + index);
+
+    // delete from ofApp::shapes container
+//    MySequence::MySequenceItem & item = mySequence.myItems[index];
+//    vector<shared_ptr<Shape>> & shapes = ofApp::get()->shapes;
+//    std::remove( shapes.begin(), shapes.end(), item.shape );
+}
+
+void Sequencer::startTrack(const shared_ptr<Shape> & shape, int frame){
+    if(shape){
+        shape->start(frame);
+    }else{
+        ofLogError("Sequencer::startTrack") << "shape is null";
     }
 }
 
-void Sequencer::stopTrack(int type){
-    shared_ptr<ofApp> & app = ofApp::get();
-    switch(type){
-        case 0: app->fanL.stop(); break;
-        case 1: app->fanR.stop(); break;
-        case 2: app->rectScreen.stop(); break;
-        case 3: app->ellipse.stop(); break;
-        default: ofLogError("Sequencer") << "Unknow Sequence Type!!"; break;
+void Sequencer::stopTrack(const shared_ptr<Shape> & shape){
+    if(shape){
+        shape->stop();
+    }else{
+        ofLogError("Sequencer::startTrack") << "shape is null";
     }
 }
 
@@ -101,43 +149,42 @@ void Sequencer::updateSequenceItemAll(bool bSeek){
 }
 
 void Sequencer::updateSequenceItem(int entry, bool bSeek){
-    std::vector<MySequence::MySequenceItem> & items = mySequence.myItems;
     int max = mySequence.GetFrameMax();
     int min = mySequence.GetFrameMin();
     bool bLoop = ofApp::get()->bLoop.get();
 
     /// TODO: null check
     //if(items.find()
-    MySequence::MySequenceItem & item = items[entry];
+    MySequence::MySequenceItem & item = mySequence.myItems[entry];
     int st = item.mFrameStart;
     int end = item.mFrameEnd;
     int type = item.mType;
-    
+    const auto & shape = item.shape;
     if(st == currentFrame){
-        startTrack(type, 0);
+        startTrack(shape, 0);
         ofLogVerbose("Sequencer") << entry << " : start";
     }
     else if(st < currentFrame && currentFrame < end){
         // we can not call start too often
         if(bSeek){
             int frame = currentFrame - st;
-            startTrack(type, frame);
+            startTrack(shape, frame);
             ofLogVerbose("Sequencer") << entry << " : seek, frame=" << frame;
         }
     }else if(end == currentFrame){
         if(bLoop && st == min && end == max){
             // special case
             // we have to start movie immediately after finish
-            startTrack(type, 0);
+            startTrack(shape, 0);
             ofLogVerbose("Sequencer") << entry << " : Loop back";
         }else{
             // otherwise stop it
-            ofLogVerbose("Sequencer") << entry << " : stop";
-            stopTrack(type);
+            //ofLogVerbose("Sequencer") << entry << " : stop";
+            stopTrack(shape);
         }
     }else{
-        ofLogVerbose("Sequencer") << entry << " : stop";
-        stopTrack(type);
+        //ofLogVerbose("Sequencer") << entry << " : stop";
+        stopTrack(shape);
     }
     
     if(0){
@@ -183,66 +230,245 @@ void Sequencer::draw(bool * bOpen){
     auto settings = ofxImGui::Settings();
     
     if(ofxImGui::BeginWindow("Sequencer", settings, false, bOpen)) {
-
+        
         // let's create the sequencer
         static int selectedEntry = -1;
         static int firstFrame = 0;
         static bool expanded = true;
-
+        
         ImGui::PushItemWidth(130);
-        ImGui::InputInt("Frame Min", &mySequence.mFrameMin);
+        ImGui::InputInt("Min", &mySequence.mFrameMin);
         ImGui::SameLine();
         ImGui::InputInt("Frame ", &currentFrame);
         ImGui::SameLine();
-        ImGui::InputInt("Frame Max", &mySequence.mFrameMax);
+        ImGui::InputInt("Max", &mySequence.mFrameMax);
         ImGui::PopItemWidth();
         
         int prevCurrentFrame = currentFrame;
         int options = ImSequencer::SEQUENCER_EDIT_STARTEND
-                                    | ImSequencer::SEQUENCER_ADD
-                                    | ImSequencer::SEQUENCER_DEL
-                                    //| ImSequencer::SEQUENCER_COPYPASTE
-                                    | ImSequencer::SEQUENCER_CHANGE_FRAME;
-
-        auto onIndicatorMoveCb = [&](){
-            //std::cout << "OnIndicatorMoveCb" << std::endl;
+        | ImSequencer::SEQUENCER_ADD
+        | ImSequencer::SEQUENCER_DEL
+        //| ImSequencer::SEQUENCER_COPYPASTE
+        | ImSequencer::SEQUENCER_CHANGE_FRAME;
+        
+        auto onIndicatorMove = [&](){
+            //std::cout << "OnIndicatorMove" << std::endl;
             updateSequenceItemAll(true);
         };
         
-        auto onSequenceMoveCb = [&](int movedEntry){
-            //std::cout << "onSequenceMoveCb: " << movedEntry << std::endl;
+        auto onSequenceMove = [&](int movedEntry){
+            //std::cout << "onSequenceMove: " << movedEntry << std::endl;
             updateSequenceItem(movedEntry, true);
         };
-        
+
+        auto onSequenceAdd = [&](int type){
+            //std::cout << "onSequenceAdd: " << type << std::endl;
+            addTrack((ShapeType)type);
+        };
+
+        auto onSequenceDel = [&](int index){
+            //std::cout << "onSequenceDel: " << index << std::endl;
+            deleteTrack(index);
+        };
+
+        auto onSequenceDup = [&](int index){
+            std::cout << "onSequenceDel: " << index << std::endl;
+            MySequence::MySequenceItem & item = mySequence.myItems[index];
+            int st = item.mFrameStart;
+            int end = item.mFrameEnd;
+            int type = item.mType;
+            addTrack((ShapeType)type, st, end);
+        };
+
         SequencerGui(&mySequence,
                      &currentFrame,
                      &expanded,
                      &selectedEntry,
                      &firstFrame,
                      options,
-                     onIndicatorMoveCb,
-                     onSequenceMoveCb);
-
+                     onIndicatorMove,
+                     onSequenceMove,
+                     onSequenceAdd,
+                     onSequenceDel,
+                     onSequenceDup);
+        
         
         // add a UI to edit that particular item
         if (selectedEntry != -1)
         {
-            const MySequence::MySequenceItem &item = mySequence.myItems[selectedEntry];
+            MySequence::MySequenceItem &item = mySequence.myItems[selectedEntry];
             int type = item.mType;
             int start = item.mFrameStart;
             int end = item.mFrameEnd;
             int total = end - start;
-            ImGui::Text("%s: %df -> %df, total %d frames (%0.2f sec)",
-                        SequencerItemTypeNames[type],
-                        start,
-                        end,
-                        total,
-                        total/30.0f);
+            ImGui::Text("%s", SequencerItemTypeNames[type]);
+            auto shape = item.shape;
+                        
+            if(shape){
+                static bool disable_mouse_wheel = false;
+                static bool disable_menu = false;
+                static bool bordar = false;
+                ImGuiWindowFlags window_flags = ImGuiWindowFlags_HorizontalScrollbar;
+                
+                {
+                    // Left Gui Area
+                    ImGui::BeginChild("ChildL", ImVec2(ImGui::GetContentRegionAvail().x * 0.5f, 250), bordar, window_flags);
+                    
+                    if(type != (int)shape->type ){
+                        ofLogError("Sequencer::draw()") << "Something went wrong about ShapeType";
+                    }
+                    
+                    if(type==ShapeType::NONE ){
+                        ofLogError("Sequencer::draw()") << "ShapeType::NONE detected";
+                    }
+                    
+                    switch(type){
+                        case ShapeType::FAN: drawGui_Fan(shape); break;
+                        case ShapeType::RECT_SCREEN: drawGui_RectScreen(shape); break;
+                        case ShapeType::ELLIPSE: drawGui_Ellipse(shape); break;
+                        default: ofLogError("Sequencer::draw()") << "Something went wrong about ShapeType"; break;
+                    }
+                    
+                    ImGui::EndChild();
+                }
+                
+                ImGui::SameLine();
+                
+                {
+                    /// Right Gui Area
+                    ImGui::BeginChild("ChildR", ImVec2(0, 260), true, window_flags);
+
+                    int min = mySequence.mFrameMin;
+                    int max = mySequence.mFrameMax;
+                    ImGui::SliderInt("start", &item.mFrameStart, min, max);
+                    ImGui::SliderInt("end", &item.mFrameEnd, min, max);
+                    ImGui::Text("total %d frames (%0.2f sec)", total, total/30.0f);
+                    ImGui::EndChild();
+                }
+            } // end if(shape)
         }
     }
     ofxImGui::EndWindow(settings);
+
 }
 
+void Sequencer::drawGui_Fan(shared_ptr<Shape> & shape){
+    
+    auto fan = dynamic_pointer_cast<Fan>(shape);
+    
+    ImGuiTreeNodeFlags flag = ImGuiTreeNodeFlags_DefaultOpen;
+
+    ImGui::PushID("Fan");
+    {
+        ImGui::Checkbox("ON", (bool*)&fan->bOn.get() );
+        ImGui::SameLine();
+        if(ImGui::Checkbox("Test", (bool*)&fan->bShowTest.get())){
+            fan->setup();
+        }
+        ImGui::SameLine();
+        if(ImGui::Checkbox("Flip X", (bool*)&fan->bFlipX.get())){
+            fan->setup();
+        }
+
+        if(ImGui::SliderInt("direction", (int*)&fan->direction.get(), fan->direction.getMin(), fan->direction.getMax())){
+            fan->setup();
+        }
+
+        if(ImGui::SliderFloat3("position", (float*)&fan->position.get().x, fan->position.getMin().x, fan->position.getMax().x)){
+            fan->setPosition(fan->position);
+        }
+
+        if(ImGui::SliderFloat("orientationY", (float*)&fan->orientationY.get(), fan->orientationY.getMin(), fan->orientationY.getMax())){
+            glm::quat q = glm::angleAxis(glm::radians(fan->orientationY.get()), vec3(0,1,0));
+            fan->setOrientation(q);
+        }
+
+        if(ImGui::SliderFloat("openAngle", (float*)&fan->openAngle.get(), fan->openAngle.getMin(), fan->openAngle.getMax())){
+            fan->setup();
+        }
+
+        if(ImGui::SliderFloat("radius", (float*)&fan->radius.get(), fan->radius.getMin(), fan->radius.getMax())){
+            fan->setup();
+        }
+
+        if(ImGui::SliderInt("resolution", (int*)&fan->resolution.get(), fan->resolution.getMin(), fan->resolution.getMax())){
+            fan->setup();
+        }
+    }
+    ImGui::PopID();
+}
+
+void Sequencer::drawGui_RectScreen(shared_ptr<Shape> & shape){
+
+    auto rectScreen = dynamic_pointer_cast<RectScreen>(shape);
+    
+    ImGuiTreeNodeFlags flag = ImGuiTreeNodeFlags_DefaultOpen;
+    ImGui::PushID("RectScreen");
+    {
+        ImGui::Checkbox("ON", (bool*)&rectScreen->bOn.get());
+        ImGui::SameLine();
+
+        if(ImGui::Checkbox("Test", (bool*)&rectScreen->bShowTest.get())){
+            rectScreen->setup();
+        }
+        ImGui::SameLine();
+        if(ImGui::Checkbox("Flip X", (bool*)&rectScreen->bFlipX.get())){
+            rectScreen->setup();
+        }
+
+        if(ImGui::SliderFloat3("position", (float*)&rectScreen->position.get().x, rectScreen->position.getMin().x, rectScreen->position.getMax().x)){
+            rectScreen->setPosition(rectScreen->position);
+        }
+
+        if(ImGui::SliderFloat2("size", (float*)&rectScreen->size.get().x, rectScreen->size.getMin().x, rectScreen->size.getMax().x)){
+            rectScreen->setup();
+        }
+
+        if(ImGui::SliderFloat("orientationY", (float*)&rectScreen->orientationY.get(), rectScreen->orientationY.getMin(), rectScreen->orientationY.getMax())){
+            glm::quat q = glm::angleAxis(glm::radians(rectScreen->orientationY.get()), vec3(0,1,0));
+            rectScreen->setOrientation(q);
+        }
+    }
+    ImGui::PopID();
+}
+
+void Sequencer::drawGui_Ellipse(shared_ptr<Shape> & shape){
+
+    auto ellipse = dynamic_pointer_cast<Ellipse>(shape);
+    
+    ImGuiTreeNodeFlags flag = ImGuiTreeNodeFlags_DefaultOpen;
+    ImGui::PushID("Ellipse");
+    {
+        ImGui::Checkbox("ON", (bool*)&ellipse->bOn.get());
+        ImGui::SameLine();
+
+        if(ImGui::Checkbox("Test", (bool*)&ellipse->bShowTest.get())){
+            ellipse->setup();
+        }
+        ImGui::SameLine();
+        if(ImGui::Checkbox("Flip X", (bool*)&ellipse->bFlipX.get())){
+            ellipse->setup();
+        }
+
+        if(ImGui::SliderFloat3("position", (float*)&ellipse->position.get().x, ellipse->position.getMin().x, ellipse->position.getMax().x)){
+            ellipse->setPosition(ellipse->position);
+        }
+
+        if(ImGui::SliderFloat("radius", (float*)&ellipse->radius.get(), ellipse->radius.getMin(), ellipse->radius.getMax())){
+            ellipse->setup();
+        }
+
+        if(ImGui::SliderFloat("center Width", (float*)&ellipse->centerWidth.get(), ellipse->centerWidth.getMin(), ellipse->centerWidth.getMax())){
+            ellipse->setup();
+        }
+
+        if(ImGui::SliderFloat("orientationY", (float*)&ellipse->orientationY.get(), ellipse->orientationY.getMin(), ellipse->orientationY.getMax())){
+            glm::quat q = glm::angleAxis(glm::radians(ellipse->orientationY.get()), vec3(0,1,0));
+            ellipse->setOrientation(q);
+        }
+    }
+    ImGui::PopID();
+}
 
 bool Sequencer::save(const std::string & filepath){
     ofJson json;
@@ -293,7 +519,9 @@ bool Sequencer::load(const std::string & filepath){
                 int type = ofToInt(j.value("type", "0"));
                 int st = ofToInt(j.value("start", "0"));
                 int end = ofToInt(j.value("end", "1000"));
-                mySequence.myItems.push_back(MySequence::MySequenceItem{type, st, end, false});
+                addTrack((ShapeType)type, st, end, false);
+                
+                //mySequence.myItems.push_back(MySequence::MySequenceItem{type, st, end, false});
             }
             return true;
         }
