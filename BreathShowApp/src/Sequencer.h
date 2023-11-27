@@ -19,13 +19,10 @@ public:
     void updateSequenceItemAll(bool bSeek);
     void updateSequenceItem(int entry, bool bSeek);
     void draw(bool * bOpen);
-        void drawGui_Fan(shared_ptr<Shape> & s);
-        void drawGui_RectScreen(shared_ptr<Shape> & s);
-        void drawGui_Ellipse(shared_ptr<Shape> & s);
     bool save(const std::string & filepath);
     bool load(const std::string & filepath);
 
-    void addTrack(ShapeType type, int st=0, int end=1000, bool bExpanded=false  );
+    shared_ptr<Shape> addTrack(ShapeType type, int st=0, int end=1000, bool bExpanded=false  );
     void deleteTrack(int index);
     
     const vector<MySequence::MySequenceItem> & getSequenceItems(){ return mySequence.myItems; };
