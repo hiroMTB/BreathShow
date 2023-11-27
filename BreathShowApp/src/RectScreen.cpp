@@ -14,6 +14,8 @@ RectScreen::RectScreen(){
     grp.setName("Rect");
     
     loadTestImage();
+    loadVideo(videoPath);   // load Default test video file
+
     setup();    
 }
 

@@ -17,6 +17,8 @@ Ellipse::Ellipse(){
     grp.add(position);
         
     loadTestImage();
+    loadVideo(videoPath);   // load Default test video file
+
     setup();
 }
 

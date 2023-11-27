@@ -20,6 +20,8 @@ Fan::Fan(){
     grp.add(direction);
     
     loadTestImage();
+    
+    loadVideo(videoPath);   // load Default test video file
     setup();
 };
 

@@ -86,8 +86,9 @@ public:
     ofParameter<bool> bShowTest{"test texture", false};
     //ofParameter<vec3> position{"position", vec3(5,36,0), vec3(-100), vec3(100)};
     ofParameter<float> orientationY{"orientationY", 0, -180, 180};
+    ofParameter<string> videoPath{"video path", "vid/test.mp4"};
 
-    ofParameterGroup grp{"Fun", bOn, bShowTest, orientationY };
+    ofParameterGroup grp{"Fun", bOn, bShowTest, orientationY, videoPath };
     
 protected:
     ofMesh mesh;
