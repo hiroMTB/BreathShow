@@ -56,12 +56,13 @@ void ofApp::draw3DScene(){
     // Floor (Grid)
     drawFloor();
     
-    // Fan, RectScreen, Ellipse
     human.draw();
-    fanL.draw();
-    fanR.draw();
-    rectScreen.draw();
-    ellipse.draw();
+
+    // Fan, RectScreen, Ellipse
+    const auto & items = sequencer.getSequenceItems();
+    for( auto & i : items){
+        i.shape->draw();
+    }
     
     // Projector
     projector.drawProjector();
@@ -80,10 +81,10 @@ void ofApp::drawProjectorFbo(){
     // Fan
     ofSetColor(255);
     ofPushMatrix();
-    fanL.draw();
-    fanR.draw();
-    rectScreen.draw();
-    ellipse.draw();
+    const auto & items = sequencer.getSequenceItems();
+    for( auto & i : items){
+        i.shape->draw();
+    }
     ofPopMatrix();
     
     projector.end();

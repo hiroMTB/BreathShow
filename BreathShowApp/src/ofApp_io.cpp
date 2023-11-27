@@ -80,14 +80,15 @@ bool ofApp::loadProject(string dirpath){
     // This limits fps under 30 somehow
     // ofSetFrameRate(targetFps);
     human.setup();
-    fanL.loadVideo( "vid/fanL_h264.mp4" );
-    fanR.loadVideo( "vid/fanR_h264.mp4" );
-    rectScreen.loadVideo( "vid/rectScreen_h264.mp4" );
-    ellipse.loadVideo( "vid/ellipse_h264.mp4" );
-    
-    fanL.setup();
-    fanR.setup();
-    rectScreen.setup();
-    ellipse.setup();
-    return bApp && bCamera && bHuman && bProjector && bFanL && bFanR && bEllipse && bWin && bPrj && bRectScreen && bSeq;
+//    fanL.loadVideo( "vid/fanL_h264.mp4" );
+//    fanR.loadVideo( "vid/fanR_h264.mp4" );
+//    rectScreen.loadVideo( "vid/rectScreen_h264.mp4" );
+//    ellipse.loadVideo( "vid/ellipse_h264.mp4" );
+
+    const auto & items = sequencer.getSequenceItems();
+    for( auto & i : items){
+        i.shape->loadVideo( i.shape->videoPath.get() );
+        i.shape->setup();
+    }
+    return bApp && bCamera && bHuman && bProjector && bWin && bPrj && bSeq;
 }

@@ -7,7 +7,7 @@ shared_ptr<ofApp> ofApp::app = nullptr;
 
 void ofApp::setup()
 {
-//    ofSetLogLevel(OF_LOG_NOTICE);
+//     ofSetLogLevel(OF_LOG_NOTICE);
     ofSetLogLevel(OF_LOG_VERBOSE);
     ofSetCircleResolution(64);
     
@@ -30,10 +30,11 @@ void ofApp::setup()
 void ofApp::update()
 {
     ofSetFrameRate(app->targetFps);
-    fanL.update();
-    fanR.update();
-    rectScreen.update();
-    ellipse.update();    
+
+    const auto & items = sequencer.getSequenceItems();
+    for( auto & i : items){
+        i.shape->update();
+    }
 }
 
 void ofApp::draw()
@@ -198,10 +199,10 @@ ofFbo::Settings ofApp::getFboSettings(int w, int h, bool bUseDepth, GLint glForm
 
 void ofApp::setPlay( bool b){
     bPlay = b;
-    fanL.pause(!bPlay);
-    fanR.pause(!bPlay);
-    rectScreen.pause(!bPlay);
-    ellipse.pause(!bPlay);
+    const auto & items = sequencer.getSequenceItems();
+    for( auto & i : items){
+        i.shape->pause(!bPlay);
+    }
     
     if(bPlay){
         sequencer.updateSequenceItemAll(true);
@@ -210,10 +211,10 @@ void ofApp::setPlay( bool b){
 
 void ofApp::setLoop( bool b){
     bLoop = b;
-    fanL.setLoop(bLoop);
-    fanR.setLoop(bLoop);
-    rectScreen.setLoop(bLoop);
-    ellipse.setLoop(bLoop);
+    const auto & items = sequencer.getSequenceItems();
+    for( auto & i : items){
+        i.shape->setLoop(bLoop);
+    }
 }
 
 void ofApp::keyPressed(ofKeyEventArgs & args)
