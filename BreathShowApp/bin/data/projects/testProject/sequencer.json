@@ -3,23 +3,71 @@
     "min": "0",
     "tracks": [
         {
-            "end": "2000",
-            "start": "30",
+            "end": "2005",
+            "shape": {
+                "Fun": {
+                    "On": "1",
+                    "direction": "-1",
+                    "openAngle": "180",
+                    "orientationY": "0",
+                    "position": "-15, 120, 0",
+                    "radius": "100",
+                    "resolution": "60",
+                    "test_texture": "0",
+                    "video_path": "/Users/hiroshimatoba/Desktop/of_v0.12.0_osx_release/apps/BreathShow/BreathShowApp/bin/data/vid/fanL_h264.mp4"
+                }
+            },
+            "start": "35",
             "type": "0"
         },
         {
             "end": "2000",
+            "shape": {
+                "Fun": {
+                    "On": "1",
+                    "direction": "1",
+                    "openAngle": "180",
+                    "orientationY": "0",
+                    "position": "15, 120, 0",
+                    "radius": "100",
+                    "resolution": "60",
+                    "test_texture": "0",
+                    "video_path": "/Users/hiroshimatoba/Desktop/of_v0.12.0_osx_release/apps/BreathShow/BreathShowApp/bin/data/vid/fanR_h264.mp4"
+                }
+            },
             "start": "30",
             "type": "0"
         },
         {
-            "end": "2850",
-            "start": "1950",
+            "end": "2925",
+            "shape": {
+                "Rect": {
+                    "On": "0",
+                    "orientationY": "0",
+                    "position": "0, 120, 0",
+                    "size": "200, 200",
+                    "test_texture": "0",
+                    "video_path": "/Users/hiroshimatoba/Desktop/of_v0.12.0_osx_release/apps/BreathShow/BreathShowApp/bin/data/vid/rectScreen_h264.mp4"
+                }
+            },
+            "start": "2025",
             "type": "1"
         },
         {
-            "end": "3810",
-            "start": "2910",
+            "end": "4154",
+            "shape": {
+                "Ellipse": {
+                    "On": "0",
+                    "center_width": "60",
+                    "orientationY": "0",
+                    "position": "0, 120, 0",
+                    "radius": "100",
+                    "resolution": "60",
+                    "test_texture": "0",
+                    "video_path": "/Users/hiroshimatoba/Desktop/of_v0.12.0_osx_release/apps/BreathShow/BreathShowApp/bin/data/vid/ellipse_h264.mp4"
+                }
+            },
+            "start": "3254",
             "type": "2"
         }
     ]
