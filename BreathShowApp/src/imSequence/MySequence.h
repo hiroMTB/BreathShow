@@ -52,20 +52,20 @@ public:
 		if (type)
 			*type = item.mType;
 	}
-	virtual void Add(int type)
-	{
-		myItems.push_back(MySequenceItem{type, 0, 10, false});
-	};
-
-	virtual void Del(int index)
-	{
-		myItems.erase(myItems.begin() + index);
-	}
-
-	virtual void Duplicate(int index) {
-        myItems.push_back(myItems[index]);
-        
-    }
+    
+//	virtual void Add(int type)
+//	{
+//		myItems.push_back(MySequenceItem{type, 0, 10, false});
+//	};
+//
+//	virtual void Del(int index)
+//	{
+//		myItems.erase(myItems.begin() + index);
+//	}
+//
+//	virtual void Duplicate(int index) {
+//        myItems.push_back(myItems[index]);
+//    }
 
 	virtual size_t GetCustomHeight(int index) { return myItems[index].mExpanded ? 100 : 0; }
 
