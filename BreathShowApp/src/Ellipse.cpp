@@ -5,7 +5,7 @@
 #include "Ellipse.h"
 
 Ellipse::Ellipse(){
-
+    type = ShapeType::ELLIPSE;
     position.setMin(vec3(-200));
     position.setMax(vec3(200));
     position.setName("position");

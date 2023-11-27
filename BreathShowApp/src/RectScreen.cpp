@@ -1,6 +1,9 @@
 #include "RectScreen.h"
 
 RectScreen::RectScreen(){
+    
+    type = ShapeType::RECT_SCREEN;
+    
     position.setMin(vec3(-200));
     position.setMax(vec3(200));
     position.setName("position");

@@ -8,7 +8,7 @@
 #include "Fan.h"
 
 Fan::Fan(){
-    
+    type = ShapeType::FAN;
     position.setMin(vec3(-200));
     position.setMax(vec3(200));
     position.setName("position");
