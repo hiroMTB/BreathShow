@@ -38,14 +38,63 @@ void Sequencer::setupTestSequences(){
     }
 }
 
-void Sequencer::addTrack( ShapeType type, int st, int end, bool bExpanded ){
+shared_ptr<Shape> Sequencer::duplicateTrack( const shared_ptr<Shape> & shape, int st, int end, bool bExpanded ){
+
+    shared_ptr<Shape> newShape = nullptr;
+
+    if(!shape){
+        ofLogError("Sequencer::addTrack") << "shape is nullptr";
+        return newShape;
+    }
+
+    ShapeType type = shape->type;
+    switch (type){
+        case ShapeType::FAN:
+        {
+            auto fan = dynamic_pointer_cast<Fan>(shape);
+            newShape = make_shared<Fan>(*fan);
+            newShape->setup();
+            mySequence.myItems.push_back(MySequence::MySequenceItem{ type, st, end, bExpanded, newShape});
+            ofLogNotice("Sequencer::AddTrack() - ") << "Fan";
+        }
+            break;
+        case ShapeType::RECT_SCREEN:
+        {
+            auto r = dynamic_pointer_cast<RectScreen>(shape);
+            newShape = make_shared<RectScreen>(*r);
+            newShape->setup();
+            mySequence.myItems.push_back(MySequence::MySequenceItem{ type, st, end, bExpanded, newShape});
+            ofLogNotice("Sequencer::AddTrack() - ") << "RECT_SCREEN";
+        }
+            break;
+        case ShapeType::ELLIPSE:
+        {
+            auto e = dynamic_pointer_cast<Ellipse>(shape);
+            newShape = make_shared<Ellipse>(*e);
+            newShape->setup();
+
+            mySequence.myItems.push_back(MySequence::MySequenceItem{ type, st, end, bExpanded, newShape});
+            ofLogNotice("Sequencer::AddTrack() - ") << "ELLIPSE";
+        }
+            break;
+        case ShapeType::NONE:
+            ofLogError("Sequencer::AddTrack() - ") << "ShapeType::NONE";
+            break;
+        default:
+            ofLogError("Sequencer::AddTrack() - ") << "Unknown ShapeType" << type;
+            break;
+    }
+    return newShape;
+}
+
+shared_ptr<Shape> Sequencer::addTrack( ShapeType type, int st, int end, bool bExpanded ){
     
-    //vector<shared_ptr<Shape>> & shapes = ofApp::get()->shapes;
+    shared_ptr<Shape> shape = nullptr;
     
     switch (type){
         case ShapeType::FAN:
         {
-            auto shape = make_shared<Fan>();
+            shape = make_shared<Fan>();
             //shapes.emplace_back( shape );
             mySequence.myItems.push_back(MySequence::MySequenceItem{ type, st, end, bExpanded, shape});
             ofLogNotice("Sequencer::AddTrack() - ") << "Fan";
