@@ -1,4 +1,7 @@
 #include "ofApp.h"
+#include "Fan.h"
+#include "RectScreen.h"
+#include "Ellipse.h"
 
 shared_ptr<ofApp> ofApp::app = nullptr;
 
@@ -22,14 +25,6 @@ void ofApp::setup()
     
     currentProjectPath = "./projects/testProject";
     loadProject(currentProjectPath);
-    
-    ///
-    /// ofNode link
-    ///
-    fanL.setParent(human.root);
-    fanR.setParent(human.root);
-    rectScreen.setParent(human.root);
-    ellipse.setParent(human.root);
 }
 
 void ofApp::update()

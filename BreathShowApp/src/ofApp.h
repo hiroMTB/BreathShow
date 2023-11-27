@@ -6,10 +6,8 @@
 #include "ImHelpers.h"
 #include "Projector.h"
 #include "RenderWindow.h"
-#include "Fan.h"
-#include "RectScreen.h"
-#include "Ellipse.h"
 #include "Human.h"
+#include "Shape.h"
 #include "Sequencer.h"
 
 using glm::vec2;
@@ -56,6 +54,9 @@ class ofApp : public ofBaseApp{
         void drawGui();
         void drawGui_WindowManager();
         void drawGui_ShowSettings();
+        
+        void drawGui_Human();
+
     
         // WindowSequencer.cpp
         void drawGui_Sequencer();
@@ -85,14 +86,10 @@ class ofApp : public ofBaseApp{
         ofParameterGroup grp{"app settings", genGrp, panelGrp};
 
         Human human;
-        Fan fanL;
-        Fan fanR;
-        RectScreen rectScreen;
-        Ellipse ellipse;
-    
+        //vector<shared_ptr<Shape>> shapes;
+            
         string currentProjectPath;
     
-
     public:
         std::shared_ptr<MainWindow> mainWindow;
         std::shared_ptr<ProjectorWindow> projectorWindow;
