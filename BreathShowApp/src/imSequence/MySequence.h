@@ -62,7 +62,10 @@ public:
 		myItems.erase(myItems.begin() + index);
 	}
 
-	virtual void Duplicate(int index) { myItems.push_back(myItems[index]); }
+	virtual void Duplicate(int index) {
+        myItems.push_back(myItems[index]);
+        
+    }
 
 	virtual size_t GetCustomHeight(int index) { return myItems[index].mExpanded ? 100 : 0; }
 
