@@ -38,6 +38,8 @@ class ofApp : public ofBaseApp{
         bool saveProject(string dirpath);
         bool loadProject(string dirpath);
     
+        string dialogueLoadVideo();
+    
         void setPlay(bool b);
         void setLoop(bool b);
     

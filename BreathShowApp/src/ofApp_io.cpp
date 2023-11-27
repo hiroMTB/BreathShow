@@ -92,3 +92,17 @@ bool ofApp::loadProject(string dirpath){
     }
     return bApp && bCamera && bHuman && bProjector && bWin && bPrj && bSeq;
 }
+
+std::string ofApp::dialogueLoadVideo(){
+    
+    auto res = pfd::open_file("Select video file", ofToDataPath(".", true)).result();
+
+    if(res.size() > 0){
+        string & filepath = res[0];
+        if(ofFile::doesFileExist(filepath, false)) {
+            return filepath;
+        }
+    }
+    return "";
+}
+
