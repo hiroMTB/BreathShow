@@ -57,8 +57,11 @@ namespace ImSequencer
 							int *selectedEntry,
 							int *firstFrame,
 							int sequenceOptions,
-							std::function<void(void)> onIndicatorMoveCb,
-							std::function<void(int)> onSequenceMoveCb)
+							std::function<void(void)> onIndicatorMove,
+                            std::function<void(int)> onSequenceMove,
+                            std::function<void(int)> onSequenceAdd,
+                            std::function<void(int)> onSequenceDel,
+							std::function<void(int)> onSequenceDup)
 	{
 		bool ret = false;
 		ImGuiIO &io = ImGui::GetIO();
@@ -198,7 +201,7 @@ namespace ImSequencer
 					if (*currentFrame >= sequence->GetFrameMax())
 						*currentFrame = sequence->GetFrameMax();
 
-					onIndicatorMoveCb();
+					onIndicatorMove();
 				}
 				if (!io.MouseDown[0])
 					MovingCurrentFrame = false;
@@ -216,7 +219,9 @@ namespace ImSequencer
 					for (int i = 0; i < sequence->GetItemTypeCount(); i++)
 						if (ImGui::Selectable(sequence->GetItemTypeName(i)))
 						{
-							sequence->Add(i);
+#pragma mark ADD
+							//sequence->Add(i);
+                            onSequenceAdd(i);
 							*selectedEntry = sequence->GetItemCount() - 1;
 						}
 
@@ -464,7 +469,7 @@ namespace ImSequencer
 						r = l;
 					movingPos += round(diffFrame * (float)framePixelWidth);
 
-					onSequenceMoveCb(movingEntry);
+					onSequenceMove(movingEntry);
 				}
 				if (!io.MouseDown[0])
 				{
@@ -526,7 +531,7 @@ namespace ImSequencer
 			ImGui::EndChildFrame();
 			ImGui::PopStyleColor();
 
-#pragma ZOOM_IN_OUT_BAR
+#pragma mark ZOOM_IN_OUT_BAR
 			if (hasScrollBar)
 			{
 				ImGui::InvisibleButton("scrollBar", scrollBarSize);
@@ -696,14 +701,18 @@ namespace ImSequencer
 
 		if (delEntry != -1)
 		{
-			sequence->Del(delEntry);
+#pragma mark DEL
+			//sequence->Del(delEntry);
+            onSequenceDel(delEntry);
 			if (selectedEntry && (*selectedEntry == delEntry || *selectedEntry >= sequence->GetItemCount()))
 				*selectedEntry = -1;
 		}
 
 		if (dupEntry != -1)
 		{
-			sequence->Duplicate(dupEntry);
+#pragma mark DUP
+            //sequence->Duplicate(dupEntry);
+            onSequenceDup(dupEntry);
 		}
 		return ret;
 	}

@@ -80,7 +80,10 @@ namespace ImSequencer
 					  int *selectedEntry,
 					  int *firstFrame,
 					  int sequenceOptions,
-					  std::function<void(void)> onIndicatorMoveCb,
-					  std::function<void(int)> onSequenceMoveCb);
+					  std::function<void(void)> onIndicatorMove,
+					  std::function<void(int)> onSequenceMove,
+                      std::function<void(int)> onSequenceAdd,
+                      std::function<void(int)> onSequenceDel,
+                      std::function<void(int)> onSequenceDup);
 
 };
