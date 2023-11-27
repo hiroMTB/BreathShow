@@ -44,6 +44,7 @@ public:
             vid.play();
             vid.setVolume(0);
             ofLogNotice("Fan") << "Video file loaded: ";
+            videoPath = path;
         }else{
             ofLogError("Fan") << "Video file does not exist: " << path;
         }
@@ -81,6 +82,18 @@ public:
         bOn = false;
     }
 
+    const char * getVideoInfo(){
+        if( vid.isLoaded() ){
+            char m[255];
+            int nFrames = vid.getTotalNumFrames();
+            float duration = vid.getDuration();
+            float frameRate = (float)nFrames / duration;
+            sprintf(m, "total: %4d frames, (%3.2f sec)\nframe rate: %3.0f fps\n", nFrames, duration, frameRate);
+            return m;
+        }
+        return "Video is not loaded";
+    }
+    
     ofParameter<bool> bOn{"On", true};
     ofParameter<bool> bFlipX{"Flip X", false};
     ofParameter<bool> bShowTest{"test texture", false};
