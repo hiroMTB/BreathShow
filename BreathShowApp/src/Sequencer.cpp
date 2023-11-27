@@ -102,7 +102,7 @@ shared_ptr<Shape> Sequencer::addTrack( ShapeType type, int st, int end, bool bEx
             break;
         case ShapeType::RECT_SCREEN:
         {
-            auto shape = make_shared<RectScreen>();
+            shape = make_shared<RectScreen>();
             //shapes.emplace_back( shape );
             mySequence.myItems.push_back(MySequence::MySequenceItem{ type, st, end, bExpanded, shape});
             ofLogNotice("Sequencer::AddTrack() - ") << "RECT_SCREEN";
@@ -110,7 +110,7 @@ shared_ptr<Shape> Sequencer::addTrack( ShapeType type, int st, int end, bool bEx
             break;
         case ShapeType::ELLIPSE:
         {
-            auto shape = make_shared<Ellipse>();
+            shape = make_shared<Ellipse>();
             //shapes.emplace_back( shape );
             mySequence.myItems.push_back(MySequence::MySequenceItem{ type, st, end, bExpanded, shape});
             ofLogNotice("Sequencer::AddTrack() - ") << "ELLIPSE";
@@ -124,8 +124,8 @@ shared_ptr<Shape> Sequencer::addTrack( ShapeType type, int st, int end, bool bEx
             break;
     }
     
+    return shape;
 }
-
 
 void Sequencer::deleteTrack(int index){
     
