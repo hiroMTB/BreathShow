@@ -10,96 +10,107 @@
 
 #include "ImCurveEdit.h"
 
-class RampEdit : public ImCurveEdit::Delegate{
+class RampEdit : public ImCurveEdit::Delegate
+{
 
 public:
-   RampEdit() {
-//      mPts.assign(3, std::vector<ImVec2>());
-      
-//      mPts[0].emplace_back( -10.f, 0 );
-//      mPts[0].emplace_back( 20.f, 0.6f );
-//      mPts[0].emplace_back( 25.f, 0.2f );
-//      mPts[0].emplace_back( 70.f, 0.4f );
-//      mPts[0].emplace_back( 120.f, 1.f );
-//
-//      mPts[1].emplace_back( 0.f, 0.2f );
-//      mPts[1].emplace_back( 82.f, 0.8f );
-//      mPts[1].emplace_back( 33.f, 0.7f );
-//      mPts[1].emplace_back( 80.f, 0.2f );
-//
-//      mPts[2].emplace_back( 40.f, 0 );
-//      mPts[2].emplace_back( 60.f, 0.1f );
-//      mPts[2].emplace_back( 90.f, 0.82f );
-//      mPts[2].emplace_back( 150.f, 0.24f );
-//      mPts[2].emplace_back( 200.f, 0.34f );
-//      mPts[2].emplace_back( 250.f, 0.12f );
-       
-      mbVisible[0] = mbVisible[1] = mbVisible[2] = true;
-      mMax = ImVec2(1.f, 1.f);
-      mMin = ImVec2(0.f, 0.f);
-       
-//       SortValues(0);
-//       SortValues(1);
-//       SortValues(2);
-   }
+	RampEdit()
+	{
+		//      mPts.assign(3, std::vector<ImVec2>());
 
-   size_t GetCurveCount() override{
-      return mPts.size();
-   }
+		//      mPts[0].emplace_back( -10.f, 0 );
+		//      mPts[0].emplace_back( 20.f, 0.6f );
+		//      mPts[0].emplace_back( 25.f, 0.2f );
+		//      mPts[0].emplace_back( 70.f, 0.4f );
+		//      mPts[0].emplace_back( 120.f, 1.f );
+		//
+		//      mPts[1].emplace_back( 0.f, 0.2f );
+		//      mPts[1].emplace_back( 82.f, 0.8f );
+		//      mPts[1].emplace_back( 33.f, 0.7f );
+		//      mPts[1].emplace_back( 80.f, 0.2f );
+		//
+		//      mPts[2].emplace_back( 40.f, 0 );
+		//      mPts[2].emplace_back( 60.f, 0.1f );
+		//      mPts[2].emplace_back( 90.f, 0.82f );
+		//      mPts[2].emplace_back( 150.f, 0.24f );
+		//      mPts[2].emplace_back( 200.f, 0.34f );
+		//      mPts[2].emplace_back( 250.f, 0.12f );
 
-   bool IsVisible(size_t curveIndex) override{
-      return mbVisible[curveIndex];
-   }
+		mbVisible[0] = mbVisible[1] = mbVisible[2] = true;
+		mMax = ImVec2(1.f, 1.f);
+		mMin = ImVec2(0.f, 0.f);
 
-   size_t GetPointCount(size_t curveIndex) override{
-      return mPts[curveIndex].size();
-   }
+		//       SortValues(0);
+		//       SortValues(1);
+		//       SortValues(2);
+	}
 
-   uint32_t GetCurveColor(size_t curveIndex) override{
-      uint32_t cols[] = {0xFF0000FF, 0xFF00FF00, 0xFFFF0000};
-      return cols[curveIndex];
-   }
+	size_t GetCurveCount() override
+	{
+		return mPts.size();
+	}
 
-   std::vector<ImVec2> & GetPoints(size_t curveIndex) override{
-      return mPts[curveIndex];
-   }
+	bool IsVisible(size_t curveIndex) override
+	{
+		return mbVisible[curveIndex];
+	}
 
-   virtual ImCurveEdit::CurveType GetCurveType(size_t curveIndex) const override{
-       return ImCurveEdit::CurveSmooth;
-   }
-   
-    virtual int EditPoint(size_t curveIndex, int pointIndex, const ImVec2 & value) override{
-      mPts[curveIndex][pointIndex] = ImVec2(value.x, value.y);
-      SortValues(curveIndex);
-      for (size_t i = 0; i < GetPointCount(curveIndex); i++)
-      {
-         if (mPts[curveIndex][i].x == value.x)
-            return (int)i;
-      }
-      return pointIndex;
-   }
+	size_t GetPointCount(size_t curveIndex) override
+	{
+		return mPts[curveIndex].size();
+	}
 
-   virtual void AddPoint(size_t curveIndex, const ImVec2 &value) override{
-      mPts[curveIndex].emplace_back( value );
-      SortValues(curveIndex);
-   }
+	uint32_t GetCurveColor(size_t curveIndex) override
+	{
+		uint32_t cols[] = {0xFF0000FF, 0xFF00FF00, 0xFFFF0000};
+		return cols[curveIndex];
+	}
 
-   virtual ImVec2 &GetMax() override { return mMax; }
-   virtual ImVec2 &GetMin() override { return mMin; }
-   virtual unsigned int GetBackgroundColor() override{ return 0; }
+	std::vector<ImVec2> &GetPoints(size_t curveIndex) override
+	{
+		return mPts[curveIndex];
+	}
 
-   std::vector<std::vector<ImVec2>> mPts;
-   bool mbVisible[3];
-   ImVec2 mMin;
-   ImVec2 mMax;
+	virtual ImCurveEdit::CurveType GetCurveType(size_t curveIndex) const override
+	{
+		return ImCurveEdit::CurveSmooth;
+	}
+
+	virtual int EditPoint(size_t curveIndex, int pointIndex, const ImVec2 &value) override
+	{
+		mPts[curveIndex][pointIndex] = ImVec2(value.x, value.y);
+		SortValues(curveIndex);
+		for (size_t i = 0; i < GetPointCount(curveIndex); i++)
+		{
+			if (mPts[curveIndex][i].x == value.x)
+				return (int)i;
+		}
+		return pointIndex;
+	}
+
+	virtual void AddPoint(size_t curveIndex, const ImVec2 &value) override
+	{
+		mPts[curveIndex].emplace_back(value);
+		SortValues(curveIndex);
+	}
+
+	virtual ImVec2 &GetMax() override { return mMax; }
+	virtual ImVec2 &GetMin() override { return mMin; }
+	virtual unsigned int GetBackgroundColor() override { return 0; }
+
+	std::vector<std::vector<ImVec2>> mPts;
+	bool mbVisible[3];
+	ImVec2 mMin;
+	ImVec2 mMax;
 
 private:
-   void SortValues(size_t curveIndex){
-       auto b = mPts[curveIndex].begin();
-       auto e = mPts[curveIndex].end();
-       std::sort(b, e, [](ImVec2 a, ImVec2 b)
-                { return a.x < b.x; });
-   }
+	void SortValues(size_t curveIndex)
+	{
+		auto b = mPts[curveIndex].begin();
+		auto e = mPts[curveIndex].end();
+		std::sort(b, e, [](ImVec2 a, ImVec2 b)
+					 { return a.x < b.x; });
+	}
 };
 
 #endif /* RampEdit_h */
