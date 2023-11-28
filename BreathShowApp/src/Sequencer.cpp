@@ -361,7 +361,7 @@ void Sequencer::draw(bool * bOpen){
             int start = item.mFrameStart;
             int end = item.mFrameEnd;
             int total = end - start;
-            ImGui::Text("[%02d] %s", selectedEntry, SequencerItemTypeNames[type]);
+            ImGui::Text("%s", SequencerItemTypeNames[type]);
             auto shape = item.shape;
                         
             if(shape){
@@ -369,11 +369,11 @@ void Sequencer::draw(bool * bOpen){
                 static bool disable_menu = false;
                 static bool bordar = false;
                 ImGuiWindowFlags window_flags = ImGuiWindowFlags_HorizontalScrollbar;
-                float height = 250;
-                
+                float height = 160;
+                float width = ImGui::GetContentRegionAvail().x * 0.333f;
                 {
                     // Left Gui Area
-                    ImGui::BeginChild("ChildL", ImVec2(ImGui::GetContentRegionAvail().x * 0.5f, height), bordar, window_flags);
+                    ImGui::BeginChild("ChildL", ImVec2(width, height), bordar, window_flags);
                     
                     if(type != (int)shape->type ){
                         ofLogError("Sequencer::draw()") << "Something went wrong about ShapeType";
@@ -396,9 +396,19 @@ void Sequencer::draw(bool * bOpen){
                 ImGui::SameLine();
                 
                 {
-                    /// Right Gui Area
-                    ImGui::BeginChild("ChildR", ImVec2(0, height), true, window_flags);
-
+                    /// Middle Gui Area
+                    ImGui::BeginChild("ChildM", ImVec2(width, height), true, window_flags);
+                    videoSection(shape);
+                    ImGui::EndChild();
+                }
+                
+                ImGui::SameLine();
+             
+                {
+                    /// Middle Gui Area
+                    ImGui::BeginChild("ChildR", ImVec2(width, height), true, window_flags);
+                    ImGui::Text("Sequence Item");
+                    ImGui::Text("[%02d] %s", selectedEntry, SequencerItemTypeNames[type]);
                     int min = mySequence.mFrameMin;
                     int max = mySequence.mFrameMax;
                     ImGui::SliderInt("start", &item.mFrameStart, min, max);
@@ -455,8 +465,6 @@ void Sequencer::drawGui_Fan(shared_ptr<Shape> & shape){
         if(ImGui::SliderInt("resolution", (int*)&fan->resolution.get(), fan->resolution.getMin(), fan->resolution.getMax())){
             fan->setup();
         }
-        
-        videoSection(fan);
     }
     ImGui::PopID();
 }
@@ -492,7 +500,6 @@ void Sequencer::drawGui_RectScreen(shared_ptr<Shape> & shape){
             rectScreen->setOrientation(q);
         }
         
-        videoSection(rectScreen);
     }
     ImGui::PopID();
 }
@@ -531,8 +538,6 @@ void Sequencer::drawGui_Ellipse(shared_ptr<Shape> & shape){
             glm::quat q = glm::angleAxis(glm::radians(ellipse->orientationY.get()), vec3(0,1,0));
             ellipse->setOrientation(q);
         }
-        
-        videoSection(ellipse);
     }
     ImGui::PopID();
 }
@@ -610,8 +615,6 @@ bool Sequencer::load(const std::string & filepath){
 }
 
 void Sequencer::videoSection(shared_ptr<Shape> s){
-
-    ImGui::Dummy({0, 10});
 
     ImGui::Text("Video");
 
