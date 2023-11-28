@@ -3,6 +3,7 @@
         "General": {
             "Loop": "1",
             "Play": "1",
+            "Use_Tracker": "0",
             "target_fps": "120"
         },
         "Panels": {
