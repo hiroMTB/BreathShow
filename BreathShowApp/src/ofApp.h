@@ -9,6 +9,8 @@
 #include "Human.h"
 #include "Shape.h"
 #include "Sequencer.h"
+#include "Osc/Osc.h"
+#include "Body/Body.h"
 
 using glm::vec2;
 using glm::vec3;
@@ -29,6 +31,8 @@ class ofApp : public ofBaseApp{
 		void keyPressed(ofKeyEventArgs & args);
 		void mousePressed(ofMouseEventArgs & args);
 		
+        void receiveOsc();
+    
         void drawProjector(ofEventArgs & args);
         void drawProjectorFbo();
         void drawFloor();
@@ -76,7 +80,8 @@ class ofApp : public ofBaseApp{
         ofParameter<int> targetFps{"target fps", 60, 0, 120};
         ofParameter<bool> bPlay{"Play", true};
         ofParameter<bool> bLoop{"Loop", true};
-        ofParameterGroup genGrp{"General", targetFps, bPlay, bLoop};
+        ofParameter<bool> bUseTracker{"Use Tracker", true};
+        ofParameterGroup genGrp{"General", targetFps, bPlay, bLoop, bUseTracker};
 
         ofParameter<bool> b3dSceneOpen{"3DScene Window Open", true};
         ofParameter<bool> bDemoOpen{"Demo Window Open", true};
@@ -97,4 +102,6 @@ class ofApp : public ofBaseApp{
         std::shared_ptr<ProjectorWindow> projectorWindow;
         Projector projector;
         Sequencer sequencer;
+        Osc osc;
+        Body body;
 };

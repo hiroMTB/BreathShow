@@ -2,6 +2,7 @@
 #include "Fan.h"
 #include "RectScreen.h"
 #include "Ellipse.h"
+#include "Util.h"
 
 shared_ptr<ofApp> ofApp::app = nullptr;
 
@@ -25,12 +26,41 @@ void ofApp::setup()
     
     currentProjectPath = "./projects/testProject";
     loadProject(currentProjectPath);
+        
+    osc.setupReceiver();
+}
+
+void ofApp::receiveOsc(){
+    if(bUseTracker){
+        osc.receive([&](const ofxOscMessage &m) -> void {
+            string address = m.getAddress();
+            const vector<string> &tokens = Util::split(address, "/");
+            body.processOsc(m, tokens);
+            //cout << m << endl;
+        });
+    }else{
+        // Read sequencer to move Human
+    }
 }
 
 void ofApp::update()
 {
     ofSetFrameRate(app->targetFps);
+    
+    receiveOsc();
+    body.calc();
 
+    if(bUseTracker){
+        human.root.setPosition(body.rootPos);
+        
+        // orientation
+        human.orientationY = body.rootOri.y;
+        glm::quat q = glm::angleAxis(glm::radians(human.orientationY.get()), vec3(0,1,0));
+        human.root.setOrientation(q);
+    }else{
+        /// Read Sequencer?
+    }
+    
     const auto & items = sequencer.getSequenceItems();
     for( auto & i : items){
         i.shape->update();
