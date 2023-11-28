@@ -47,10 +47,10 @@ void ofApp::update()
 {
     ofSetFrameRate(app->targetFps);
     
-    receiveOsc();
-    body.calc();
-
     if(bUseTracker){
+        receiveOsc();
+        body.calc();
+
         human.root.setPosition(body.rootPos);
         
         // orientation

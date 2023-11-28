@@ -80,7 +80,7 @@ class ofApp : public ofBaseApp{
         ofParameter<int> targetFps{"target fps", 60, 0, 120};
         ofParameter<bool> bPlay{"Play", true};
         ofParameter<bool> bLoop{"Loop", true};
-        ofParameter<bool> bUseTracker{"Use Tracker", true};
+        ofParameter<bool> bUseTracker{"Use Tracker", false};
         ofParameterGroup genGrp{"General", targetFps, bPlay, bLoop, bUseTracker};
 
         ofParameter<bool> b3dSceneOpen{"3DScene Window Open", true};

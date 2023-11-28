@@ -67,7 +67,7 @@ void Body::processOsc(const ofxOscMessage & m, const vector<string> & tokens){
             //cout << i << " : " << x << ", " << y << ", " << z << endl;
         }
     }else if(tokens[1] == "enter"){
-        bEnter = true;
+        //bEnter = true;
     }else if(tokens[1] == "exit"){
         //offset = vec3(0);
     }
@@ -109,16 +109,16 @@ void Body::calc(){
     vec3 u = normalize(hipL - hipCenter);
     vec3 v = normalize(shoulderCenter - hipCenter);   // not sure if this is correct or not
     vec3 w = normalize(cross(u, v));
-    glm::mat3 m = glm::mat3(u, v, w);
-    glm::quat q = glm::toQuat(m);
-    rootOri = glm::degrees(glm::eulerAngles(q));
-    rootOri.x = 0;
-    rootOri.z = 0;
     
-//    if(bEnter){
-//        offset = -rootPos;
-//        bEnter = false;
-//    }
+    if( std::isnan(u.x) || std::isnan(v.x) || std::isnan(w.x)){
+        // probablly depth camera didnt detect skeleton, do nothing
+    }else{
+        glm::mat3 m = glm::mat3(u, v, w);
+        glm::quat q = glm::toQuat(m);
+        rootOri = glm::degrees(glm::eulerAngles(q));
+        rootOri.x = 0;
+        rootOri.z = 0;
+    }
 }
 
 // draw the body

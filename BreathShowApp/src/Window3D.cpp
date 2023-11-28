@@ -58,6 +58,10 @@ void ofApp::draw3DScene(){
     
     human.draw();
 
+    if(bUseTracker){
+    	body.draw(2, ofColor(255));
+    }
+    
     // Fan, RectScreen, Ellipse
     const auto & items = sequencer.getSequenceItems();
     for( auto & i : items){

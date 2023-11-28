@@ -42,6 +42,17 @@ void ofApp::drawGui_Human()
             glm::quat q = glm::angleAxis(glm::radians(human.orientationY.get()), vec3(0,1,0));
             human.root.setOrientation(q);
         }
+        
+        if(bUseTracker){
+            if(ImGui::Button("Set Offset")){
+                float y = body.offset.get().y;
+                body.offset = body.rootPos * vec3(-1, 0, -1);
+                body.offset = vec3(body.offset.get().x, y, body.offset.get().z);
+            }
+            
+            if(ImGui::SliderFloat3("offset", (float*)&body.offset.get().x, -100, 100)){
+            }
+        }
     }
     ImGui::PopID();
 }
