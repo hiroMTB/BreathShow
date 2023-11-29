@@ -18,21 +18,27 @@ public:
         grp.add(root.position);
         
     }
+    
     bool setup(){
         
-
+        string filepath = "./3dModel/human.obj";
+        
 #if OF_VERSION_MINOR >= 12
-        bool bOk = model.load("./3dModel/human.obj", ofxAssimpModelLoader::OPTIMIZE_HIGH);
+        bool bOk = model.load(filepath); //, ofxAssimpModelLoader::OPTIMIZE_HIGH);
 #else
-        bool bOk = model.loadModel("./3dModel/human.obj", true);
+        bool bOk = model.loadModel(filepath, true);
 #endif
         if(bOk){
-            ofLogNotice() << "OK! load human.obj";
-            model.setScale(scale.get().x, scale.get().y, scale.get().z) ;
+            ofLogNotice() << "OK! load: " << filepath;
+            
+            cout << "Human Original Scale: " << model.getScale() << endl;
+            
+            setModelScale();
+            //model.setScale(scale.get().x, scale.get().y, scale.get().z) ;
             //model.setPosition(position.get().x, position.get().y, position.get().z);
             //model.setRotation(0, orientationY, 0, 1, 0);
         }else{
-            ofLogError() << "Can not load human.obj";
+            ofLogError() << "Can not load: "<< filepath;
         }
         return bOk;
     }
@@ -47,12 +53,24 @@ public:
         }
     }
     
+    void setModelScale(){
+        glm::vec3 s =  preScale * height.get() * 0.01f ;
+        model.setScale(s.x, s.y, s.z);
+    }
+    
     ofNode root; // empty Root Node, place holder
     
     ofxAssimpModelLoader model;
     ofParameter<bool> bOn{"ON", true};
     //ofParameter<glm::vec3> position{"position", vec3(0), vec3(-500), vec3(500)};
-    ofParameter<glm::vec3> scale{"scale", glm::vec3(1), glm::vec3(-3), glm::vec3(3)};
+    ofParameter<int> height{"height", 165, 100, 200};
     ofParameter<float> orientationY{"orientationY", 0, -360, 360};
-    ofParameterGroup grp{"human", bOn, scale, orientationY};
+    ofParameterGroup grp{"human", bOn, height, orientationY};
+    
+private:
+    
+    // can not load obj file with propery scaling editted by Blender
+    glm::vec3 preScale{0.415, -0.415, -0.415};
+    
+    
 };

@@ -34,8 +34,9 @@ void ofApp::drawGui_Human()
             human.root.setPosition(human.root.position);
         }
         
-        if(ImGui::SliderFloat3("scale", (float*)&human.scale.get().x, human.scale.getMin().x, human.scale.getMax().x)){
-            human.model.setScale(human.scale.get().x, human.scale.get().y, human.scale.get().z) ;
+        if(ImGui::SliderInt("height(cm)", (int*)&human.height.get(), human.height.getMin(), human.height.getMax())){
+            //human.model.setScale(human.scale.get().x, human.scale.get().y, human.scale.get().z) ;
+            human.setModelScale();
         }
         
         if(ImGui::SliderFloat("orientation Y", (float*)&human.orientationY.get(), -360, 360)){
