@@ -36,22 +36,13 @@ class ofApp : public ofBaseApp{
         void drawProjector(ofEventArgs & args);
         void drawProjectorFbo();
         void drawFloor();
-        
-        void dialogueSaveProject();
-        void dialogueLoadProject();
-        bool saveProject(string dirpath);
-        bool loadProject(string dirpath);
-    
-        string dialogueLoadVideo();
-    
+            
         void setPlay(bool b);
         void setLoop(bool b);
     
         void exit();
+
     private:
-        void dock();
-        void menu();
-    
         // Window3D.cpp
         void draw3DWindow();
         void draw3DScene();
@@ -60,23 +51,19 @@ class ofApp : public ofBaseApp{
         void drawGui();
         void drawGui_WindowManager();
         void drawGui_ShowSettings();
-        
         void drawGui_Human();
 
     
         // WindowSequencer.cpp
         void drawGui_Sequencer();
     
-        ofRectangle calcCameraControArea();
-
         ofFbo::Settings getFboSettings(int w, int h, bool bUseDepth=false, GLint glFormat=GL_RGBA8, GLenum glTexTarget=GL_TEXTURE_2D);
         ofxImGui::Gui gui;
         ofFbo fbo3dScene;
-        ofEasyCam cam;
-    
-        glm::vec2 mouseOffset{0,0};
-    
+        
     public:
+        ofEasyCam cam;
+
         ofParameter<int> targetFps{"target fps", 60, 0, 120};
         ofParameter<bool> bPlay{"Play", true};
         ofParameter<bool> bLoop{"Loop", true};

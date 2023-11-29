@@ -1,4 +1,5 @@
 #include "ofApp.h"
+#include "Helper.h"
 
 void ofApp::draw3DWindow(){
     ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
@@ -7,7 +8,7 @@ void ofApp::draw3DWindow(){
     ImGuiWindowFlags flags = ImGuiWindowFlags_None;
     if(ofxImGui::BeginWindow("3D Scene", settings, false, (bool*)&b3dSceneOpen.get())){
         
-        ofRectangle area = calcCameraControArea();
+        ofRectangle area = gui::Helper::calcCameraControlArea();
         if(area.width == 0 && area.height == 0){
             cam.disableMouseInput();
             cam.clearControlArea();

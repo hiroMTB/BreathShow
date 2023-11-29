@@ -13,6 +13,7 @@
 #include "Fan.h"
 #include "RectScreen.h"
 #include "Ellipse.h"
+#include "io.h"
 
 Sequencer::Sequencer(){
     setup();
@@ -638,7 +639,7 @@ void Sequencer::videoSection(shared_ptr<Shape> s){
     ImGui::Dummy({0, 10});
 
     if(ImGui::Button("Load Video")){
-        string filepath = ofApp::get()->dialogueLoadVideo();
+        string filepath = io::dialogueLoadVideo();
         if( filepath != ""){
             s->loadVideo(filepath);
         }
