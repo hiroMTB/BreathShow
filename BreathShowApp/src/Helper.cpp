@@ -39,7 +39,8 @@ void Helper::menu(const shared_ptr<ofApp> & app) {
         if (ImGui::BeginMenu("Panel")) {
             //ImGui::Checkbox("Demo", (bool *) &bDemoOpen.get());
             ImGui::Checkbox("3D Scene", (bool *) &app->b3dSceneOpen.get());
-            ImGui::Checkbox("Gui Panel", (bool *) &app->bGuiOpen.get());
+            ImGui::Checkbox("Human Panel", (bool *) &app->bHumanOpen.get());
+            ImGui::Checkbox("Projector Panel", (bool *) &app->bProjectorOpen.get());
             ImGui::Checkbox("Sequencer Panel", (bool *) &app->bSeqOpen.get());
             ImGui::Checkbox("Window Manager Panel", (bool *) &app->bWindowManagerOpen.get());
             ImGui::EndMenu();

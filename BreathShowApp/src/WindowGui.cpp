@@ -2,33 +2,34 @@
 #include "Fan.h"
 #include "RectScreen.h"
 #include "Ellipse.h"
+#include "Helper.h"
 
 void ofApp::drawGui()
 {
     if(bWindowManagerOpen) drawGui_WindowManager();
-    if(bGuiOpen) drawGui_ShowSettings();
+    if(bHumanOpen) drawGui_Human();
+    if(bProjectorOpen) drawGui_Projector();
     if(bSeqOpen) drawGui_Sequencer();
     if(b3dSceneOpen) draw3DWindow();
     //if(bDemoOpen) ImGui::ShowDemoWindow();
 }
 
-void ofApp::drawGui_ShowSettings(){
+void ofApp::drawGui_Projector(){
     auto settings = ofxImGui::Settings();
     
-    if(ofxImGui::BeginWindow("Gui", settings, false, (bool*)&bGuiOpen.get())) {
-        drawGui_Human();
+    if(ofxImGui::BeginWindow("Projector", settings, false, (bool*)&bProjectorOpen.get())) {
+        ofxImGui::AddGroup(projector.grp, settings);
     }
-    ofxImGui::AddGroup(projector.grp, settings);
-    
     ofxImGui::EndWindow(settings);
 }
 
 void ofApp::drawGui_Human()
 {
     ImGuiTreeNodeFlags flag = ImGuiTreeNodeFlags_DefaultOpen;
-    ImGui::PushID("Human");
-    
-    if(ImGui::CollapsingHeader("Human", flag)){
+    auto settings = ofxImGui::Settings();
+   
+    if(ofxImGui::BeginWindow("Human", settings, false, (bool*)&bProjectorOpen.get())) {
+       
         ImGui::Checkbox("ON", (bool*)&human.bOn.get());
         if(ImGui::SliderFloat3("position", (float*)&human.root.position.get().x, human.root.position.getMin().x, human.root.position.getMax().x)){
             human.root.setPosition(human.root.position);
@@ -44,18 +45,68 @@ void ofApp::drawGui_Human()
             human.root.setOrientation(q);
         }
         
+        ///
+        /// Tracker
+        ///
+        ImGui::Separator();
+        ImGui::Checkbox("Use Tracker", (bool*)&bUseTracker.get());
+        
         if(bUseTracker){
-            if(ImGui::Button("Set Offset")){
-                float y = body.offset.get().y;
-                body.offset = body.rootPos * vec3(-1, 0, -1);
-                body.offset = vec3(body.offset.get().x, y, body.offset.get().z);
-            }
-            
-            if(ImGui::SliderFloat3("offset", (float*)&body.offset.get().x, -100, 100)){
+
+            if(ImGui::CollapsingHeader("Tracker", ImGuiTreeNodeFlags_DefaultOpen)){
+                
+                if(ImGui::TreeNodeEx("OSC", ImGuiTreeNodeFlags_DefaultOpen)){
+                    if(ImGui::SliderInt("port", (int*)&osc.receivePort.get(), osc.receivePort.getMin(), osc.receivePort.getMax())){
+                        osc.setupReceiver();
+                    }
+                    
+                    if(ImGui::TreeNodeEx("OSC Logger")){
+                        if(ImGui::SliderInt("Queue Size", (int*)&osc.maxMsgQueueNum.get(), osc.maxMsgQueueNum.getMin(), osc.maxMsgQueueNum.getMax())){
+                            osc.resizeQueue();
+                        }
+                        gui::Helper::drawMsgLogger(osc.msgQueue);                  
+                        ImGui::TreePop();
+                    }
+                    
+                    if (ImGui::TreeNodeEx("Filter", ImGuiTreeNodeFlags_DefaultOpen)) {
+                        vector<string> fTypes{"none", "legacy", "OneEuro"};
+                        ofxImGui::VectorCombo("Filter Type", (int *) &body.filterType.get(), fTypes);
+                        if (body.filterType == 0) {
+                        } else if (body.filterType == 1) {
+                            ImGui::SliderFloat(body.lowpass.getName().c_str(), (float*)&body.lowpass.get(), body.lowpass.getMin(), body.lowpass.getMax());
+                        } else if (body.filterType == 2) {
+                            gui::Helper::DragDouble(body.frequency, 1);
+                            gui::Helper::DragDouble(body.mincutoff);
+                            gui::Helper::DragDouble(body.beta);
+                            gui::Helper::DragDouble(body.dcutoff);
+                        }
+                        ImGui::TreePop();
+                    }
+                    
+                    ImGui::TreePop();
+                }
+                
+                if(ImGui::TreeNodeEx("Body", ImGuiTreeNodeFlags_DefaultOpen)){
+                    
+                    if(ImGui::SliderFloat3("offset", (float*)&body.offset.get().x, body.offset.getMin().x, body.offset.getMax().x)){
+                    }
+                    
+                    if(ImGui::SliderFloat3("Scale", (float*)&body.scale.get().x, body.scale.getMin().x, body.scale.getMax().x)){
+                    }
+
+                    if(ImGui::Button("Set Offset")){
+                        float y = body.offset.get().y;
+                        body.offset = body.rootPos * vec3(-1, 0, -1);
+                        body.offset = vec3(body.offset.get().x, y, body.offset.get().z);
+                    }
+
+                    ImGui::TreePop();
+                }
             }
         }
     }
-    ImGui::PopID();
+    
+    ofxImGui::EndWindow(settings);
 }
         
 void ofApp::drawGui_WindowManager() {

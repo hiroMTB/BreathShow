@@ -50,7 +50,7 @@ class ofApp : public ofBaseApp{
         // WindowGui.cpp
         void drawGui();
         void drawGui_WindowManager();
-        void drawGui_ShowSettings();
+        void drawGui_Projector();
         void drawGui_Human();
 
     
@@ -72,10 +72,11 @@ class ofApp : public ofBaseApp{
 
         ofParameter<bool> b3dSceneOpen{"3DScene Window Open", true};
         ofParameter<bool> bDemoOpen{"Demo Window Open", true};
-        ofParameter<bool> bGuiOpen{"Gui Panel Open", true};
+        ofParameter<bool> bHumanOpen{"Human Panel Open", true};
+        ofParameter<bool> bProjectorOpen{"Projector Panel Open", true};
         ofParameter<bool> bSeqOpen{"Sequencer Panel Open", false};
         ofParameter<bool> bWindowManagerOpen{"Window Manager Open", true};
-        ofParameterGroup panelGrp{"Panels", b3dSceneOpen, bDemoOpen, bGuiOpen, bSeqOpen, bWindowManagerOpen};
+        ofParameterGroup panelGrp{"Panels", b3dSceneOpen, bDemoOpen, bHumanOpen, bProjectorOpen, bSeqOpen, bWindowManagerOpen};
         
         ofParameterGroup grp{"app settings", genGrp, panelGrp};
 
