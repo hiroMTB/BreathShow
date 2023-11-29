@@ -1,5 +1,9 @@
 ofxAssimpModelLoader
 ofxCameraSaveLoad
 ofxOsc
+ofxXmlSettings
 ../local_addons/ofxImGui
 ../local_addons/ofxOneEuroFilter
+../local_addons/ofxVezer
+../local_addons/ofxGizmo
+../local_addons/ofxCereal
