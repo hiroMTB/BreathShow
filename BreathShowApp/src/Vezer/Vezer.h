@@ -60,7 +60,7 @@ public:
             ofLogError("Vezer") << "No Composition loaded?";
         }
 
-        if(bPlay || bNeedUpdate ) {
+        if( bNeedUpdate ) {
 //            if(!bNeedUpdate)currentFrame++;
 //            currentFrame %= comp.length;
 //            setFrame(currentFrame);
@@ -103,10 +103,9 @@ public:
 
     std::deque<string> msgQueue;
 
-    ofParameter<bool> bPlay{"Play", true};
     ofParameter<string> filepath{ "File Path", "./vezer/rec01.xml"};
     ofParameter<int> maxMsgQueueNum{"Max Message Queue Num", 5, 0, 100};
-    ofParameterGroup grp{"Vezer", filepath, bPlay, maxMsgQueueNum};
+    ofParameterGroup grp{"Vezer", filepath, maxMsgQueueNum};
     ofEventListeners listeners;
 
 private:
