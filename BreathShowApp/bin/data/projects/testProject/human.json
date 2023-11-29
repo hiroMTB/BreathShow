@@ -1,8 +1,8 @@
 {
     "human": {
         "ON": "1",
+        "height": "165",
         "orientationY": "0",
-        "position": "0, 0, 0",
-        "scale": "0.65, -0.65, -0.65"
+        "position": "0, 0, 0"
     }
 }
