@@ -25,8 +25,9 @@ inline bool saveProject(string dirpath){
     bool bWin = app->mainWindow->save(dirpath + "/mainWindow.json");
     bool bPrj = app->projectorWindow->save(dirpath + "/projectorWindow.json");
     bool bSeq = app->sequencer.save(dirpath + "/sequencer.json");
+    bool bBody = Serializer::save(app->body.grp, dirpath + "/body.json");
 
-    return bApp && bCamera && bHuman && bProjector && bWin && bPrj;
+    return bApp && bCamera && bHuman && bProjector && bWin && bPrj && bBody;
 }
 
 inline bool loadProject(string dirpath){
@@ -51,6 +52,8 @@ inline bool loadProject(string dirpath){
     bool bWin = app->mainWindow->load(dirpath + "/mainWindow.json");
     bool bPrj = app->projectorWindow->load(dirpath + "/projectorWindow.json");
     bool bSeq = app->sequencer.load(dirpath + "/sequencer.json");
+    bool bBody = Serializer::load(app->body.grp, dirpath + "/body.json");
+
     bool bVezer = app->vezer.load();
     
     // This limits fps under 30 somehow
@@ -63,7 +66,7 @@ inline bool loadProject(string dirpath){
         i.shape->setup();
     }
     
-    return bApp && bCamera && bHuman && bProjector && bWin && bPrj && bSeq && bVezer;
+    return bApp && bCamera && bHuman && bProjector && bWin && bPrj && bSeq && bVezer & bBody;
 }
 
 inline void dialogueSaveProject(){
