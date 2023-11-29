@@ -639,7 +639,12 @@ void Sequencer::videoSection(shared_ptr<Shape> s){
         int nFrames = vid.getTotalNumFrames();
         float duration = vid.getDuration();
         float frameRate = (float)nFrames / duration;
+        int currentFrame = vid.getCurrentFrame();
+        bool isPlaying = vid.isPlaying();
         ImGui::Text("total: %4d frames, (%3.2f sec)\nframe rate: %3.0f fps\n", nFrames, duration, frameRate);
+        ImGui::Text("state: %s", isPlaying ? "playing" : "Not playing");
+        ImGui::Text("current frame: %d", currentFrame);
+        
     }else{
         ImGui::Text("%s", "Video is not loaded");
     }
