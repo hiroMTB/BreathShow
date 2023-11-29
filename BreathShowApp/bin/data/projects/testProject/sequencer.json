@@ -87,7 +87,7 @@
                     "resolution": "60",
                     "test_texture": "0",
                     "video_path": "vid/test.mp4",
-                    "video_volume": "0"
+                    "video_volume": "0.377"
                 }
             },
             "start": "4209",
