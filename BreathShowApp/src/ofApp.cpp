@@ -34,12 +34,21 @@ void ofApp::setup()
 
 void ofApp::receiveOsc(){
     if(bUseTracker){
-        osc.receive([&](const ofxOscMessage &m) -> void {
-            string address = m.getAddress();
-            const vector<string> &tokens = Util::split(address, "/");
-            body.processOsc(m, tokens);
-            //cout << m << endl;
-        });
+        if(bLiveOsc){
+            osc.receive([&](const ofxOscMessage &m) -> void {
+                string address = m.getAddress();
+                const vector<string> &tokens = Util::split(address, "/");
+                body.processOsc(m, tokens);
+                //cout << m << endl;
+            });
+        }else{
+            // load vezer xml file
+            vezer.receive( [&](const ofxOscMessage & m) -> void {
+               string address = m.getAddress();
+               const vector<string> &tokens = Util::split(address, "/");
+               body.processOsc(m, tokens);
+           });
+        }
     }else{
         // Read sequencer to move Human
     }
@@ -50,9 +59,13 @@ void ofApp::update()
     ofSetFrameRate(app->targetFps);
     
     if(bUseTracker){
+        if(bLiveOsc){
+            
+        }else{
+            vezer.setFrame(sequencer.getCurrentFrame() );
+        }
         receiveOsc();
         body.calc();
-
         human.root.setPosition(body.rootPos);
         
         // orientation
