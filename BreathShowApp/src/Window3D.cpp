@@ -56,6 +56,16 @@ void ofApp::draw3DScene(){
 
     // Floor (Grid)
     drawFloor();
+
+//    ofPushMatrix();
+//    ofTranslate(0, 100, 0);
+//    drawFloor();
+//    ofPopMatrix();
+//
+//    ofPushMatrix();
+//    ofTranslate(0, 200, 0);
+//    drawFloor();
+//    ofPopMatrix();
     
     human.draw();
 
