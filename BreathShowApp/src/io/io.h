@@ -51,7 +51,8 @@ inline bool loadProject(string dirpath){
     bool bWin = app->mainWindow->load(dirpath + "/mainWindow.json");
     bool bPrj = app->projectorWindow->load(dirpath + "/projectorWindow.json");
     bool bSeq = app->sequencer.load(dirpath + "/sequencer.json");
-
+    bool bVezer = app->vezer.load();
+    
     // This limits fps under 30 somehow
     // ofSetFrameRate(targetFps);
     app->human.setup();
@@ -61,7 +62,8 @@ inline bool loadProject(string dirpath){
         i.shape->loadVideo( i.shape->videoPath.get() );
         i.shape->setup();
     }
-    return bApp && bCamera && bHuman && bProjector && bWin && bPrj && bSeq;
+    
+    return bApp && bCamera && bHuman && bProjector && bWin && bPrj && bSeq && bVezer;
 }
 
 inline void dialogueSaveProject(){
@@ -91,6 +93,24 @@ inline string dialogueLoadVideo(){
         }
     }
     return "";
+}
+
+inline void dialogueOpenVezer(const shared_ptr<ofApp> & app){
+    string defaultDirToOpen = ofToDataPath( ".", true);
+    if(!ofDirectory::doesDirectoryExist(defaultDirToOpen)){
+        defaultDirToOpen = "";
+    }
+    vector<string> files = pfd::open_file("Select Vezer XML file", defaultDirToOpen, {"XML Files", "*.xml"}).result();
+    if( !files.empty() ) {
+        const string & filepath = files.at(0);
+        if (ofFile::doesFileExist(filepath, false)) {
+            app->vezer.load(filepath);
+        } else {
+            ofLogError("dialogueOpenFBX") << "FBX file does not exist: " << filepath;
+        }
+    }else{
+        ofLogError("dialogueOpenFBX") << "Something went wrong or canceled?";
+    }
 }
 
 };
