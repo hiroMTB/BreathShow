@@ -82,16 +82,8 @@ public:
         bOn = false;
     }
 
-    const char * getVideoInfo(){
-        if( vid.isLoaded() ){
-            char m[255];
-            int nFrames = vid.getTotalNumFrames();
-            float duration = vid.getDuration();
-            float frameRate = (float)nFrames / duration;
-            sprintf(m, "total: %4d frames, (%3.2f sec)\nframe rate: %3.0f fps\n", nFrames, duration, frameRate);
-            return m;
-        }
-        return "Video is not loaded";
+    const ofVideoPlayer & getVideo(){
+        return vid;
     }
     
     ofParameter<bool> bOn{"On", true};

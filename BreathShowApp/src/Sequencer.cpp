@@ -633,9 +633,17 @@ void Sequencer::videoSection(shared_ptr<Shape> s){
             ImGui::EndTooltip();
         }
     }
-    
-    ImGui::Text("%s", s->getVideoInfo());
-    
+
+    const ofVideoPlayer & vid = s->getVideo();
+    if( vid.isLoaded() ){
+        int nFrames = vid.getTotalNumFrames();
+        float duration = vid.getDuration();
+        float frameRate = (float)nFrames / duration;
+        ImGui::Text("total: %4d frames, (%3.2f sec)\nframe rate: %3.0f fps\n", nFrames, duration, frameRate);
+    }else{
+        ImGui::Text("%s", "Video is not loaded");
+    }
+
     ImGui::Dummy({0, 10});
 
     if(ImGui::Button("Load Video")){
