@@ -18,7 +18,7 @@ public:
     bool load(const string& pathXml){
         ofFile file(pathXml);
         if(file.exists()) {
-            string pathBin = file.getBaseName() + ".bin";
+            string pathBin = file.getEnclosingDirectory() + "/" +  file.getBaseName() + ".bin";
             return load(pathXml, pathBin);
         }else{
             ofLogError("Vezer") << "Vezer XML file does not exist";
