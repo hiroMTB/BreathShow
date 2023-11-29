@@ -37,7 +37,7 @@ public:
     glm::vec3 rootPos{0};
     glm::vec3 rootOri{0};
     
-    ofParameter<glm::vec3> offset{ "offset", glm::vec3(0, 110, 0), glm::vec3(-100), glm::vec3(100)};
+    ofParameter<glm::vec3> offset{ "offset", glm::vec3(0, 110, 0), glm::vec3(-200), glm::vec3(200)};
     ofParameter<glm::vec3> scale{ "scale", glm::vec3(1), glm::vec3(-30), glm::vec3(30)};
     ofParameterGroup landmarkGrp {"Landmark", offset, scale};
 
