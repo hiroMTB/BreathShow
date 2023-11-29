@@ -69,8 +69,11 @@ public:
     
 private:
     
+#if OF_VERSION_MINOR >= 12
+
     // can not load obj file with propery scaling editted by Blender
     glm::vec3 preScale{0.415, -0.415, -0.415};
-    
-    
+#else
+    glm::vec3 preScale{0.415, -0.415, 0.415};
+#endif
 };
