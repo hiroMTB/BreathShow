@@ -93,6 +93,10 @@ public:
         }
     }
     
+    int getTotalFrames(){
+        return comp.length;
+    }
+    
     ofxVezer::Parser parser;
     ofxVezer::Composition comp;
     ofxVezer::Provider provider;

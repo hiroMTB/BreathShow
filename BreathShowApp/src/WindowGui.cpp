@@ -55,6 +55,9 @@ void ofApp::drawGui_Human()
         if(bUseTracker){
 
             if(ImGui::CollapsingHeader("Tracker", ImGuiTreeNodeFlags_DefaultOpen)){
+                
+                ImGui::Checkbox("Live OSC", (bool*)&bLiveOsc.get());
+                
                 if(bLiveOsc){
                     if(ImGui::TreeNodeEx("OSC", ImGuiTreeNodeFlags_DefaultOpen)){
                         if(ImGui::SliderInt("port", (int*)&osc.receivePort.get(), osc.receivePort.getMin(), osc.receivePort.getMax())){
@@ -90,6 +93,9 @@ void ofApp::drawGui_Human()
                     if(ImGui::TreeNodeEx("Vezer", ImGuiTreeNodeFlags_DefaultOpen)){
                          filesystem::path path{vezer.filepath.get()};
                          ImGui::Text("file name: %s", path.filename().c_str());
+                        
+                        ImGui::Text("total frames: %d", vezer.getTotalFrames());
+                        
                          if( ImGui::Button("Load Vezer XML file") ){
                              io::dialogueOpenVezer(app);
                          }
