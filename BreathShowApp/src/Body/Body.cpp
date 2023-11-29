@@ -129,9 +129,11 @@ void Body::draw(float sSize, const ofColor & c){
     ofPushMatrix();
     ofTranslate( rootPos );
 
-    // Root
-    ofSetColor(255,0,0);
-    ofDrawSphere(vec3(0), sSize*1.2f);
+    // Root, yellow shere and arrow
+    ofSetColor(255,255,0);
+    ofDrawSphere(vec3(0), sSize);
+    ofRotateYDeg(rootOri.y);
+    ofDrawArrow(vec3(0), vec3(0,0,30), sSize*2.0f);
     ofPopMatrix();
     
     ofPushMatrix();
