@@ -11,6 +11,7 @@
 #include "Sequencer.h"
 #include "Osc/Osc.h"
 #include "Body/Body.h"
+#include "Vezer/Vezer.h"
 
 using glm::vec2;
 using glm::vec3;
@@ -68,7 +69,8 @@ class ofApp : public ofBaseApp{
         ofParameter<bool> bPlay{"Play", true};
         ofParameter<bool> bLoop{"Loop", true};
         ofParameter<bool> bUseTracker{"Use Tracker", false};
-        ofParameterGroup genGrp{"General", targetFps, bPlay, bLoop, bUseTracker};
+        ofParameter<bool> bLiveOsc{"Live OSC", false};
+        ofParameterGroup genGrp{"General", targetFps, bPlay, bLoop, bUseTracker, bLiveOsc};
 
         ofParameter<bool> b3dSceneOpen{"3DScene Window Open", true};
         ofParameter<bool> bDemoOpen{"Demo Window Open", true};
@@ -92,4 +94,5 @@ class ofApp : public ofBaseApp{
         Sequencer sequencer;
         Osc osc;
         Body body;
+        Vezer vezer;
 };
