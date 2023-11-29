@@ -1,0 +1,546 @@
+{
+	"archiveVersion": "1",
+	"classes": {},
+	"objectVersion": "54",
+	"objects": {
+		"03DED4B9-E066-4E90-824C-25BB91402504": {
+			"explicitFileType": "sourcecode.c.h",
+			"fileEncoding": "4",
+			"isa": "PBXFileReference",
+			"name": "ZMathsFunc.h",
+			"path": "../../../addons/ofxGizmo/libs/LibGizmo/ZMathsFunc.h",
+			"sourceTree": "SOURCE_ROOT"
+		},
+		"0DB26859-15EB-40DB-AF80-FC7098E50EA7": {
+			"explicitFileType": "sourcecode.c.h",
+			"fileEncoding": "4",
+			"isa": "PBXFileReference",
+			"name": "ZBaseDefs.h",
+			"path": "../../../addons/ofxGizmo/libs/LibGizmo/ZBaseDefs.h",
+			"sourceTree": "SOURCE_ROOT"
+		},
+		"0E908449-874F-4E9B-B10D-41F7E3B86640": {
+			"explicitFileType": "sourcecode.c.h",
+			"fileEncoding": "4",
+			"isa": "PBXFileReference",
+			"name": "ZBaseMaths.h",
+			"path": "../../../addons/ofxGizmo/libs/LibGizmo/ZBaseMaths.h",
+			"sourceTree": "SOURCE_ROOT"
+		},
+		"191CD6FA2847E21E0085CBB6": {
+			"fileEncoding": "4",
+			"isa": "PBXFileReference",
+			"lastKnownFileType": "text.plist.entitlements",
+			"path": "of.entitlements",
+			"sourceTree": "<group>"
+		},
+		"191EF70929D778A400F35F26": {
+			"isa": "PBXFileReference",
+			"lastKnownFileType": "folder",
+			"name": "openFrameworks",
+			"path": "../../../libs/openFrameworks",
+			"sourceTree": "SOURCE_ROOT"
+		},
+		"19B789C429E5AB4A0082E9B8": {
+			"buildActionMask": "2147483647",
+			"files": [],
+			"inputFileListPaths": [],
+			"inputPaths": [],
+			"isa": "PBXShellScriptBuildPhase",
+			"outputFileListPaths": [],
+			"outputPaths": [],
+			"runOnlyForDeploymentPostprocessing": "0",
+			"shellPath": "/bin/sh",
+			"shellScript": "\"$OF_PATH/scripts/osx/xcode_project.sh\"\n",
+			"showEnvVarsInLog": "0"
+		},
+		"31467687-5086-4D2A-B889-363352FF0DC4": {
+			"explicitFileType": "sourcecode.c.h",
+			"fileEncoding": "4",
+			"isa": "PBXFileReference",
+			"name": "GizmoTransform.h",
+			"path": "../../../addons/ofxGizmo/libs/LibGizmo/GizmoTransform.h",
+			"sourceTree": "SOURCE_ROOT"
+		},
+		"3DB39DA5-2BCD-40F1-8A8E-6A30755560B1": {
+			"children": [
+				"31467687-5086-4D2A-B889-363352FF0DC4",
+				"77B4A8BB-EF8F-4E75-85BF-E9886B45B9B0",
+				"3DF0C6FB-8C73-464B-B9C8-DB15316A7C8B",
+				"AFACC727-16CA-4064-8B53-70DE6A720F9A",
+				"51ADF0F2-4A77-418F-970B-047409C27D58",
+				"A753E20D-A9E2-4998-857D-B80A6306EFE0",
+				"C87FC44B-D8DF-474A-9CA4-D3C969C5FDEC",
+				"669AF0A9-E89B-4A52-9DB1-997CAEBA5A86",
+				"50463A1D-C445-445E-814C-9E49191F2016",
+				"EFBD5CC4-D162-4657-B31F-682F43F8C066",
+				"4F0342C1-EF7E-43D8-9D20-2FA38EA4F0A8",
+				"0DB26859-15EB-40DB-AF80-FC7098E50EA7",
+				"ADC9D723-32C4-48E3-96DB-9F8B66EE0E32",
+				"0E908449-874F-4E9B-B10D-41F7E3B86640",
+				"8A1323C4-5249-4BFB-9BD3-98FE0D9974B9",
+				"FCD2CC95-1F70-4DCA-86F2-828E3502B4B4",
+				"03DED4B9-E066-4E90-824C-25BB91402504"
+			],
+			"isa": "PBXGroup",
+			"name": "LibGizmo",
+			"path": "../../../addons/ofxGizmo/libs/LibGizmo",
+			"sourceTree": "SOURCE_ROOT"
+		},
+		"3DF0C6FB-8C73-464B-B9C8-DB15316A7C8B": {
+			"explicitFileType": "sourcecode.c.h",
+			"fileEncoding": "4",
+			"isa": "PBXFileReference",
+			"name": "GizmoTransformMove.h",
+			"path": "../../../addons/ofxGizmo/libs/LibGizmo/GizmoTransformMove.h",
+			"sourceTree": "SOURCE_ROOT"
+		},
+		"4F0342C1-EF7E-43D8-9D20-2FA38EA4F0A8": {
+			"explicitFileType": "sourcecode.c.h",
+			"fileEncoding": "4",
+			"isa": "PBXFileReference",
+			"name": "LibBase.h",
+			"path": "../../../addons/ofxGizmo/libs/LibGizmo/LibBase.h",
+			"sourceTree": "SOURCE_ROOT"
+		},
+		"50463A1D-C445-445E-814C-9E49191F2016": {
+			"explicitFileType": "sourcecode.c.h",
+			"fileEncoding": "4",
+			"isa": "PBXFileReference",
+			"name": "GizmoTransformScale.h",
+			"path": "../../../addons/ofxGizmo/libs/LibGizmo/GizmoTransformScale.h",
+			"sourceTree": "SOURCE_ROOT"
+		},
+		"51ADF0F2-4A77-418F-970B-047409C27D58": {
+			"explicitFileType": "sourcecode.c.h",
+			"fileEncoding": "4",
+			"isa": "PBXFileReference",
+			"name": "GizmoTransformRender.h",
+			"path": "../../../addons/ofxGizmo/libs/LibGizmo/GizmoTransformRender.h",
+			"sourceTree": "SOURCE_ROOT"
+		},
+		"5600813E-F547-4063-A080-62621EE0AC9F": {
+			"explicitFileType": "sourcecode.c.h",
+			"fileEncoding": "4",
+			"isa": "PBXFileReference",
+			"name": "ofxGizmo.h",
+			"path": "../../../addons/ofxGizmo/src/ofxGizmo.h",
+			"sourceTree": "SOURCE_ROOT"
+		},
+		"566CF363-D5CE-4A1C-9EC9-DF2220596ACA": {
+			"children": [
+				"3DB39DA5-2BCD-40F1-8A8E-6A30755560B1"
+			],
+			"isa": "PBXGroup",
+			"name": "libs",
+			"path": "../../../addons/ofxGizmo/libs",
+			"sourceTree": "SOURCE_ROOT"
+		},
+		"669AF0A9-E89B-4A52-9DB1-997CAEBA5A86": {
+			"explicitFileType": "sourcecode.cpp.cpp",
+			"fileEncoding": "4",
+			"isa": "PBXFileReference",
+			"name": "GizmoTransformScale.cpp",
+			"path": "../../../addons/ofxGizmo/libs/LibGizmo/GizmoTransformScale.cpp",
+			"sourceTree": "SOURCE_ROOT"
+		},
+		"6D234474-8246-44F6-B3F0-91444D41654A": {
+			"children": [
+				"566CF363-D5CE-4A1C-9EC9-DF2220596ACA",
+				"C780F8CA-BA3A-4586-8AE9-551DBAFFF571"
+			],
+			"isa": "PBXGroup",
+			"name": "ofxGizmo",
+			"path": "../../../addons/ofxGizmo",
+			"sourceTree": "SOURCE_ROOT"
+		},
+		"77B4A8BB-EF8F-4E75-85BF-E9886B45B9B0": {
+			"explicitFileType": "sourcecode.cpp.cpp",
+			"fileEncoding": "4",
+			"isa": "PBXFileReference",
+			"name": "GizmoTransformMove.cpp",
+			"path": "../../../addons/ofxGizmo/libs/LibGizmo/GizmoTransformMove.cpp",
+			"sourceTree": "SOURCE_ROOT"
+		},
+		"8A1323C4-5249-4BFB-9BD3-98FE0D9974B9": {
+			"explicitFileType": "sourcecode.c.h",
+			"fileEncoding": "4",
+			"isa": "PBXFileReference",
+			"name": "ZCollisionsUtils.h",
+			"path": "../../../addons/ofxGizmo/libs/LibGizmo/ZCollisionsUtils.h",
+			"sourceTree": "SOURCE_ROOT"
+		},
+		"929E5DF9-D80B-423B-93EA-2703A266C47B": {
+			"fileRef": "669AF0A9-E89B-4A52-9DB1-997CAEBA5A86",
+			"isa": "PBXBuildFile"
+		},
+		"93A06EC4-35E2-42E7-8489-758C41F4B12D": {
+			"fileRef": "77B4A8BB-EF8F-4E75-85BF-E9886B45B9B0",
+			"isa": "PBXBuildFile"
+		},
+		"94DA9C05-D45D-4277-8EF4-CACE00A9CBDE": {
+			"fileRef": "FCD2CC95-1F70-4DCA-86F2-828E3502B4B4",
+			"isa": "PBXBuildFile"
+		},
+		"A652FCA7-371D-4D8C-AFF8-0F54621F3C7F": {
+			"fileRef": "AFACC727-16CA-4064-8B53-70DE6A720F9A",
+			"isa": "PBXBuildFile"
+		},
+		"A753E20D-A9E2-4998-857D-B80A6306EFE0": {
+			"explicitFileType": "sourcecode.cpp.cpp",
+			"fileEncoding": "4",
+			"isa": "PBXFileReference",
+			"name": "GizmoTransformRotate.cpp",
+			"path": "../../../addons/ofxGizmo/libs/LibGizmo/GizmoTransformRotate.cpp",
+			"sourceTree": "SOURCE_ROOT"
+		},
+		"AB9AA2DD-7346-4B9E-841C-90E9F1E20289": {
+			"fileRef": "ADC9D723-32C4-48E3-96DB-9F8B66EE0E32",
+			"isa": "PBXBuildFile"
+		},
+		"ADC9D723-32C4-48E3-96DB-9F8B66EE0E32": {
+			"explicitFileType": "sourcecode.cpp.cpp",
+			"fileEncoding": "4",
+			"isa": "PBXFileReference",
+			"name": "ZBaseMaths.cpp",
+			"path": "../../../addons/ofxGizmo/libs/LibGizmo/ZBaseMaths.cpp",
+			"sourceTree": "SOURCE_ROOT"
+		},
+		"AFACC727-16CA-4064-8B53-70DE6A720F9A": {
+			"explicitFileType": "sourcecode.cpp.cpp",
+			"fileEncoding": "4",
+			"isa": "PBXFileReference",
+			"name": "GizmoTransformRender.cpp",
+			"path": "../../../addons/ofxGizmo/libs/LibGizmo/GizmoTransformRender.cpp",
+			"sourceTree": "SOURCE_ROOT"
+		},
+		"BB4B014C10F69532006C3DED": {
+			"children": [
+				"6D234474-8246-44F6-B3F0-91444D41654A"
+			],
+			"isa": "PBXGroup",
+			"name": "addons",
+			"path": "../../../addons",
+			"sourceTree": "<group>"
+		},
+		"C780F8CA-BA3A-4586-8AE9-551DBAFFF571": {
+			"children": [
+				"FB10A94F-88C0-4091-A1A7-3C060F581C1C",
+				"5600813E-F547-4063-A080-62621EE0AC9F"
+			],
+			"isa": "PBXGroup",
+			"name": "src",
+			"path": "../../../addons/ofxGizmo/src",
+			"sourceTree": "SOURCE_ROOT"
+		},
+		"C87FC44B-D8DF-474A-9CA4-D3C969C5FDEC": {
+			"explicitFileType": "sourcecode.c.h",
+			"fileEncoding": "4",
+			"isa": "PBXFileReference",
+			"name": "GizmoTransformRotate.h",
+			"path": "../../../addons/ofxGizmo/libs/LibGizmo/GizmoTransformRotate.h",
+			"sourceTree": "SOURCE_ROOT"
+		},
+		"E42962A92163ECCD00A6A9E2": {
+			"alwaysOutOfDate": "1",
+			"buildActionMask": "2147483647",
+			"files": [],
+			"inputPaths": [],
+			"isa": "PBXShellScriptBuildPhase",
+			"name": "Run Script — Compile OF",
+			"outputPaths": [],
+			"runOnlyForDeploymentPostprocessing": "0",
+			"shellPath": "/bin/sh",
+			"shellScript": "echo \"💾 Compiling Openframeworks\"\nxcodebuild -project \"$OF_PATH/libs/openFrameworksCompiled/project/osx/openFrameworksLib.xcodeproj\" -target openFrameworks -configuration \"${CONFIGURATION}\"  CLANG_CXX_LANGUAGE_STANDARD=$CLANG_CXX_LANGUAGE_STANDARD MACOSX_DEPLOYMENT_TARGET=$MACOSX_DEPLOYMENT_TARGET GCC_PREPROCESSOR_DEFINITIONS=$USER_PREPROCESSOR_DEFINITIONS\n",
+			"showEnvVarsInLog": "0"
+		},
+		"E4A5B60F29BAAAE400C2D356": {
+			"buildActionMask": "2147483647",
+			"dstPath": "",
+			"dstSubfolderSpec": "6",
+			"files": [],
+			"isa": "PBXCopyFilesBuildPhase",
+			"runOnlyForDeploymentPostprocessing": "0"
+		},
+		"E4B69B4A0A3A1720003C02F2": {
+			"children": [
+				"191CD6FA2847E21E0085CBB6",
+				"E4B6FCAD0C3E899E008CF71C",
+				"E4EB6923138AFD0F00A09F29",
+				"E4B69E1C0A3A1BDC003C02F2",
+				"191EF70929D778A400F35F26",
+				"BB4B014C10F69532006C3DED",
+				"E4B69B5B0A3A1756003C02F2"
+			],
+			"isa": "PBXGroup",
+			"sourceTree": "<group>"
+		},
+		"E4B69B4C0A3A1720003C02F2": {
+			"attributes": {
+				"LastUpgradeCheck": "0600"
+			},
+			"buildConfigurationList": "E4B69B4D0A3A1720003C02F2",
+			"compatibilityVersion": "Xcode 3.2",
+			"developmentRegion": "en",
+			"hasScannedForEncodings": "0",
+			"isa": "PBXProject",
+			"knownRegions": [
+				"en",
+				"Base"
+			],
+			"mainGroup": "E4B69B4A0A3A1720003C02F2",
+			"productRefGroup": "E4B69B4A0A3A1720003C02F2",
+			"projectDirPath": "",
+			"projectRoot": "",
+			"targets": [
+				"E4B69B5A0A3A1756003C02F2"
+			]
+		},
+		"E4B69B4D0A3A1720003C02F2": {
+			"buildConfigurations": [
+				"E4B69B4E0A3A1720003C02F2",
+				"E4B69B4F0A3A1720003C02F2"
+			],
+			"defaultConfigurationIsVisible": "0",
+			"defaultConfigurationName": "Release",
+			"isa": "XCConfigurationList"
+		},
+		"E4B69B4E0A3A1720003C02F2": {
+			"baseConfigurationReference": "E4EB6923138AFD0F00A09F29",
+			"buildSettings": {
+				"CODE_SIGN_ENTITLEMENTS": "of.entitlements",
+				"COPY_PHASE_STRIP": "NO",
+				"ENABLE_TESTABILITY": "YES",
+				"GCC_OPTIMIZATION_LEVEL": "0",
+				"GCC_WARN_UNUSED_VARIABLE": "NO",
+				"HEADER_SEARCH_PATHS": [
+					"$(OF_CORE_HEADERS)",
+					"src"
+				],
+				"OTHER_CPLUSPLUSFLAGS": "-D__MACOSX_CORE__"
+			},
+			"isa": "XCBuildConfiguration",
+			"name": "Debug"
+		},
+		"E4B69B4F0A3A1720003C02F2": {
+			"baseConfigurationReference": "E4EB6923138AFD0F00A09F29",
+			"buildSettings": {
+				"CODE_SIGN_ENTITLEMENTS": "of.entitlements",
+				"COPY_PHASE_STRIP": "YES",
+				"GCC_OPTIMIZATION_LEVEL": "3",
+				"GCC_UNROLL_LOOPS": "YES",
+				"HEADER_SEARCH_PATHS": [
+					"$(OF_CORE_HEADERS)",
+					"src"
+				],
+				"OTHER_CPLUSPLUSFLAGS": "-D__MACOSX_CORE__"
+			},
+			"isa": "XCBuildConfiguration",
+			"name": "Release"
+		},
+		"E4B69B580A3A1756003C02F2": {
+			"buildActionMask": "2147483647",
+			"files": [
+				"E4B69E200A3A1BDC003C02F2",
+				"E4B69E210A3A1BDC003C02F2",
+				"93A06EC4-35E2-42E7-8489-758C41F4B12D",
+				"A652FCA7-371D-4D8C-AFF8-0F54621F3C7F",
+				"EA4D03EA-6FDC-444D-A78A-9242453C74F3",
+				"929E5DF9-D80B-423B-93EA-2703A266C47B",
+				"AB9AA2DD-7346-4B9E-841C-90E9F1E20289",
+				"94DA9C05-D45D-4277-8EF4-CACE00A9CBDE",
+				"F5318C83-AB29-4CB0-8E5D-2FA0CF222A2D"
+			],
+			"isa": "PBXSourcesBuildPhase",
+			"runOnlyForDeploymentPostprocessing": "0"
+		},
+		"E4B69B590A3A1756003C02F2": {
+			"buildActionMask": "2147483647",
+			"files": [],
+			"isa": "PBXFrameworksBuildPhase",
+			"runOnlyForDeploymentPostprocessing": "0"
+		},
+		"E4B69B5A0A3A1756003C02F2": {
+			"buildConfigurationList": "E4B69B5F0A3A1757003C02F2",
+			"buildPhases": [
+				"E42962A92163ECCD00A6A9E2",
+				"E4B69B580A3A1756003C02F2",
+				"E4B69B590A3A1756003C02F2",
+				"E4C2427710CC5ABF004149E2",
+				"E4A5B60F29BAAAE400C2D356",
+				"19B789C429E5AB4A0082E9B8"
+			],
+			"buildRules": [],
+			"dependencies": [],
+			"isa": "PBXNativeTarget",
+			"name": "GizmoExample",
+			"productName": "myOFApp",
+			"productReference": "E4B69B5B0A3A1756003C02F2",
+			"productType": "com.apple.product-type.application"
+		},
+		"E4B69B5B0A3A1756003C02F2": {
+			"explicitFileType": "wrapper.application",
+			"includeInIndex": "0",
+			"isa": "PBXFileReference",
+			"path": "GizmoExampleDebug.app",
+			"sourceTree": "BUILT_PRODUCTS_DIR"
+		},
+		"E4B69B5F0A3A1757003C02F2": {
+			"buildConfigurations": [
+				"E4B69B600A3A1757003C02F2",
+				"E4B69B610A3A1757003C02F2"
+			],
+			"defaultConfigurationIsVisible": "0",
+			"defaultConfigurationName": "Release",
+			"isa": "XCConfigurationList"
+		},
+		"E4B69B600A3A1757003C02F2": {
+			"baseConfigurationReference": "E4EB6923138AFD0F00A09F29",
+			"buildSettings": {
+				"ARCHS": "$(ARCHS_STANDARD)",
+				"COPY_PHASE_STRIP": "NO",
+				"FRAMEWORK_SEARCH_PATHS": "$(inherited)",
+				"GCC_DYNAMIC_NO_PIC": "NO",
+				"HEADER_SEARCH_PATHS": [
+					"$(OF_CORE_HEADERS)",
+					"src",
+					"src",
+					"../../../addons/ofxGizmo/libs",
+					"../../../addons/ofxGizmo/libs/LibGizmo",
+					"../../../addons/ofxGizmo/src"
+				],
+				"LIBRARY_SEARCH_PATHS": "$(inherited)",
+				"OTHER_LDFLAGS": [
+					"$(OF_CORE_LIBS)",
+					"$(OF_CORE_FRAMEWORKS)",
+					"$(LIB_OF_DEBUG)"
+				]
+			},
+			"isa": "XCBuildConfiguration",
+			"name": "Debug"
+		},
+		"E4B69B610A3A1757003C02F2": {
+			"baseConfigurationReference": "E4EB6923138AFD0F00A09F29",
+			"buildSettings": {
+				"ARCHS": "$(ARCHS_STANDARD)",
+				"COPY_PHASE_STRIP": "YES",
+				"FRAMEWORK_SEARCH_PATHS": "$(inherited)",
+				"HEADER_SEARCH_PATHS": [
+					"$(OF_CORE_HEADERS)",
+					"src",
+					"src",
+					"../../../addons/ofxGizmo/libs",
+					"../../../addons/ofxGizmo/libs/LibGizmo",
+					"../../../addons/ofxGizmo/src"
+				],
+				"LIBRARY_SEARCH_PATHS": "$(inherited)",
+				"OTHER_LDFLAGS": [
+					"$(OF_CORE_LIBS)",
+					"$(OF_CORE_FRAMEWORKS)",
+					"$(LIB_OF)"
+				],
+				"baseConfigurationReference": "E4EB6923138AFD0F00A09F29"
+			},
+			"isa": "XCBuildConfiguration",
+			"name": "Release"
+		},
+		"E4B69E1C0A3A1BDC003C02F2": {
+			"children": [
+				"E4B69E1D0A3A1BDC003C02F2",
+				"E4B69E1E0A3A1BDC003C02F2",
+				"E4B69E1F0A3A1BDC003C02F2"
+			],
+			"isa": "PBXGroup",
+			"path": "src",
+			"sourceTree": "SOURCE_ROOT"
+		},
+		"E4B69E1D0A3A1BDC003C02F2": {
+			"fileEncoding": "4",
+			"isa": "PBXFileReference",
+			"lastKnownFileType": "sourcecode.cpp.cpp",
+			"name": "main.cpp",
+			"path": "src/main.cpp",
+			"sourceTree": "SOURCE_ROOT"
+		},
+		"E4B69E1E0A3A1BDC003C02F2": {
+			"explicitFileType": "sourcecode.cpp.cpp",
+			"fileEncoding": "4",
+			"isa": "PBXFileReference",
+			"name": "ofApp.cpp",
+			"path": "src/ofApp.cpp",
+			"sourceTree": "SOURCE_ROOT"
+		},
+		"E4B69E1F0A3A1BDC003C02F2": {
+			"fileEncoding": "4",
+			"isa": "PBXFileReference",
+			"lastKnownFileType": "sourcecode.c.h",
+			"name": "ofApp.h",
+			"path": "src/ofApp.h",
+			"sourceTree": "SOURCE_ROOT"
+		},
+		"E4B69E200A3A1BDC003C02F2": {
+			"fileRef": "E4B69E1D0A3A1BDC003C02F2",
+			"isa": "PBXBuildFile"
+		},
+		"E4B69E210A3A1BDC003C02F2": {
+			"fileRef": "E4B69E1E0A3A1BDC003C02F2",
+			"isa": "PBXBuildFile"
+		},
+		"E4B6FCAD0C3E899E008CF71C": {
+			"fileEncoding": "4",
+			"isa": "PBXFileReference",
+			"lastKnownFileType": "text.plist.xml",
+			"path": "openFrameworks-Info.plist",
+			"sourceTree": "<group>"
+		},
+		"E4C2427710CC5ABF004149E2": {
+			"buildActionMask": "2147483647",
+			"dstPath": "",
+			"dstSubfolderSpec": "10",
+			"files": [],
+			"isa": "PBXCopyFilesBuildPhase",
+			"runOnlyForDeploymentPostprocessing": "0"
+		},
+		"E4EB6923138AFD0F00A09F29": {
+			"fileEncoding": "4",
+			"isa": "PBXFileReference",
+			"lastKnownFileType": "text.xcconfig",
+			"path": "Project.xcconfig",
+			"sourceTree": "<group>"
+		},
+		"EA4D03EA-6FDC-444D-A78A-9242453C74F3": {
+			"fileRef": "A753E20D-A9E2-4998-857D-B80A6306EFE0",
+			"isa": "PBXBuildFile"
+		},
+		"EFBD5CC4-D162-4657-B31F-682F43F8C066": {
+			"explicitFileType": "sourcecode.c.h",
+			"fileEncoding": "4",
+			"isa": "PBXFileReference",
+			"name": "IGizmo.h",
+			"path": "../../../addons/ofxGizmo/libs/LibGizmo/IGizmo.h",
+			"sourceTree": "SOURCE_ROOT"
+		},
+		"F5318C83-AB29-4CB0-8E5D-2FA0CF222A2D": {
+			"fileRef": "FB10A94F-88C0-4091-A1A7-3C060F581C1C",
+			"isa": "PBXBuildFile"
+		},
+		"FB10A94F-88C0-4091-A1A7-3C060F581C1C": {
+			"explicitFileType": "sourcecode.cpp.cpp",
+			"fileEncoding": "4",
+			"isa": "PBXFileReference",
+			"name": "ofxGizmo.cpp",
+			"path": "../../../addons/ofxGizmo/src/ofxGizmo.cpp",
+			"sourceTree": "SOURCE_ROOT"
+		},
+		"FCD2CC95-1F70-4DCA-86F2-828E3502B4B4": {
+			"explicitFileType": "sourcecode.cpp.cpp",
+			"fileEncoding": "4",
+			"isa": "PBXFileReference",
+			"name": "ZMathsFunc.cpp",
+			"path": "../../../addons/ofxGizmo/libs/LibGizmo/ZMathsFunc.cpp",
+			"sourceTree": "SOURCE_ROOT"
+		}
+	},
+	"openFrameworksProjectGeneratorVersion": "21",
+	"rootObject": "E4B69B4C0A3A1720003C02F2"
+}
