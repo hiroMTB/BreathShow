@@ -1,9 +1,10 @@
 {
     "app_settings": {
         "General": {
+            "Live_OSC": "0",
             "Loop": "1",
             "Play": "1",
-            "Use_Tracker": "0",
+            "Use_Tracker": "1",
             "target_fps": "120"
         },
         "Panels": {
