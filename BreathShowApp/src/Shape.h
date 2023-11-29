@@ -42,7 +42,7 @@ public:
             vid.setUseTexture(true);
             vid.setLoopState(OF_LOOP_NORMAL);
             vid.play();
-            vid.setVolume(0);
+            //vid.setVolume(0);
             ofLogNotice("Fan") << "Video file loaded: ";
             videoPath = path;
         }else{
