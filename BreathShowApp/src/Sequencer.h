@@ -30,6 +30,8 @@ public:
     
     const vector<MySequence::MySequenceItem> & getSequenceItems(){ return mySequence.myItems; };
     
+    int getCurrentFrame() const { return currentFrame; }
+    
 private:
     
     void startTrack(const shared_ptr<Shape> & shape, int frame);
