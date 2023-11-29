@@ -6,7 +6,7 @@
             "end": "2000",
             "shape": {
                 "Fun": {
-                    "On": "1",
+                    "On": "0",
                     "direction": "-1",
                     "openAngle": "180",
                     "orientationY": "0",
@@ -14,7 +14,8 @@
                     "radius": "100",
                     "resolution": "60",
                     "test_texture": "0",
-                    "video_path": "vid/fanL_h264.mp4"
+                    "video_path": "vid/fanL_h264.mp4",
+                    "video_volume": "1"
                 }
             },
             "start": "30",
@@ -24,7 +25,7 @@
             "end": "2000",
             "shape": {
                 "Fun": {
-                    "On": "1",
+                    "On": "0",
                     "direction": "1",
                     "openAngle": "180",
                     "orientationY": "0",
@@ -32,7 +33,8 @@
                     "radius": "100",
                     "resolution": "60",
                     "test_texture": "0",
-                    "video_path": "vid/fanR_h264.mp4"
+                    "video_path": "vid/fanR_h264.mp4",
+                    "video_volume": "1"
                 }
             },
             "start": "30",
@@ -47,7 +49,8 @@
                     "position": "0, 120, 0",
                     "size": "200, 200",
                     "test_texture": "0",
-                    "video_path": "vid/rectScreen_h264.mp4"
+                    "video_path": "vid/rectScreen_h264.mp4",
+                    "video_volume": "1"
                 }
             },
             "start": "2020",
@@ -64,7 +67,8 @@
                     "radius": "100",
                     "resolution": "60",
                     "test_texture": "0",
-                    "video_path": "vid/ellipse_h264.mp4"
+                    "video_path": "vid/ellipse_h264.mp4",
+                    "video_volume": "1"
                 }
             },
             "start": "3254",
@@ -74,7 +78,7 @@
             "end": "5209",
             "shape": {
                 "Fun": {
-                    "On": "0",
+                    "On": "1",
                     "direction": "1",
                     "openAngle": "180",
                     "orientationY": "0",
@@ -82,7 +86,8 @@
                     "radius": "100",
                     "resolution": "60",
                     "test_texture": "0",
-                    "video_path": "vid/test.mp4"
+                    "video_path": "vid/test.mp4",
+                    "video_volume": "0"
                 }
             },
             "start": "4209",

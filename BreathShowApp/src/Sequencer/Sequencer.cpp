@@ -286,12 +286,19 @@ void Sequencer::draw(bool * bOpen){
         static int firstFrame = 0;
         static bool expanded = true;
         
-        ImGui::PushItemWidth(130);
+        ImGui::PushItemWidth(100);
+        
         ImGui::InputInt("Min", &mySequence.mFrameMin);
-        ImGui::SameLine();
+
+        ImGui::SameLine(); ImGui::Dummy({30, 0}); ImGui::SameLine();
         ImGui::InputInt("Frame ", &currentFrame);
+
         ImGui::SameLine();
+        ImGui::Text("(%3.2f sec)", currentFrame/30.0f);
+        
+        ImGui::SameLine(); ImGui::Dummy({30, 0}); ImGui::SameLine();
         ImGui::InputInt("Max", &mySequence.mFrameMax);
+
         ImGui::PopItemWidth();
         
         int prevCurrentFrame = currentFrame;
@@ -621,7 +628,8 @@ void Sequencer::videoSection(shared_ptr<Shape> s){
 
     string filepath = ofToDataPath(s->videoPath.get(), true);
     filesystem::path p(filepath);
-    ImGui::TextWrapped("File Name: %s", p.filename().c_str());
+    ImGui::TextWrapped("File Name     : %s", p.filename().c_str());
+
     {
         ImGui::SameLine();
         ImGui::TextDisabled("(path)");
@@ -641,9 +649,15 @@ void Sequencer::videoSection(shared_ptr<Shape> s){
         float frameRate = (float)nFrames / duration;
         int currentFrame = vid.getCurrentFrame();
         bool isPlaying = vid.isPlaying();
-        ImGui::Text("total: %4d frames, (%3.2f sec)\nframe rate: %3.0f fps\n", nFrames, duration, frameRate);
-        ImGui::Text("state: %s", isPlaying ? "playing" : "Not playing");
-        ImGui::Text("current frame: %d", currentFrame);
+        bool isLoop = vid.getLoopState() != OF_LOOP_NONE;
+        ImGui::Text("current frame : %5d frame", currentFrame);
+        ImGui::Text("total frames  : %5d frames, (%3.2f sec)", nFrames, duration);
+        ImGui::Text("frame rate    : %2.2f fps", frameRate);
+        ImGui::Text("state         : %s", isPlaying ? "Playing" : "Not playing");
+        ImGui::Text("loop          : %s", isLoop ? "Loop" : "Loop None");
+        if(ImGui::SliderFloat("volume", (float *)&s->videoVolume.get(), s->videoVolume.getMin(), s->videoVolume.getMax())){
+            s->setVideoVolume(s->videoVolume);
+        }
         
     }else{
         ImGui::Text("%s", "Video is not loaded");

@@ -40,7 +40,7 @@ public:
         if( ofFile::doesFileExist(path)){
             vid.load(path);
             vid.setUseTexture(true);
-            vid.setLoopState(OF_LOOP_NORMAL);
+            vid.setLoopState(OF_LOOP_NONE);
             vid.play();
             //vid.setVolume(0);
             ofLogNotice("Fan") << "Video file loaded: ";
@@ -50,6 +50,11 @@ public:
         }
     }
 
+    void setVideoVolume(float volume){
+        videoVolume = volume;
+        vid.setVolume(videoVolume);
+    }
+    
     void pause(bool b){
         vid.setPaused(b);
     }
@@ -96,9 +101,10 @@ public:
     ofParameter<bool> bShowTest{"test texture", false};
     //ofParameter<vec3> position{"position", vec3(5,36,0), vec3(-100), vec3(100)};
     ofParameter<float> orientationY{"orientationY", 0, -180, 180};
+    ofParameter<float> videoVolume{"video volume", 1, 0, 1};
     ofParameter<string> videoPath{"video path", "vid/test.mp4"};
 
-    ofParameterGroup grp{"Fun", bOn, bShowTest, orientationY, videoPath };
+    ofParameterGroup grp{"Fun", bOn, bShowTest, orientationY, videoPath, videoVolume };
     
 protected:
     ofMesh mesh;
