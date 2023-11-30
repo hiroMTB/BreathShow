@@ -108,6 +108,21 @@ void ofApp::drawGui_Human()
                              ImGui::TreePop();
                          }
                         
+                        if (ImGui::TreeNodeEx("Filter", ImGuiTreeNodeFlags_DefaultOpen)) {
+                            vector<string> fTypes{"none", "legacy", "OneEuro"};
+                            ofxImGui::VectorCombo("Filter Type", (int *) &body.filterType.get(), fTypes);
+                            if (body.filterType == 0) {
+                            } else if (body.filterType == 1) {
+                                ImGui::SliderFloat(body.lowpass.getName().c_str(), (float*)&body.lowpass.get(), body.lowpass.getMin(), body.lowpass.getMax());
+                            } else if (body.filterType == 2) {
+                                gui::Helper::DragDouble(body.frequency, 1);
+                                gui::Helper::DragDouble(body.mincutoff);
+                                gui::Helper::DragDouble(body.beta);
+                                gui::Helper::DragDouble(body.dcutoff);
+                            }
+                            ImGui::TreePop();
+                        }
+                        
                         ImGui::TreePop();
                     }
                 }
@@ -116,8 +131,8 @@ void ofApp::drawGui_Human()
                     if(ImGui::SliderFloat3("offset", (float*)&body.offset.get().x, body.offset.getMin().x, body.offset.getMax().x)){
                     }
                     
-                    //if(ImGui::SliderFloat3("Scale", (float*)&body.scale.get().x, body.scale.getMin().x, body.scale.getMax().x)){
-                    //}
+                    if(ImGui::SliderFloat3("Scale", (float*)&body.scale.get().x, body.scale.getMin().x, body.scale.getMax().x)){
+                    }
 
                     if(ImGui::Button("Set Offset")){
                         vec3 prevOffset = body.offset;
