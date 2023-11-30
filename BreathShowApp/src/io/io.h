@@ -9,6 +9,8 @@ namespace io{
 
 inline bool saveProject(string dirpath){
     auto & app = ofApp::get();
+    app->currentProjectPath = dirpath;
+    
     bool bRel = ofDirectory::doesDirectoryExist(dirpath, true);
     bool bAbs = ofDirectory::doesDirectoryExist(dirpath, false);
     if(!bRel && !bAbs){
@@ -28,12 +30,15 @@ inline bool saveProject(string dirpath){
     bool bBody = Serializer::save(app->body.grp, dirpath + "/body.json");
     bool bVezer = Serializer::save(app->vezer.grp, dirpath + "/vezer.json");
 
+    Serializer::save(app->initGrp, ofToDataPath("./init.json"));
+
     return bApp && bCamera && bHuman && bProjector && bWin && bPrj && bBody && bVezer;
 }
 
 inline bool loadProject(string dirpath){
     auto & app = ofApp::get();
-
+    app->currentProjectPath = dirpath;
+    
     bool bRel = ofDirectory::doesDirectoryExist(dirpath, true);
     bool bAbs = ofDirectory::doesDirectoryExist(dirpath, false);
     if(!bRel && !bAbs){
