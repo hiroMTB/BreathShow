@@ -26,7 +26,8 @@ void ofApp::setup()
     cam.setNearClip(1);
     cam.setFarClip(10000);
     
-    currentProjectPath = "./projects/testProject";
+    Serializer::load(initGrp, ofToDataPath("./init.json"));
+    //currentProjectPath = "./projects/testProject";
     io::loadProject(currentProjectPath);
         
     osc.setupReceiver();
