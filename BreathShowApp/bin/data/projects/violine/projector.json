@@ -1,0 +1,14 @@
+{
+    "Projector": {
+        "calibration": "0",
+        "farClip": "600",
+        "fbo_offset_position": "0, 0",
+        "frustumVisible": "0",
+        "naerClip": "1",
+        "position": "0, 235, 480",
+        "principalPoint": "960, 0",
+        "resolution": "1920, 1080",
+        "rotationDegs": "0, 0, 0",
+        "throwToWidthRatio": "1.25"
+    }
+}

@@ -1,0 +1,43 @@
+--------------ofNode parameters--------------
+position
+20.5442, 216.194, 338.997
+scale
+1, 1, 1
+orientation
+0.982847, -0.184135, 0.00349686, -0.00974031
+--------------ofCamera parameters--------------
+fov
+60
+near
+1
+far
+10000
+lensOffset
+0, 0
+forceAspectRatio
+0
+aspectRatio
+1.33333
+isOrtho
+0
+vFlip
+0
+--------------ofEasyCam parameters--------------
+target
+0, 0, 0
+bEnableMouseMiddleButton
+1
+bMouseInputEnabled
+1
+drag
+0.9
+doTranslationKey
+m
+relativeYAxis
+0
+doInertia
+0
+upAxis
+0, 1, 0
+controlArea
+320, 37, 0, 1117, 730

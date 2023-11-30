@@ -1,0 +1,44 @@
+{
+    "max": "6000",
+    "min": "-120",
+    "tracks": [
+        {
+            "end": "5500",
+            "shape": {
+                "Fun": {
+                    "On": "1",
+                    "direction": "-1",
+                    "openAngle": "180",
+                    "orientationY": "2.457",
+                    "position": "-7, 109, -17.808",
+                    "radius": "85.95",
+                    "resolution": "60",
+                    "test_texture": "0",
+                    "video_path": "/Users/matobahiroshi/Desktop/of_v0.11.0/apps/BreathShow/BreathShowApp/bin/data/vid/001_Final_Synched_L.mp4",
+                    "video_volume": "1"
+                }
+            },
+            "start": "-80",
+            "type": "0"
+        },
+        {
+            "end": "5500",
+            "shape": {
+                "Fun": {
+                    "On": "1",
+                    "direction": "1",
+                    "openAngle": "180",
+                    "orientationY": "-2.457",
+                    "position": "22, 109, -17.808",
+                    "radius": "85.95",
+                    "resolution": "60",
+                    "test_texture": "0",
+                    "video_path": "/Users/matobahiroshi/Desktop/of_v0.11.0/apps/BreathShow/BreathShowApp/bin/data/vid/001_Final_Synched_R.mp4",
+                    "video_volume": "1"
+                }
+            },
+            "start": "-80",
+            "type": "0"
+        }
+    ]
+}
