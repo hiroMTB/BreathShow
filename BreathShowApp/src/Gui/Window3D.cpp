@@ -108,7 +108,7 @@ void ofApp::drawProjectorFbo(){
 void ofApp::drawFloor(){
     ofPushMatrix();
     ofRotateZDeg(90);
-    ofSetColor(180);
+    ofSetColor(10);
     ofDrawGridPlane(25, 4*2);   // 25cm, 2m x 2m grid
     ofPopMatrix();
 }

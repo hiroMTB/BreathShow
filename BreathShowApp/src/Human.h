@@ -21,10 +21,15 @@ public:
     
     bool setup(){
         
-        string filepath = "./3dModel/human.obj";
+        model.clear();
+        mesh.clear();
+        model.setScaleNormalization(false);
+        
+        //string filepath = "./3dModel/human.obj";
+        string filepath = "./3dModel/human.ply";
         
 #if OF_VERSION_MINOR >= 12
-        bool bOk = model.load(filepath); //, ofxAssimpModelLoader::OPTIMIZE_HIGH);
+        bool bOk = model.load(filepath, ofxAssimpModelLoader::OPTIMIZE_HIGH);
 #else
         bool bOk = model.loadModel(filepath, true);
 #endif
@@ -37,6 +42,12 @@ public:
             //model.setScale(scale.get().x, scale.get().y, scale.get().z) ;
             //model.setPosition(position.get().x, position.get().y, position.get().z);
             //model.setRotation(0, orientationY, 0, 1, 0);
+            
+            unsigned int nMesh = model.getNumMeshes();
+            for(int i=0; i<nMesh; i++){
+                mesh = model.getMesh(i);
+            }
+
         }else{
             ofLogError() << "Can not load: "<< filepath;
         }
@@ -46,9 +57,10 @@ public:
     
     void draw(){
         if(bOn){
-            ofSetColor(180);
             root.transformGL();
-            model.drawWireframe();            
+            ofSetColor(200, 200);
+            //model.drawWireframe();
+            mesh.drawWireframe();
             root.restoreTransformGL();
         }
     }
@@ -56,6 +68,7 @@ public:
     void setModelScale(){
         glm::vec3 s =  preScale * height.get() * 0.01f ;
         model.setScale(s.x, s.y, s.z);
+        model.update();
     }
     
     ofNode root; // empty Root Node, place holder
@@ -66,14 +79,13 @@ public:
     ofParameter<int> height{"height", 165, 100, 200};
     ofParameter<float> orientationY{"orientationY", 0, -360, 360};
     ofParameterGroup grp{"human", bOn, height, orientationY};
-    
+    ofMesh mesh;
 private:
     
 #if OF_VERSION_MINOR >= 12
-
     // can not load obj file with propery scaling editted by Blender
-    glm::vec3 preScale{0.415, -0.415, -0.415};
+    glm::vec3 preScale{1};
 #else
-    glm::vec3 preScale{0.415, -0.415, 0.415};
+    glm::vec3 preScale{1};
 #endif
 };
