@@ -1,0 +1,6 @@
+{
+    "Vezer": {
+        "File_Path": "./vezer/cello_v2.xml",
+        "Max_Message_Queue_Num": "5"
+    }
+}

@@ -1,0 +1,24 @@
+{
+    "max": "29928",
+    "min": "0",
+    "tracks": [
+        {
+            "end": "10000",
+            "shape": {
+                "Ellipse": {
+                    "On": "1",
+                    "center_width": "27.577",
+                    "orientationY": "0",
+                    "position": "9.5, 111, 0",
+                    "radius": "80",
+                    "resolution": "60",
+                    "test_texture": "0",
+                    "video_path": "/Users/matobahiroshi/Desktop/of_v0.11.0/apps/BreathShow/BreathShowApp/bin/data/vid/Circle_Cello_final.mov",
+                    "video_volume": "1"
+                }
+            },
+            "start": "0",
+            "type": "2"
+        }
+    ]
+}
