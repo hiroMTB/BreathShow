@@ -31,9 +31,17 @@ public:
         if(file.exists()) {
             filepath = pathXml;
             vector<ofxVezer::Composition> comps = ofxVezer::ParserCereal::load(pathXml, pathBin);
-            comp = comps[0];
-            comp.combine(comps[1]);
-            parser.redraw(comp);
+            
+            comp.tracks.clear();
+            comp.tmp_tracks.clear();
+            
+            if(comps.size() !=0){
+                comp = comps[0];
+                //comp.combine(comps[1]);
+                parser.redraw(comp);
+            }else{
+                ofLogError("Vezer") << "Empty Composition";
+            }
             return true;
         }else{
             ofLogError("Vezer") << "Vezer XML file does not exist";
@@ -41,13 +49,13 @@ public:
         }
     }
 
-//    void draw(){
-//        parser.debugDraw();
+    void draw(){
+        parser.debugDraw();
 //        //int frame = int(ofGetElapsedTimef() * comp.fps) % comp.length;
 //        int frame = currentFrame;
 //        float x = (frame / float(comp.length)) * ofGetWidth();
 //        ofRect(x, 0, 1, ofGetHeight());
-//    }
+    }
 
     void redraw(){
         parser.redraw(comp);
