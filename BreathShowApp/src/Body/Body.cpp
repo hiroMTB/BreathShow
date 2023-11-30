@@ -56,15 +56,87 @@ void Body::processOsc(const ofxOscMessage & m, const vector<string> & tokens){
     string address = m.getAddress();
     // /tracker
     if( tokens[1] == "tracker" ){
-
-        for(int i=0; i<15; i++){
-            float x = m.getArgAsFloat(i*3+0);
-            float y = m.getArgAsFloat(i*3+1);
-            float z = m.getArgAsFloat(i*3+2);
-            updateValue(landmarks[i], x, 0);
-            updateValue(landmarks[i], y, 1);
-            updateValue(landmarks[i], z, 2);
-            //cout << i << " : " << x << ", " << y << ", " << z << endl;
+        
+        float x = m.getArgAsFloat(0);
+        float y = m.getArgAsFloat(1);
+        float z = m.getArgAsFloat(2);
+        if(tokens.size() >= 3){
+            string jointName = tokens[2];
+            
+            if(jointName == "hipL"){
+                updateValue( landmarks[Landmark::LEFT_HIP], x, 0);
+                updateValue( landmarks[Landmark::LEFT_HIP], y, 1);
+                updateValue( landmarks[Landmark::LEFT_HIP], z, 2);
+            } else if(jointName == "hipR"){
+                updateValue( landmarks[Landmark::RIGHT_HIP], x, 0);
+                updateValue( landmarks[Landmark::RIGHT_HIP], y, 1);
+                updateValue( landmarks[Landmark::RIGHT_HIP], z, 2);
+            } else if(jointName == "torso"){
+                updateValue( landmarks[Landmark::TORSO], x, 0);
+                updateValue( landmarks[Landmark::TORSO], y, 1);
+                updateValue( landmarks[Landmark::TORSO], z, 2);
+            } else if(jointName == "neck"){
+                updateValue( landmarks[Landmark::NECK], x, 0);
+                updateValue( landmarks[Landmark::NECK], y, 1);
+                updateValue( landmarks[Landmark::NECK], z, 2);
+            } else if(jointName == "head"){
+                updateValue( landmarks[Landmark::HEAD], x, 0);
+                updateValue( landmarks[Landmark::HEAD], y, 1);
+                updateValue( landmarks[Landmark::HEAD], z, 2);
+            } else if(jointName == "shoulderL"){
+                updateValue( landmarks[Landmark::LEFT_SHOULDER], x, 0);
+                updateValue( landmarks[Landmark::LEFT_SHOULDER], y, 1);
+                updateValue( landmarks[Landmark::LEFT_SHOULDER], z, 2);
+            } else if(jointName == "shoulderR"){
+                updateValue( landmarks[Landmark::RIGHT_SHOULDER], x, 0);
+                updateValue( landmarks[Landmark::RIGHT_SHOULDER], y, 1);
+                updateValue( landmarks[Landmark::RIGHT_SHOULDER], z, 2);
+            } else if(jointName == "elbowL"){
+                updateValue( landmarks[Landmark::LEFT_ELBOW], x, 0);
+                updateValue( landmarks[Landmark::LEFT_ELBOW], y, 1);
+                updateValue( landmarks[Landmark::LEFT_ELBOW], z, 2);
+            } else if(jointName == "elbowR"){
+                updateValue( landmarks[Landmark::RIGHT_ELBOW], x, 0);
+                updateValue( landmarks[Landmark::RIGHT_ELBOW], y, 1);
+                updateValue( landmarks[Landmark::RIGHT_ELBOW], z, 2);
+            } else if(jointName == "handL"){
+                updateValue( landmarks[Landmark::LEFT_HAND], x, 0);
+                updateValue( landmarks[Landmark::LEFT_HAND], y, 1);
+                updateValue( landmarks[Landmark::LEFT_HAND], z, 2);
+            } else if(jointName == "handR"){
+                updateValue( landmarks[Landmark::RIGHT_HAND], x, 0);
+                updateValue( landmarks[Landmark::RIGHT_HAND], y, 1);
+                updateValue( landmarks[Landmark::RIGHT_HAND], z, 2);
+            } else if(jointName == "kneeL"){
+                updateValue( landmarks[Landmark::LEFT_KNEE], x, 0);
+                updateValue( landmarks[Landmark::LEFT_KNEE], y, 1);
+                updateValue( landmarks[Landmark::LEFT_KNEE], z, 2);
+            } else if(jointName == "kneeR"){
+                updateValue( landmarks[Landmark::RIGHT_KNEE], x, 0);
+                updateValue( landmarks[Landmark::RIGHT_KNEE], y, 1);
+                updateValue( landmarks[Landmark::RIGHT_KNEE], z, 2);
+            } else if(jointName == "footL"){
+                updateValue( landmarks[Landmark::LEFT_FOOT], x, 0);
+                updateValue( landmarks[Landmark::LEFT_FOOT], y, 1);
+                updateValue( landmarks[Landmark::LEFT_FOOT], z, 2);
+            } else if(jointName == "footR"){
+                updateValue( landmarks[Landmark::RIGHT_FOOT], x, 0);
+                updateValue( landmarks[Landmark::RIGHT_FOOT], y, 1);
+                updateValue( landmarks[Landmark::RIGHT_FOOT], z, 2);
+            } else{
+                ofLogError("Body") << "Strange joint name: " <<jointName;
+            }
+        }else{
+            // legacy
+            for(int i=0; i<15; i++){
+                float x = m.getArgAsFloat(i*3+0);
+                float y = m.getArgAsFloat(i*3+1);
+                float z = m.getArgAsFloat(i*3+2);
+                updateValue(landmarks[i], x, 0);
+                updateValue(landmarks[i], y, 1);
+                updateValue(landmarks[i], z, 2);
+                //cout << i << " : " << x << ", " << y << ", " << z << endl;
+            }
         }
     }else if(tokens[1] == "enter"){
         //bEnter = true;
