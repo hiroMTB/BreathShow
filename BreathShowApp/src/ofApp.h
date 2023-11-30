@@ -85,8 +85,8 @@ class ofApp : public ofBaseApp{
         Human human;
         //vector<shared_ptr<Shape>> shapes;
             
-        string currentProjectPath;
-    
+        ofParameter<string> currentProjectPath{"Current Project Path", "./projects/testProject"};
+        ofParameterGroup initGrp{"init", currentProjectPath};
     public:
         std::shared_ptr<MainWindow> mainWindow;
         std::shared_ptr<ProjectorWindow> projectorWindow;
