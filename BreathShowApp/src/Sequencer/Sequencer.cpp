@@ -84,6 +84,11 @@ SequenceUser Sequencer::addTrack( int type, int st, int end, bool bExpanded ){
     return user;
 }
 
+void Sequencer::deleteTrackAll(){
+
+    mySequence.myItems.clear();
+}
+
 void Sequencer::deleteTrack(int index){
     
     mySequence.myItems.erase(mySequence.myItems.begin() + index);
@@ -642,6 +647,9 @@ bool Sequencer::load(const std::string & filepath){
         
         ofJson json = ofLoadJson(filepath);
         if(!json.is_null()){
+        
+            deleteTrackAll();
+            
             int min = ofToInt(json.value("min", "0"));
             int max = ofToInt(json.value("max", "1000"));
             

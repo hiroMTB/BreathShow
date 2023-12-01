@@ -27,6 +27,7 @@ public:
 
     SequenceUser addTrack(int type, int st=0, int end=1000, bool bExpanded=false  );
     void deleteTrack(int index);
+    void deleteTrackAll();
     
     const vector<MySequence::MySequenceItem> & getSequenceItems(){ return mySequence.myItems; };
     
