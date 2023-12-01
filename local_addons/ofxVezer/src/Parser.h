@@ -104,10 +104,14 @@ namespace ofx { namespace vezer{
     };
     
     class Parser{
+
     protected:
         ofFbo fbo;
+
     public:
         vector<Composition> compositions;
+        ofFbo & getFbo(){ return fbo; };
+        
     public:
         Parser ();
         
@@ -118,7 +122,8 @@ namespace ofx { namespace vezer{
         
         void debugDraw();
         
-        ofFbo redraw(Composition comp);
+        void redraw(Composition comp);
+        void redraw(Composition comp, float w, float h);
         
         vector<Composition> load(string path);
     protected:
