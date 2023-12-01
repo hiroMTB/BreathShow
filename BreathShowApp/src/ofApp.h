@@ -92,5 +92,4 @@ class ofApp : public ofBaseApp{
         Sequencer sequencer;
         Osc osc;
         Body body;
-        Vezer vezer;
 };
