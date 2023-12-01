@@ -32,20 +32,28 @@ void ofApp::drawGui_Human()
     if(ofxImGui::BeginWindow("Human", settings, false, (bool*)&bProjectorOpen.get())) {
        
         ImGui::Checkbox("ON", (bool*)&human.bOn.get());
-        if(ImGui::SliderFloat3("position", (float*)&human.root.position.get().x, human.root.position.getMin().x, human.root.position.getMax().x)){
-            human.root.setPosition(human.root.position);
-        }
-        
+                
         if(ImGui::SliderInt("height(cm)", (int*)&human.height.get(), human.height.getMin(), human.height.getMax())){
             //human.model.setScale(human.scale.get().x, human.scale.get().y, human.scale.get().z) ;
             human.setModelScale();
         }
-        
+
+        if(ImGui::SliderFloat3("position", (float*)&human.root.position.get().x, human.root.position.getMin().x, human.root.position.getMax().x)){
+            human.root.setPosition(human.root.position);
+        }
+                        
         if(ImGui::SliderFloat("orientation Y", (float*)&human.orientationY.get(), -360, 360)){
             glm::quat q = glm::angleAxis(glm::radians(human.orientationY.get()), vec3(0,1,0));
             human.root.setOrientation(q);
         }
         
+        if(ImGui::Button("Reset")){
+            human.root.position = vec3(0);
+            human.root.setPosition(human.root.position);
+            human.orientationY = 0;
+            human.root.setOrientation(vec3(0));
+        }
+
         ///
         /// Tracker
         ///
