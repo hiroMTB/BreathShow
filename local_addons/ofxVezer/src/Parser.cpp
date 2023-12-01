@@ -255,9 +255,13 @@ namespace ofx { namespace vezer{
         }
     }
     
-    ofFbo Parser::redraw(Composition comp){
-        float w = ofGetWidth();
-        float h = ofGetHeight();
+
+
+    void Parser::redraw(Composition comp){
+        redraw(comp, ofGetWidth(), ofGetHeight());
+    }
+    
+    void Parser::redraw(Composition comp, float w, float h){
         
         fbo.allocate(w, h, GL_RGBA);
         fbo.begin();
@@ -317,7 +321,6 @@ namespace ofx { namespace vezer{
         }
         
         fbo.end();
-        return fbo;
     }
     
     vector<Composition> Parser::load(string path){
