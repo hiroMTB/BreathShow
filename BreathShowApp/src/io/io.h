@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ofApp.h"
+#include "Vezer.h"
 #include "portable-file-dialogs.h"
 #include "ofxCameraSaveLoad.h"
 #include "Serializer.h"
@@ -28,11 +29,10 @@ inline bool saveProject(string dirpath){
     bool bPrj = app->projectorWindow->save(dirpath + "/projectorWindow.json");
     bool bSeq = app->sequencer.save(dirpath + "/sequencer.json");
     bool bBody = Serializer::save(app->body.grp, dirpath + "/body.json");
-    bool bVezer = Serializer::save(app->vezer.grp, dirpath + "/vezer.json");
 
     Serializer::save(app->initGrp, ofToDataPath("./init.json"));
 
-    return bApp && bCamera && bHuman && bProjector && bWin && bPrj && bBody && bVezer;
+    return bApp && bCamera && bHuman && bProjector && bWin && bPrj && bBody;
 }
 
 inline bool loadProject(string dirpath){
@@ -59,8 +59,6 @@ inline bool loadProject(string dirpath){
     bool bPrj = app->projectorWindow->load(dirpath + "/projectorWindow.json");
     bool bSeq = app->sequencer.load(dirpath + "/sequencer.json");
     bool bBody = Serializer::load(app->body.grp, dirpath + "/body.json");
-    bool bVezer1 = Serializer::load(app->vezer.grp, dirpath + "/vezer.json");
-    bool bVezer2 = app->vezer.load();
     
     // This limits fps under 30 somehow
     // ofSetFrameRate(targetFps);
@@ -75,7 +73,7 @@ inline bool loadProject(string dirpath){
         }
     }
     
-    return bApp && bCamera && bHuman && bProjector && bWin && bPrj && bSeq && bBody && bVezer1 && bVezer2;
+    return bApp && bCamera && bHuman && bProjector && bWin && bPrj && bSeq && bBody;
 }
 
 inline void dialogueSaveProject(){
@@ -107,7 +105,7 @@ inline string dialogueLoadVideo(){
     return "";
 }
 
-inline void dialogueOpenVezer(const shared_ptr<ofApp> & app){
+inline void dialogueOpenVezer(const shared_ptr<Vezer> & vezer){
     string defaultDirToOpen = ofToDataPath( ".", true);
     if(!ofDirectory::doesDirectoryExist(defaultDirToOpen)){
         defaultDirToOpen = "";
@@ -116,7 +114,7 @@ inline void dialogueOpenVezer(const shared_ptr<ofApp> & app){
     if( !files.empty() ) {
         const string & filepath = files.at(0);
         if (ofFile::doesFileExist(filepath, false)) {
-            app->vezer.load(filepath);
+            vezer->load(filepath);
         } else {
             ofLogError("dialogueOpenFBX") << "FBX file does not exist: " << filepath;
         }
