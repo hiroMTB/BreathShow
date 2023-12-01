@@ -127,6 +127,24 @@
             },
             "start": "21560",
             "type": "1"
+        },
+        {
+            "end": "18862",
+            "start": "11977",
+            "type": "3",
+            "vezer": {
+                "File_Path": "./vezer/cello.xml",
+                "Max_Message_Queue_Num": "5"
+            }
+        },
+        {
+            "end": "21444",
+            "start": "18806",
+            "type": "3",
+            "vezer": {
+                "File_Path": "./vezer/violine.xml",
+                "Max_Message_Queue_Num": "5"
+            }
         }
     ]
 }
