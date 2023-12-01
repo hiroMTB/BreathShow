@@ -1,0 +1,132 @@
+{
+    "max": "29928",
+    "min": "0",
+    "tracks": [
+        {
+            "end": "12090",
+            "shape": {
+                "Fun": {
+                    "On": "1",
+                    "direction": "-1",
+                    "openAngle": "180",
+                    "orientationY": "2.457",
+                    "position": "-7, 109, -17.808",
+                    "radius": "85.95",
+                    "resolution": "60",
+                    "test_texture": "0",
+                    "video_path": "/Users/kerstinluecker/Desktop/Breathshow 8/data/vid/App_groe_Voice_li2.mov",
+                    "video_volume": "1"
+                }
+            },
+            "start": "6110",
+            "type": "0"
+        },
+        {
+            "end": "12090",
+            "shape": {
+                "Fun": {
+                    "On": "1",
+                    "direction": "1",
+                    "openAngle": "180",
+                    "orientationY": "-2.457",
+                    "position": "22, 109, -17.808",
+                    "radius": "85.95",
+                    "resolution": "60",
+                    "test_texture": "0",
+                    "video_path": "/Users/kerstinluecker/Desktop/Breathshow 8/data/vid/App_groe_Voice_re 2.mov",
+                    "video_volume": "1"
+                }
+            },
+            "start": "6110",
+            "type": "0"
+        },
+        {
+            "end": "6037",
+            "shape": {
+                "Rect": {
+                    "On": "0",
+                    "orientationY": "0",
+                    "position": "6, 142, 0",
+                    "size": "275, 155",
+                    "test_texture": "0",
+                    "video_path": "/Users/kerstinluecker/Desktop/finale_Dateien/1.Nebelzug_240.mov",
+                    "video_volume": "1"
+                }
+            },
+            "start": "200",
+            "type": "1"
+        },
+        {
+            "end": "18980",
+            "shape": {
+                "Ellipse": {
+                    "On": "0",
+                    "center_width": "27.577",
+                    "orientationY": "0",
+                    "position": "9.5, 111, 0",
+                    "radius": "80",
+                    "resolution": "60",
+                    "test_texture": "0",
+                    "video_path": "/Users/kerstinluecker/Desktop/Breathshow 8/data/vid/Circle_Cello_final.mov",
+                    "video_volume": "1"
+                }
+            },
+            "start": "12070",
+            "type": "2"
+        },
+        {
+            "end": "21510",
+            "shape": {
+                "Fun": {
+                    "On": "0",
+                    "direction": "-1",
+                    "openAngle": "180",
+                    "orientationY": "2.457",
+                    "position": "-7, 109, -17.808",
+                    "radius": "85.95",
+                    "resolution": "60",
+                    "test_texture": "0",
+                    "video_path": "/Users/kerstinluecker/Downloads/BreathShowApp_V10.1_Intel/data/vid/App_groe_violin_li_Hiro.mov",
+                    "video_volume": "1"
+                }
+            },
+            "start": "18750",
+            "type": "0"
+        },
+        {
+            "end": "21530",
+            "shape": {
+                "Fun": {
+                    "On": "0",
+                    "direction": "1",
+                    "openAngle": "180",
+                    "orientationY": "-2.457",
+                    "position": "22, 109, -17.808",
+                    "radius": "85.95",
+                    "resolution": "60",
+                    "test_texture": "0",
+                    "video_path": "/Users/kerstinluecker/Downloads/BreathShowApp_V10.1_Intel/data/vid/App_groe_violin_re_Hiro .mov",
+                    "video_volume": "1"
+                }
+            },
+            "start": "18750",
+            "type": "0"
+        },
+        {
+            "end": "25078",
+            "shape": {
+                "Rect": {
+                    "On": "0",
+                    "orientationY": "0",
+                    "position": "-11, 150, 0",
+                    "size": "175, 175",
+                    "test_texture": "0",
+                    "video_path": "/Users/kerstinluecker/Desktop/Breathshow 8/data/vid/2. Nebelzug.mov",
+                    "video_volume": "1"
+                }
+            },
+            "start": "21560",
+            "type": "1"
+        }
+    ]
+}
