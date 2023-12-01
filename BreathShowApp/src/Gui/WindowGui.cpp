@@ -148,7 +148,15 @@ void ofApp::drawGui_Human()
                         vec3 r = body.rootPos - prevOffset;
                         body.offset = vec3(-r.x, y, -r.z);
                     }
-
+                 
+                    ImGui::SameLine();
+                 
+                    if( ImGui::Button("Reset Offset")){
+                        vec3 prevOffset = body.offset;
+                        float y = prevOffset.y;
+                        body.offset = vec3(0, y, 0);
+                    }
+                 
                     ImGui::TreePop();
                 }
             }
