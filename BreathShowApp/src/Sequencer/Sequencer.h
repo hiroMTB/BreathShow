@@ -24,9 +24,6 @@ public:
 
     shared_ptr<Shape> addTrackShape(ShapeType type, int st=0, int end=1000, bool bExpanded=false  );
     void deleteTrack(int index);
-
-    // TODO: not working well
-    shared_ptr<Shape> duplicateTrack(const shared_ptr<Shape> & shape, int st=0, int end=1000, bool bExpanded=false  );
     
     const vector<MySequence::MySequenceItem> & getSequenceItems(){ return mySequence.myItems; };
     
