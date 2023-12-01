@@ -139,8 +139,8 @@ void ofApp::drawGui_Human()
                     if(ImGui::SliderFloat3("offset", (float*)&body.offset.get().x, body.offset.getMin().x, body.offset.getMax().x)){
                     }
                     
-                    if(ImGui::SliderFloat3("Scale", (float*)&body.scale.get().x, body.scale.getMin().x, body.scale.getMax().x)){
-                    }
+                    //if(ImGui::SliderFloat3("Scale", (float*)&body.scale.get().x, body.scale.getMin().x, body.scale.getMax().x)){
+                    //}
 
                     if(ImGui::Button("Set Offset")){
                         vec3 prevOffset = body.offset;
