@@ -1,0 +1,18 @@
+{
+    "app_settings": {
+        "General": {
+            "Live_Tracking": "0",
+            "Loop": "1",
+            "Play": "0",
+            "target_fps": "120"
+        },
+        "Panels": {
+            "3DScene_Window_Open": "1",
+            "Demo_Window_Open": "0",
+            "Human_Panel_Open": "1",
+            "Projector_Panel_Open": "0",
+            "Sequencer_Panel_Open": "1",
+            "Window_Manager_Open": "0"
+        }
+    }
+}

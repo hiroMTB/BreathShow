@@ -1,0 +1,52 @@
+{
+    "max": "29928",
+    "min": "0",
+    "tracks": [
+        {
+            "end": "13582",
+            "shape": {
+                "Ellipse": {
+                    "Flip_X": "0",
+                    "On": "1",
+                    "center_width": "27.577",
+                    "orientationY": "0",
+                    "position": "9.5, 111, 0",
+                    "radius": "80",
+                    "resolution": "60",
+                    "test_texture": "0",
+                    "video_path": "/Users/hiroshimatoba/Desktop/of_v0.12.0_osx_release/apps/BreathShow/BreathShowApp/bin/data/vid/Circle_Cello_final.mov",
+                    "video_volume": "1"
+                }
+            },
+            "start": "3582",
+            "type": "2"
+        },
+        {
+            "end": "2702",
+            "start": "0",
+            "type": "3",
+            "vezer": {
+                "File_Path": "./vezer/rec01.xml",
+                "Max_Message_Queue_Num": "5"
+            }
+        },
+        {
+            "end": "6359",
+            "start": "2630",
+            "type": "3",
+            "vezer": {
+                "File_Path": "./vezer/rec01.xml",
+                "Max_Message_Queue_Num": "5"
+            }
+        },
+        {
+            "end": "12471",
+            "start": "6214",
+            "type": "3",
+            "vezer": {
+                "File_Path": "./vezer/rec01.xml",
+                "Max_Message_Queue_Num": "5"
+            }
+        }
+    ]
+}
