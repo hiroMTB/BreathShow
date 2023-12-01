@@ -68,8 +68,11 @@ inline bool loadProject(string dirpath){
 
     const auto & items = app->sequencer.getSequenceItems();
     for( auto & i : items){
-        i.shape->loadVideo( i.shape->videoPath.get() );
-        i.shape->setup();
+        if (std::holds_alternative<shared_ptr<Shape>>(i.user)) {
+          auto & shape = std::get<shared_ptr<Shape>>(i.user);
+            shape->loadVideo( shape->videoPath.get() );
+            shape->setup();
+        }
     }
     
     return bApp && bCamera && bHuman && bProjector && bWin && bPrj && bSeq && bBody && bVezer1 && bVezer2;

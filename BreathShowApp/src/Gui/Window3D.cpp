@@ -76,7 +76,10 @@ void ofApp::draw3DScene(){
     // Fan, RectScreen, Ellipse
     const auto & items = sequencer.getSequenceItems();
     for( auto & i : items){
-        i.shape->draw();
+        if (std::holds_alternative<shared_ptr<Shape>>(i.user)) {
+          auto & shape = std::get<shared_ptr<Shape>>(i.user);
+            shape->draw();
+        }
     }
     
     // Projector
@@ -98,7 +101,10 @@ void ofApp::drawProjectorFbo(){
     ofPushMatrix();
     const auto & items = sequencer.getSequenceItems();
     for( auto & i : items){
-        i.shape->draw();
+        if (std::holds_alternative<shared_ptr<Shape>>(i.user)) {
+            auto & shape = std::get<shared_ptr<Shape>>(i.user);
+            shape->draw();
+        }
     }
     ofPopMatrix();
     

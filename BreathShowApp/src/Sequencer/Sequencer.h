@@ -22,7 +22,7 @@ public:
     bool save(const std::string & filepath);
     bool load(const std::string & filepath);
 
-    shared_ptr<Shape> addTrack(ShapeType type, int st=0, int end=1000, bool bExpanded=false  );
+    shared_ptr<Shape> addTrackShape(ShapeType type, int st=0, int end=1000, bool bExpanded=false  );
     void deleteTrack(int index);
 
     // TODO: not working well
@@ -34,8 +34,8 @@ public:
     
 private:
     
-    void startTrack(const shared_ptr<Shape> & shape, int frame);
-    void stopTrack(const shared_ptr<Shape> & shape);
+    void startTrack(const std::variant<shared_ptr<Shape>, shared_ptr<Human>, shared_ptr<Vezer>> user, int frame);
+    void stopTrack(const std::variant<shared_ptr<Shape>, shared_ptr<Human>, shared_ptr<Vezer>> user);
 
     // Gui helper
     void drawGui_Fan(shared_ptr<Shape> & s);

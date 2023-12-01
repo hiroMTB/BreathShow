@@ -88,7 +88,7 @@ shared_ptr<Shape> Sequencer::duplicateTrack( const shared_ptr<Shape> & shape, in
     return newShape;
 }
 
-shared_ptr<Shape> Sequencer::addTrack( ShapeType type, int st, int end, bool bExpanded ){
+shared_ptr<Shape> Sequencer::addTrackShape( ShapeType type, int st, int end, bool bExpanded ){
     
     shared_ptr<Shape> shape = nullptr;
     
@@ -138,19 +138,31 @@ void Sequencer::deleteTrack(int index){
 //    std::remove( shapes.begin(), shapes.end(), item.shape );
 }
 
-void Sequencer::startTrack(const shared_ptr<Shape> & shape, int frame){
-    if(shape){
-        shape->start(frame);
-    }else{
-        ofLogError("Sequencer::startTrack") << "shape is null";
+void Sequencer::startTrack(const std::variant<shared_ptr<Shape>, shared_ptr<Human>, shared_ptr<Vezer>> user, int frame){
+    if (std::holds_alternative<shared_ptr<Shape>>(user)) {
+        auto & shape = std::get<shared_ptr<Shape>>(user);
+        if(shape){
+            shape->start(frame);
+        }else{
+            ofLogError("Sequencer::startTrack") << "shape is null";
+        }
+    }else {
+        // human
+        // vezer
     }
 }
 
-void Sequencer::stopTrack(const shared_ptr<Shape> & shape){
-    if(shape){
-        shape->stop();
+void Sequencer::stopTrack(const std::variant<shared_ptr<Shape>, shared_ptr<Human>, shared_ptr<Vezer>> user){
+    if (std::holds_alternative<shared_ptr<Shape>>(user)) {
+        auto & shape = std::get<shared_ptr<Shape>>(user);
+        if(shape){
+            shape->stop();
+        }else{
+            ofLogError("Sequencer::startTrack") << "shape is null";
+        }
     }else{
-        ofLogError("Sequencer::startTrack") << "shape is null";
+        // human
+        // vezer
     }
 }
 
@@ -209,32 +221,33 @@ void Sequencer::updateSequenceItem(int entry, bool bSeek){
     int st = item.mFrameStart;
     int end = item.mFrameEnd;
     int type = item.mType;
-    const auto & shape = item.shape;
-    if(st == currentFrame){
-        startTrack(shape, 0);
-        ofLogVerbose("Sequencer") << entry << " : start";
-    }
-    else if(st < currentFrame && currentFrame < end){
-        // we can not call start too often
-        if(bSeek){
-            int frame = currentFrame - st;
-            startTrack(shape, frame);
-            ofLogVerbose("Sequencer") << entry << " : seek, frame=" << frame;
+    {
+        if(st == currentFrame){
+            startTrack(item.user, 0);
+            ofLogVerbose("Sequencer") << entry << " : start";
         }
-    }else if(end == currentFrame){
-        if(bLoop && st == min && end == max){
-            // special case
-            // we have to start movie immediately after finish
-            startTrack(shape, 0);
-            ofLogVerbose("Sequencer") << entry << " : Loop back";
+        else if(st < currentFrame && currentFrame < end){
+            // we can not call start too often
+            if(bSeek){
+                int frame = currentFrame - st;
+                startTrack(item.user, frame);
+                ofLogVerbose("Sequencer") << entry << " : seek, frame=" << frame;
+            }
+        }else if(end == currentFrame){
+            if(bLoop && st == min && end == max){
+                // special case
+                // we have to start movie immediately after finish
+                startTrack(item.user, 0);
+                ofLogVerbose("Sequencer") << entry << " : Loop back";
+            }else{
+                // otherwise stop it
+                //ofLogVerbose("Sequencer") << entry << " : stop";
+                stopTrack(item.user);
+            }
         }else{
-            // otherwise stop it
             //ofLogVerbose("Sequencer") << entry << " : stop";
-            stopTrack(shape);
+            stopTrack(item.user);
         }
-    }else{
-        //ofLogVerbose("Sequencer") << entry << " : stop";
-        stopTrack(shape);
     }
     
     if(0){
@@ -320,7 +333,14 @@ void Sequencer::draw(bool * bOpen){
 
         auto onSequenceAdd = [&](int type){
             //std::cout << "onSequenceAdd: " << type << std::endl;
-            addTrack((ShapeType)type);
+            if(type < 3){
+                // 0, 1, 2
+                addTrackShape((ShapeType)type);
+            }else if(type == 3){
+                // Human
+            }else if(type == 4){
+                // Vezer
+            }
         };
 
         auto onSequenceDel = [&](int index){
@@ -333,13 +353,15 @@ void Sequencer::draw(bool * bOpen){
             MySequence::MySequenceItem & item = mySequence.myItems[index];
             int st = item.mFrameStart;
             int end = item.mFrameEnd;
-            ShapeType type = (ShapeType)item.mType;
+            int type = item.mType;
             
-            if(item.shape){
-//                shared_ptr<Shape> s = duplicateTrack(item.shape, st, end, false);
-//                s->position.setMin(vec3(-200));
-//                s->position.setMax(vec3(200));
-                addTrack(type, st, end, false);
+            if(type < 3){
+                // 0, 1, 2
+                addTrackShape((ShapeType)type, st, end, false);
+            }else if(type == 3){
+                // Human
+            }else if(type == 4){
+                // Vezer
             }
         };
 
@@ -370,9 +392,9 @@ void Sequencer::draw(bool * bOpen){
             int end = item.mFrameEnd;
             int total = end - start;
             ImGui::Text("%s", SequencerItemTypeNames[type]);
-            auto shape = item.shape;
-                        
-            if(shape){
+            if (std::holds_alternative<shared_ptr<Shape>>(item.user)) {
+                auto & shape = std::get<shared_ptr<Shape>>(item.user);
+
                 static bool disable_mouse_wheel = false;
                 static bool disable_menu = false;
                 static bool bordar = false;
@@ -565,16 +587,20 @@ bool Sequencer::save(const std::string & filepath){
         int st = item.mFrameStart;
         int end = item.mFrameEnd;
         int type = item.mType;
-        auto & shape = item.shape;
-        
         ofJson t;
         t["start"] = ofToString(st);
         t["end"] = ofToString(end);
         t["type"] = ofToString(type);
 
-        ofJson shapeJson;
-        ofSerialize(shapeJson, shape->grp);
-        t["shape"] = shapeJson;
+
+        if (std::holds_alternative<shared_ptr<Shape>>(item.user)) {
+            auto & shape = std::get<shared_ptr<Shape>>(item.user);
+            ofJson shapeJson;
+            ofSerialize(shapeJson, shape->grp);
+            t["shape"] = shapeJson;
+        }else{
+            
+        }
 
         tracks.push_back(t);
     }
@@ -605,18 +631,25 @@ bool Sequencer::load(const std::string & filepath){
                 int type = ofToInt(j.value("type", "0"));
                 int st = ofToInt(j.value("start", "0"));
                 int end = ofToInt(j.value("end", "1000"));
-                                
-                shared_ptr<Shape> s = addTrack((ShapeType)type, st, end, false);
                 
-                if(s && s->grp){
-                    ofJson shapeJson = j["shape"];
-                    ofDeserialize(shapeJson, s->grp);
-                    //mySequence.myItems.push_back(MySequence::MySequenceItem{type, st, end, false});
-                }else{
-                    ofLogError("Sequencer::load()") << "Sequence Track Load Error";
+                auto itShape = j.find("shape");
+                if( itShape != j.end()){
+                    shared_ptr<Shape> s = addTrackShape((ShapeType)type, st, end, false);
+                    if(s && s->grp)
+                        ofDeserialize(*itShape, s->grp);
                 }
+                
+                auto itHuman = j.find("human");
+                if( itHuman != j.end()){
+                    //ofDeserialize(*itHuman, h->grp);
+                }
+                
+                auto itVezer = j.find("vezer");
+                if( itVezer != j.end()){
+                    //ofDeserialize(*itVezer, v->grp);
+                }
+                return true;
             }
-            return true;
         }
     }
     return false;

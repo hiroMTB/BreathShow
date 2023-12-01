@@ -79,7 +79,10 @@ void ofApp::update()
     
     const auto & items = sequencer.getSequenceItems();
     for( auto & i : items){
-        i.shape->update();
+        if (std::holds_alternative<shared_ptr<Shape>>(i.user)) {
+            auto & shape = std::get<shared_ptr<Shape>>(i.user);
+            shape->update();
+        }
     }
 }
 
@@ -115,7 +118,10 @@ void ofApp::setPlay( bool b){
     bPlay = b;
     const auto & items = sequencer.getSequenceItems();
     for( auto & i : items){
-        i.shape->pause(!bPlay);
+        if (std::holds_alternative<shared_ptr<Shape>>(i.user)) {
+            auto & shape = std::get<shared_ptr<Shape>>(i.user);
+            shape->pause(!bPlay);
+         }
     }
     
     if(bPlay){
@@ -127,7 +133,10 @@ void ofApp::setLoop( bool b){
     bLoop = b;
     const auto & items = sequencer.getSequenceItems();
     for( auto & i : items){
-        i.shape->setLoop(bLoop);
+        if (std::holds_alternative<shared_ptr<Shape>>(i.user)) {
+            auto & shape = std::get<shared_ptr<Shape>>(i.user);
+            shape->setLoop(bLoop);            
+        }
     }
 }
 
