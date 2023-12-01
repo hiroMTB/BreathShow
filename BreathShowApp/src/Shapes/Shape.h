@@ -35,6 +35,10 @@ public:
         }
     }
     
+    void loadVideo(){
+        loadVideo(videoPath);
+    }
+                   
     void loadVideo(string path){
 
         if( ofFile::doesFileExist(path)){
