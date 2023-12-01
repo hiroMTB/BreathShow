@@ -12,6 +12,10 @@ inline bool saveProject(string dirpath){
     auto & app = ofApp::get();
     app->currentProjectPath = dirpath;
     
+    ofFile file(dirpath); // actually this is directory
+    string filename = file.getBaseName();
+    ofSetWindowTitle(filename);
+
     bool bRel = ofDirectory::doesDirectoryExist(dirpath, true);
     bool bAbs = ofDirectory::doesDirectoryExist(dirpath, false);
     if(!bRel && !bAbs){
