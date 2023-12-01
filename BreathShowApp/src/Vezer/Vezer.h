@@ -133,7 +133,7 @@ public:
 
     ofParameter<string> filepath{ "File Path", "./vezer/rec01.xml"};
     ofParameter<int> maxMsgQueueNum{"Max Message Queue Num", 5, 0, 100};
-    ofParameterGroup grp{"Vezer", filepath, maxMsgQueueNum};
+    ofParameterGroup grp{"vezer", filepath, maxMsgQueueNum};
     ofEventListeners listeners;
 
 private:

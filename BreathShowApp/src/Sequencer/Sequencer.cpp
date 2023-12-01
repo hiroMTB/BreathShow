@@ -622,7 +622,7 @@ bool Sequencer::save(const std::string & filepath){
                 auto & vezer = std::get<shared_ptr<Vezer>>(item.user);
                 ofJson vezerJson;
                 ofSerialize(vezerJson, vezer->grp);
-                t["vezer"] = vezerJson["Vezer"];
+                t["vezer"] = vezerJson["vezer"];
             }else if( std::holds_alternative<shared_ptr<Human>>(item.user)) {
                 auto & human = std::get<shared_ptr<Human>>(item.user);
                 ofJson humanJson;
@@ -686,7 +686,9 @@ bool Sequencer::load(const std::string & filepath){
                 if( itVezer != j.end()){
                     SequenceUser u = addTrack(type, st, end, false);
                     auto & v = std::get<shared_ptr<Vezer>>(u);
-                    ofDeserialize(*itVezer, v->grp);
+                    ofJson tmp;
+                    tmp["vezer"] = *itVezer;
+                    ofDeserialize(tmp, v->grp);
                     v->load();
                 }
             }
