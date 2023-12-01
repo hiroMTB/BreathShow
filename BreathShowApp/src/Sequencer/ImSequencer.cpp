@@ -134,7 +134,7 @@ namespace ImSequencer
 		{
 			panningView = false;
 		}
-		framePixelWidthTarget = ImClamp(framePixelWidthTarget, 0.1f, 50.f);
+		framePixelWidthTarget = ImClamp(framePixelWidthTarget, 0.01f, 50.f);
 
 		framePixelWidth = ImLerp(framePixelWidth, framePixelWidthTarget, 0.33f);
 
