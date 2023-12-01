@@ -104,7 +104,7 @@ public:
     ofParameter<float> videoVolume{"video volume", 1, 0, 1};
     ofParameter<string> videoPath{"video path", "vid/test.mp4"};
 
-    ofParameterGroup grp{"Fun", bOn, bShowTest, orientationY, videoPath, videoVolume };
+    ofParameterGroup grp{"Fun", bOn, bFlipX, bShowTest, orientationY, videoPath, videoVolume };
     
 protected:
     ofMesh mesh;
