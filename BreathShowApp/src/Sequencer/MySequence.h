@@ -12,8 +12,10 @@
 #include "ImCurveEdit.h"
 
 #include "Shape.h"
+#include "Human.h"
+#include "Vezer.h"
 
-static const char *SequencerItemTypeNames[] = {"Fan", "Rect", "Ellipse"};
+static const char *SequencerItemTypeNames[] = {"Fan", "Rect", "Ellipse", "Human", "Vezer"};
 
 class MySequence : public ImSequencer::SequenceInterface
 {
@@ -77,7 +79,11 @@ public:
 		int mType;
 		int mFrameStart, mFrameEnd;
 		bool mExpanded;
-		shared_ptr<Shape> shape;
+		std::variant<
+                    std::shared_ptr<Shape>,
+                    std::shared_ptr<Human>,
+                    std::shared_ptr<Vezer>
+        > user;
 		RampEdit rampEdit;
 	};
 	std::vector<MySequenceItem> myItems;
