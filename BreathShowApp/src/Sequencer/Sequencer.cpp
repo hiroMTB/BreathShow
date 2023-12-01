@@ -284,7 +284,9 @@ void Sequencer::draw(bool * bOpen){
         ImGui::InputInt("Frame ", &currentFrame);
 
         ImGui::SameLine();
-        ImGui::Text("(%3.2f sec)", currentFrame/30.0f);
+        int sec = std::floor(currentFrame/30.0);
+        int frame = currentFrame%30;
+        ImGui::Text("%02d:%02d:%02d", sec/60, sec%60, frame);
         
         ImGui::SameLine(); ImGui::Dummy({30, 0}); ImGui::SameLine();
         ImGui::InputInt("Max", &mySequence.mFrameMax);
