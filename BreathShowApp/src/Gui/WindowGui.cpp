@@ -58,109 +58,69 @@ void ofApp::drawGui_Human()
         /// Tracker
         ///
         ImGui::Separator();
-        ImGui::Checkbox("Use Tracker", (bool*)&bUseTracker.get());
+        ImGui::Checkbox("Live Tracking", (bool*)&bLiveTracking.get());
         
-        if(bUseTracker){
-
+        if(bLiveTracking){
+            
             if(ImGui::CollapsingHeader("Tracker", ImGuiTreeNodeFlags_DefaultOpen)){
-                
-                ImGui::Checkbox("Live OSC", (bool*)&bLiveOsc.get());
-                
-                if(bLiveOsc){
-                    if(ImGui::TreeNodeEx("OSC", ImGuiTreeNodeFlags_DefaultOpen)){
-                        if(ImGui::SliderInt("port", (int*)&osc.receivePort.get(), osc.receivePort.getMin(), osc.receivePort.getMax())){
-                            osc.setupReceiver();
-                        }
-                        
-                        if(ImGui::TreeNodeEx("OSC Logger")){
-                            if(ImGui::SliderInt("Queue Size", (int*)&osc.maxMsgQueueNum.get(), osc.maxMsgQueueNum.getMin(), osc.maxMsgQueueNum.getMax())){
-                                osc.resizeQueue();
-                            }
-                            gui::Helper::drawMsgLogger(osc.msgQueue);
-                            ImGui::TreePop();
-                        }
-                        
-                        if (ImGui::TreeNodeEx("Filter", ImGuiTreeNodeFlags_DefaultOpen)) {
-                            vector<string> fTypes{"none", "legacy", "OneEuro"};
-                            ofxImGui::VectorCombo("Filter Type", (int *) &body.filterType.get(), fTypes);
-                            if (body.filterType == 0) {
-                            } else if (body.filterType == 1) {
-                                ImGui::SliderFloat(body.lowpass.getName().c_str(), (float*)&body.lowpass.get(), body.lowpass.getMin(), body.lowpass.getMax());
-                            } else if (body.filterType == 2) {
-                                gui::Helper::DragDouble(body.frequency, 1);
-                                gui::Helper::DragDouble(body.mincutoff);
-                                gui::Helper::DragDouble(body.beta);
-                                gui::Helper::DragDouble(body.dcutoff);
-                            }
-                            ImGui::TreePop();
-                        }
-                        
-                        ImGui::TreePop();
-                    }
-                }else{
-                    if(ImGui::TreeNodeEx("Vezer", ImGuiTreeNodeFlags_DefaultOpen)){
-                         filesystem::path path{vezer.filepath.get()};
-                         ImGui::Text("file name: %s", path.filename().c_str());
-                        
-                        ImGui::Text("total frames: %d", vezer.getTotalFrames());
-                        
-                         if( ImGui::Button("Load Vezer XML file") ){
-                             io::dialogueOpenVezer(app);
-                         }
-
-                         if(ImGui::TreeNode("OSC Logger")){
-                             if(ImGui::SliderInt("Queue Size", (int*)&vezer.maxMsgQueueNum.get(), vezer.maxMsgQueueNum.getMin(), vezer.maxMsgQueueNum.getMax())){
-                                 vezer.resizeQueue();
-                             }
-                             gui::Helper::drawMsgLogger( vezer.msgQueue );
-                             ImGui::TreePop();
-                         }
-                        
-                        if (ImGui::TreeNodeEx("Filter", ImGuiTreeNodeFlags_DefaultOpen)) {
-                            vector<string> fTypes{"none", "legacy", "OneEuro"};
-                            ofxImGui::VectorCombo("Filter Type", (int *) &body.filterType.get(), fTypes);
-                            if (body.filterType == 0) {
-                            } else if (body.filterType == 1) {
-                                ImGui::SliderFloat(body.lowpass.getName().c_str(), (float*)&body.lowpass.get(), body.lowpass.getMin(), body.lowpass.getMax());
-                            } else if (body.filterType == 2) {
-                                gui::Helper::DragDouble(body.frequency, 1);
-                                gui::Helper::DragDouble(body.mincutoff);
-                                gui::Helper::DragDouble(body.beta);
-                                gui::Helper::DragDouble(body.dcutoff);
-                            }
-                            ImGui::TreePop();
-                        }
-                        
-                        ImGui::TreePop();
-                    }
-                }
-                if(ImGui::TreeNodeEx("Body", ImGuiTreeNodeFlags_DefaultOpen)){
-                    
-                    if(ImGui::SliderFloat3("offset", (float*)&body.offset.get().x, body.offset.getMin().x, body.offset.getMax().x)){
+                if(ImGui::TreeNodeEx("OSC", ImGuiTreeNodeFlags_DefaultOpen)){
+                    if(ImGui::SliderInt("port", (int*)&osc.receivePort.get(), osc.receivePort.getMin(), osc.receivePort.getMax())){
+                        osc.setupReceiver();
                     }
                     
-                    //if(ImGui::SliderFloat3("Scale", (float*)&body.scale.get().x, body.scale.getMin().x, body.scale.getMax().x)){
-                    //}
-
-                    if(ImGui::Button("Set Offset")){
-                        vec3 prevOffset = body.offset;
-                        float y = prevOffset.y;
-                        vec3 r = body.rootPos - prevOffset;
-                        body.offset = vec3(-r.x, y, -r.z);
+                    if(ImGui::TreeNodeEx("OSC Logger")){
+                        if(ImGui::SliderInt("Queue Size", (int*)&osc.maxMsgQueueNum.get(), osc.maxMsgQueueNum.getMin(), osc.maxMsgQueueNum.getMax())){
+                            osc.resizeQueue();
+                        }
+                        gui::Helper::drawMsgLogger(osc.msgQueue);
+                        ImGui::TreePop();
                     }
-                 
-                    ImGui::SameLine();
-                 
-                    if( ImGui::Button("Reset Offset")){
-                        vec3 prevOffset = body.offset;
-                        float y = prevOffset.y;
-                        body.offset = vec3(0, y, 0);
-                    }
-                 
+                    
                     ImGui::TreePop();
                 }
             }
         }
+                
+        if(ImGui::CollapsingHeader("Skeleton", ImGuiTreeNodeFlags_DefaultOpen)){
+            
+            if (ImGui::TreeNodeEx("Filter", ImGuiTreeNodeFlags_DefaultOpen)) {
+                vector<string> fTypes{"none", "legacy", "OneEuro"};
+                ofxImGui::VectorCombo("Filter Type", (int *) &body.filterType.get(), fTypes);
+                if (body.filterType == 0) {
+                } else if (body.filterType == 1) {
+                    ImGui::SliderFloat(body.lowpass.getName().c_str(), (float*)&body.lowpass.get(), body.lowpass.getMin(), body.lowpass.getMax());
+                } else if (body.filterType == 2) {
+                    gui::Helper::DragDouble(body.frequency, 1);
+                    gui::Helper::DragDouble(body.mincutoff);
+                    gui::Helper::DragDouble(body.beta);
+                    gui::Helper::DragDouble(body.dcutoff);
+                }
+                ImGui::TreePop();
+            }
+            
+            if(ImGui::SliderFloat3("offset", (float*)&body.offset.get().x, body.offset.getMin().x, body.offset.getMax().x)){
+            }
+            
+            //if(ImGui::SliderFloat3("Scale", (float*)&body.scale.get().x, body.scale.getMin().x, body.scale.getMax().x)){
+            //}
+
+            if(ImGui::Button("Set Offset")){
+                vec3 prevOffset = body.offset;
+                float y = prevOffset.y;
+                vec3 r = body.rootPos - prevOffset;
+                body.offset = vec3(-r.x, y, -r.z);
+            }
+            
+            ImGui::SameLine();
+            
+            if( ImGui::Button("Reset Offset")){
+                vec3 prevOffset = body.offset;
+                float y = prevOffset.y;
+                body.offset = vec3(0, y, 0);
+            }
+        }
+            
+        
     }
     
     ofxImGui::EndWindow(settings);
