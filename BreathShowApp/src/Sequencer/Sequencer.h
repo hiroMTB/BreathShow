@@ -7,13 +7,16 @@
 #include "MySequence.h"
 
 class Shape;
+class Vezer;
+class Human;
+
+using SequenceUser = std::variant<std::monostate, shared_ptr<Shape>, shared_ptr<Human>, shared_ptr<Vezer>>;
 
 class Sequencer{
     
 public:
     Sequencer();
     void setup();
-    void setupTestSequences();
     void update();
     void updateCurrentFrame();
     void updateSequenceItemAll(bool bSeek);
@@ -22,7 +25,7 @@ public:
     bool save(const std::string & filepath);
     bool load(const std::string & filepath);
 
-    shared_ptr<Shape> addTrackShape(ShapeType type, int st=0, int end=1000, bool bExpanded=false  );
+    SequenceUser addTrack(int type, int st=0, int end=1000, bool bExpanded=false  );
     void deleteTrack(int index);
     
     const vector<MySequence::MySequenceItem> & getSequenceItems(){ return mySequence.myItems; };
@@ -31,15 +34,18 @@ public:
     
 private:
     
-    void startTrack(const std::variant<shared_ptr<Shape>, shared_ptr<Human>, shared_ptr<Vezer>> user, int frame);
-    void stopTrack(const std::variant<shared_ptr<Shape>, shared_ptr<Human>, shared_ptr<Vezer>> user);
+    void startTrack(const SequenceUser & user, int frame);
+    void stopTrack(const SequenceUser & user);
 
     // Gui helper
     void drawGui_Fan(shared_ptr<Shape> & s);
     void drawGui_RectScreen(shared_ptr<Shape> & s);
     void drawGui_Ellipse(shared_ptr<Shape> & s);
-    void videoSection(shared_ptr<Shape> s);
+    void drawGui_Vezer(shared_ptr<Vezer> & vezer);
+    void drawGui_Human(shared_ptr<Human> & human);
 
+    void videoSection(shared_ptr<Shape> s);
+    bool checkUserIsValid(const SequenceUser & user);
     
     MySequence mySequence;
     

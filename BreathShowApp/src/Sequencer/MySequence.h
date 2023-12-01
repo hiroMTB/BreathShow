@@ -15,7 +15,9 @@
 #include "Human.h"
 #include "Vezer.h"
 
-static const char *SequencerItemTypeNames[] = {"Fan", "Rect", "Ellipse", "Human", "Vezer"};
+using SequenceUser = std::variant<std::monostate, shared_ptr<Shape>, shared_ptr<Human>, shared_ptr<Vezer>>;
+
+static const char *SequencerItemTypeNames[] = {"Fan", "Rect", "Ellipse", "Vezer"} ; //, "Human"};
 
 class MySequence : public ImSequencer::SequenceInterface
 {
@@ -79,11 +81,7 @@ public:
 		int mType;
 		int mFrameStart, mFrameEnd;
 		bool mExpanded;
-		std::variant<
-                    std::shared_ptr<Shape>,
-                    std::shared_ptr<Human>,
-                    std::shared_ptr<Vezer>
-        > user;
+        SequenceUser user;
 		RampEdit rampEdit;
 	};
 	std::vector<MySequenceItem> myItems;

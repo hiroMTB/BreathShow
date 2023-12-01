@@ -14,6 +14,7 @@
 #include "RectScreen.h"
 #include "Ellipse.h"
 #include "io.h"
+#include "Helper.h"
 
 Sequencer::Sequencer(){
     setup();
@@ -22,110 +23,65 @@ Sequencer::Sequencer(){
 void Sequencer::setup(){
     //setupTestSequences();
 }
-
-void Sequencer::setupTestSequences(){
-    mySequence.mFrameMin = 0;
-    mySequence.mFrameMax = 30 * 60 * 3;
-
-    int fps = 30;
-    int offset = fps * 1;
-    int duration = fps * 30;
-    int pause = fps * 2;
-
-    for(int i=0; i<4; i++){
-        int st = offset+duration*i+pause*i;
-        int end = st + duration;
-        mySequence.myItems.push_back(MySequence::MySequenceItem{i, st, end, false});
-    }
-}
-
-shared_ptr<Shape> Sequencer::duplicateTrack( const shared_ptr<Shape> & shape, int st, int end, bool bExpanded ){
-
-    shared_ptr<Shape> newShape = nullptr;
-
-    if(!shape){
-        ofLogError("Sequencer::addTrack") << "shape is nullptr";
-        return newShape;
-    }
-
-    ShapeType type = shape->type;
-    switch (type){
-        case ShapeType::FAN:
-        {
-            auto fan = dynamic_pointer_cast<Fan>(shape);
-            newShape = make_shared<Fan>(*fan);
-            newShape->setup();
-            mySequence.myItems.push_back(MySequence::MySequenceItem{ type, st, end, bExpanded, newShape});
-            ofLogNotice("Sequencer::AddTrack() - ") << "Fan";
-        }
-            break;
-        case ShapeType::RECT_SCREEN:
-        {
-            auto r = dynamic_pointer_cast<RectScreen>(shape);
-            newShape = make_shared<RectScreen>(*r);
-            newShape->setup();
-            mySequence.myItems.push_back(MySequence::MySequenceItem{ type, st, end, bExpanded, newShape});
-            ofLogNotice("Sequencer::AddTrack() - ") << "RECT_SCREEN";
-        }
-            break;
-        case ShapeType::ELLIPSE:
-        {
-            auto e = dynamic_pointer_cast<Ellipse>(shape);
-            newShape = make_shared<Ellipse>(*e);
-            newShape->setup();
-
-            mySequence.myItems.push_back(MySequence::MySequenceItem{ type, st, end, bExpanded, newShape});
-            ofLogNotice("Sequencer::AddTrack() - ") << "ELLIPSE";
-        }
-            break;
-        case ShapeType::NONE:
-            ofLogError("Sequencer::AddTrack() - ") << "ShapeType::NONE";
-            break;
-        default:
-            ofLogError("Sequencer::AddTrack() - ") << "Unknown ShapeType" << type;
-            break;
-    }
-    return newShape;
-}
-
-shared_ptr<Shape> Sequencer::addTrackShape( ShapeType type, int st, int end, bool bExpanded ){
+SequenceUser Sequencer::addTrack( int type, int st, int end, bool bExpanded ){
     
-    shared_ptr<Shape> shape = nullptr;
+    SequenceUser user = std::monostate{};
     
-    switch (type){
-        case ShapeType::FAN:
-        {
-            shape = make_shared<Fan>();
-            //shapes.emplace_back( shape );
-            mySequence.myItems.push_back(MySequence::MySequenceItem{ type, st, end, bExpanded, shape});
-            ofLogNotice("Sequencer::AddTrack() - ") << "Fan";
+    // Shapes: Fan, Rect, Ellipse
+    if(type < 3){
+        ShapeType shapeType = (ShapeType) type; // convert track type to shapeType
+        
+        switch (shapeType){
+            case ShapeType::FAN:
+            {
+                user = make_shared<Fan>();
+                //shapes.emplace_back( shape );
+                mySequence.myItems.push_back(MySequence::MySequenceItem{ type, st, end, bExpanded, user});
+                ofLogNotice("Sequencer::AddTrack() - ") << "Fan";
+                
+            }
+                break;
+            case ShapeType::RECT_SCREEN:
+            {
+                user = make_shared<RectScreen>();
+                //shapes.emplace_back( shape );
+                mySequence.myItems.push_back(MySequence::MySequenceItem{ type, st, end, bExpanded, user});
+                ofLogNotice("Sequencer::AddTrack() - ") << "RECT_SCREEN";
+            }
+                break;
+            case ShapeType::ELLIPSE:
+            {
+                user = make_shared<Ellipse>();
+                //shapes.emplace_back( shape );
+                mySequence.myItems.push_back(MySequence::MySequenceItem{ type, st, end, bExpanded, user});
+                ofLogNotice("Sequencer::AddTrack() - ") << "ELLIPSE";
+            }
+                break;
+            case ShapeType::NONE:
+                ofLogError("Sequencer::AddTrack() - ") << "ShapeType::NONE";
+                break;
+            default:
+                ofLogError("Sequencer::AddTrack() - ") << "Unknown ShapeType" << type;
+                break;
         }
-            break;
-        case ShapeType::RECT_SCREEN:
-        {
-            shape = make_shared<RectScreen>();
-            //shapes.emplace_back( shape );
-            mySequence.myItems.push_back(MySequence::MySequenceItem{ type, st, end, bExpanded, shape});
-            ofLogNotice("Sequencer::AddTrack() - ") << "RECT_SCREEN";
+    }else{
+
+        // vezer
+        if(type == 3){
+            user = make_shared<Vezer>();
+            mySequence.myItems.push_back(MySequence::MySequenceItem{ type, st, end, bExpanded, user});
+            ofLogError("Sequencer::AddTrack() - ") << "Vezer";
         }
-            break;
-        case ShapeType::ELLIPSE:
-        {
-            shape = make_shared<Ellipse>();
-            //shapes.emplace_back( shape );
-            mySequence.myItems.push_back(MySequence::MySequenceItem{ type, st, end, bExpanded, shape});
-            ofLogNotice("Sequencer::AddTrack() - ") << "ELLIPSE";
+        
+        // human
+        if(type == 4){
+            auto user = make_shared<Human>();
+            mySequence.myItems.push_back(MySequence::MySequenceItem{ type, st, end, bExpanded, user});
+            ofLogError("Sequencer::AddTrack() - ") << "Human";
         }
-            break;
-        case ShapeType::NONE:
-            ofLogError("Sequencer::AddTrack() - ") << "ShapeType::NONE";
-            break;
-        default:
-            ofLogError("Sequencer::AddTrack() - ") << "Unknown ShapeType" << type;
-            break;
     }
     
-    return shape;
+    return user;
 }
 
 void Sequencer::deleteTrack(int index){
@@ -138,21 +94,28 @@ void Sequencer::deleteTrack(int index){
 //    std::remove( shapes.begin(), shapes.end(), item.shape );
 }
 
-void Sequencer::startTrack(const std::variant<shared_ptr<Shape>, shared_ptr<Human>, shared_ptr<Vezer>> user, int frame){
-    if (std::holds_alternative<shared_ptr<Shape>>(user)) {
-        auto & shape = std::get<shared_ptr<Shape>>(user);
-        if(shape){
-            shape->start(frame);
-        }else{
-            ofLogError("Sequencer::startTrack") << "shape is null";
+void Sequencer::startTrack(const SequenceUser & user, int frame){
+
+    if(checkUserIsValid(user)){
+        if (std::holds_alternative<shared_ptr<Shape>>(user)) {
+            auto & shape = std::get<shared_ptr<Shape>>(user);
+            if(shape){
+                shape->start(frame);
+            }else{
+                ofLogError("Sequencer::startTrack") << "shape is null";
+            }
+        }else if (std::holds_alternative<shared_ptr<Vezer>>(user)) {
+            // vezer
+            auto & vezer = std::get<shared_ptr<Vezer>>(user);
+            if(vezer){
+                vezer->start();
+                vezer->setFrame(frame);
+            }
         }
-    }else {
-        // human
-        // vezer
     }
 }
 
-void Sequencer::stopTrack(const std::variant<shared_ptr<Shape>, shared_ptr<Human>, shared_ptr<Vezer>> user){
+void Sequencer::stopTrack(const SequenceUser & user){
     if (std::holds_alternative<shared_ptr<Shape>>(user)) {
         auto & shape = std::get<shared_ptr<Shape>>(user);
         if(shape){
@@ -160,9 +123,12 @@ void Sequencer::stopTrack(const std::variant<shared_ptr<Shape>, shared_ptr<Human
         }else{
             ofLogError("Sequencer::startTrack") << "shape is null";
         }
-    }else{
-        // human
+    }else if (std::holds_alternative<shared_ptr<Vezer>>(user)) {
         // vezer
+        auto & vezer = std::get<shared_ptr<Vezer>>(user);
+        if(vezer){
+            vezer->stop();
+        }
     }
 }
 
@@ -227,11 +193,17 @@ void Sequencer::updateSequenceItem(int entry, bool bSeek){
             ofLogVerbose("Sequencer") << entry << " : start";
         }
         else if(st < currentFrame && currentFrame < end){
-            // we can not call start too often
+            int frame = currentFrame - st;
+
             if(bSeek){
-                int frame = currentFrame - st;
+                // we can not call start too often
                 startTrack(item.user, frame);
                 ofLogVerbose("Sequencer") << entry << " : seek, frame=" << frame;
+            }
+
+            bool bVezer = (type == 3);
+            if(bVezer){
+                startTrack(item.user, frame);
             }
         }else if(end == currentFrame){
             if(bLoop && st == min && end == max){
@@ -333,14 +305,7 @@ void Sequencer::draw(bool * bOpen){
 
         auto onSequenceAdd = [&](int type){
             //std::cout << "onSequenceAdd: " << type << std::endl;
-            if(type < 3){
-                // 0, 1, 2
-                addTrackShape((ShapeType)type);
-            }else if(type == 3){
-                // Human
-            }else if(type == 4){
-                // Vezer
-            }
+            addTrack(type);
         };
 
         auto onSequenceDel = [&](int index){
@@ -354,15 +319,7 @@ void Sequencer::draw(bool * bOpen){
             int st = item.mFrameStart;
             int end = item.mFrameEnd;
             int type = item.mType;
-            
-            if(type < 3){
-                // 0, 1, 2
-                addTrackShape((ShapeType)type, st, end, false);
-            }else if(type == 3){
-                // Human
-            }else if(type == 4){
-                // Vezer
-            }
+            addTrack(type, st, end, false);
         };
 
         SequencerGui(&mySequence,
@@ -392,20 +349,35 @@ void Sequencer::draw(bool * bOpen){
             int end = item.mFrameEnd;
             int total = end - start;
             ImGui::Text("%s", SequencerItemTypeNames[type]);
-            if (std::holds_alternative<shared_ptr<Shape>>(item.user)) {
-                auto & shape = std::get<shared_ptr<Shape>>(item.user);
+            
+            shared_ptr<Shape> shape = nullptr;
+            shared_ptr<Vezer> vezer = nullptr;
+            shared_ptr<Human> human = nullptr;
 
+            if (std::holds_alternative<shared_ptr<Shape>>(item.user)) {
+                shape = std::get<shared_ptr<Shape>>(item.user);
+            }
+
+            if (std::holds_alternative<shared_ptr<Vezer>>(item.user)) {
+                vezer = std::get<shared_ptr<Vezer>>(item.user);
+            }
+
+            if (std::holds_alternative<shared_ptr<Human>>(item.user)) {
+                human = std::get<shared_ptr<Human>>(item.user);
+            }
+
+            if( checkUserIsValid(item.user) ){
                 static bool disable_mouse_wheel = false;
                 static bool disable_menu = false;
                 static bool bordar = false;
                 ImGuiWindowFlags window_flags = ImGuiWindowFlags_HorizontalScrollbar;
-                float height = 160;
+                float height = 180;
                 float width = ImGui::GetContentRegionAvail().x * 0.333f;
                 {
                     // Left Gui Area
                     ImGui::BeginChild("ChildL", ImVec2(width, height), bordar, window_flags);
                     
-                    if(type != (int)shape->type ){
+                    if(type < 3 && type != (int)shape->type ){
                         ofLogError("Sequencer::draw()") << "Something went wrong about ShapeType";
                     }
                     
@@ -417,6 +389,8 @@ void Sequencer::draw(bool * bOpen){
                         case ShapeType::FAN: drawGui_Fan(shape); break;
                         case ShapeType::RECT_SCREEN: drawGui_RectScreen(shape); break;
                         case ShapeType::ELLIPSE: drawGui_Ellipse(shape); break;
+                        case 3: drawGui_Vezer(vezer); break;
+                        case 4: drawGui_Human(human); break;
                         default: ofLogError("Sequencer::draw()") << "Something went wrong about ShapeType"; break;
                     }
                     
@@ -428,7 +402,28 @@ void Sequencer::draw(bool * bOpen){
                 {
                     /// Middle Gui Area
                     ImGui::BeginChild("ChildM", ImVec2(width, height), true, window_flags);
-                    videoSection(shape);
+                    if(shape){
+                        videoSection(shape);
+                    }
+                    
+                    if(vezer){
+                        ImGui::Text("OSC Logger");
+                        if(ImGui::SliderInt("Queue Size", (int*)&vezer->maxMsgQueueNum.get(), vezer->maxMsgQueueNum.getMin(), vezer->maxMsgQueueNum.getMax())){
+                            vezer->resizeQueue();
+                        }
+                        gui::Helper::drawMsgLogger( vezer->msgQueue );
+                    }
+                    
+                    // preview Vezer timelien, too small space
+//                    if(vezer && vezer->isReady()){
+//                        ofFbo & fbo = vezer->parser.getFbo();
+//                        if(!fbo.isAllocated()){
+//                            fbo.getTexture().getTextureData().bFlipTexture = true;
+//                            vezer->prepareFbo(width, height);
+//                        }
+//                        ofxImGui::AddImage(fbo.getTexture(), glm::vec2(width, height));
+//                    }
+                    
                     ImGui::EndChild();
                 }
                 
@@ -572,6 +567,26 @@ void Sequencer::drawGui_Ellipse(shared_ptr<Shape> & shape){
     ImGui::PopID();
 }
 
+void Sequencer::drawGui_Vezer(shared_ptr<Vezer> & vezer){
+    
+    if(vezer->isReady()){
+        filesystem::path path{vezer->filepath.get()};
+        ImGui::Text("file name     : %s", path.filename().c_str());
+        ImGui::Text("current frame : %d", vezer->getCurrentFrame());
+        ImGui::Text("total frames  : %d", vezer->getTotalFrames());
+    }else{
+        ImGui::Text("Vezer file not loaded");
+    }
+    
+    if( ImGui::Button("Load Vezer XML file") ){
+     io::dialogueOpenVezer(vezer);
+ }
+}
+
+void Sequencer::drawGui_Human(shared_ptr<Human> & human){
+
+}
+
 bool Sequencer::save(const std::string & filepath){
     ofJson json;
     int min = mySequence.GetFrameMin();
@@ -592,14 +607,23 @@ bool Sequencer::save(const std::string & filepath){
         t["end"] = ofToString(end);
         t["type"] = ofToString(type);
 
-
-        if (std::holds_alternative<shared_ptr<Shape>>(item.user)) {
-            auto & shape = std::get<shared_ptr<Shape>>(item.user);
-            ofJson shapeJson;
-            ofSerialize(shapeJson, shape->grp);
-            t["shape"] = shapeJson;
-        }else{
-            
+        if( checkUserIsValid(item.user) ){
+            if (std::holds_alternative<shared_ptr<Shape>>(item.user)) {
+                auto & shape = std::get<shared_ptr<Shape>>(item.user);
+                ofJson shapeJson;
+                ofSerialize(shapeJson, shape->grp);
+                t["shape"] = shapeJson;
+            }else if (std::holds_alternative<shared_ptr<Vezer>>(item.user)) {
+                auto & vezer = std::get<shared_ptr<Vezer>>(item.user);
+                ofJson vezerJson;
+                ofSerialize(vezerJson, vezer->grp);
+                t["vezer"] = vezerJson["Vezer"];
+            }else if( std::holds_alternative<shared_ptr<Human>>(item.user)) {
+                auto & human = std::get<shared_ptr<Human>>(item.user);
+                ofJson humanJson;
+                ofSerialize(humanJson, human->grp);
+                t["human"] = humanJson;
+            }
         }
 
         tracks.push_back(t);
@@ -634,22 +658,32 @@ bool Sequencer::load(const std::string & filepath){
                 
                 auto itShape = j.find("shape");
                 if( itShape != j.end()){
-                    shared_ptr<Shape> s = addTrackShape((ShapeType)type, st, end, false);
-                    if(s && s->grp)
+                    SequenceUser u = addTrack(type, st, end, false);
+                    auto & s = std::get<shared_ptr<Shape>>(u);
+                    if(s && s->grp){
                         ofDeserialize(*itShape, s->grp);
+                    }
                 }
                 
                 auto itHuman = j.find("human");
                 if( itHuman != j.end()){
-                    //ofDeserialize(*itHuman, h->grp);
+                    SequenceUser u = addTrack(type, st, end, false);
+                    auto & h = std::get<shared_ptr<Human>>(u);
+                    if(h && h->grp){
+                        ofDeserialize(*itHuman, h->grp);
+                    }
                 }
                 
                 auto itVezer = j.find("vezer");
                 if( itVezer != j.end()){
-                    //ofDeserialize(*itVezer, v->grp);
+                    SequenceUser u = addTrack(type, st, end, false);
+                    auto & v = std::get<shared_ptr<Vezer>>(u);
+                    ofDeserialize(*itVezer, v->grp);
+                    v->load();
                 }
-                return true;
             }
+            
+            return true;
         }
     }
     return false;
@@ -686,8 +720,7 @@ void Sequencer::videoSection(shared_ptr<Shape> s){
         ImGui::Text("current frame : %5d frame", currentFrame);
         ImGui::Text("total frames  : %5d frames, (%3.2f sec)", nFrames, duration);
         ImGui::Text("frame rate    : %2.2f fps", frameRate);
-        ImGui::Text("state         : %s", isPlaying ? "Playing" : "Not playing");
-        ImGui::Text("loop          : %s", isLoop ? "Loop" : "Loop None");
+        ImGui::Text("state         : %s, %s", isPlaying ? "Playing" : "Not playing", isLoop ? "Loop" : "Loop None");
         if(ImGui::SliderFloat("volume", (float *)&s->videoVolume.get(), s->videoVolume.getMin(), s->videoVolume.getMax())){
             s->setVideoVolume(s->videoVolume);
         }
@@ -704,4 +737,17 @@ void Sequencer::videoSection(shared_ptr<Shape> s){
             s->loadVideo(filepath);
         }
     }
+    ImGui::SameLine();
+    if(ImGui::Button("Reload")){
+        s->loadVideo();
+    }
+}
+
+bool Sequencer::checkUserIsValid(const SequenceUser & user){
+    
+    if(user.index() == 0){
+        ofLogError("Sequencer") << "Error: User is monostate";
+        return false;
+    }
+    return true;
 }
