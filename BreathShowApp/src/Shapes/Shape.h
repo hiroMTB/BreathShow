@@ -90,7 +90,6 @@ public:
         if(vid.getCurrentFrame() != 0){
             vid.setPosition(0);
             vid.update();
-            ofLogVerbose("Sequencer::stop()") << "vid.setPosition(0)";
         }
 
         bOn = false;

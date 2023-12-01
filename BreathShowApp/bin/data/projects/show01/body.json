@@ -1,9 +1,9 @@
 {
     "Body": {
         "Filter": {
-            "Filter_Type": "2",
+            "Filter_Type": "1",
             "Legacy_Filter": {
-                "lowpass": "0.7"
+                "lowpass": "0.94"
             },
             "One_Euro_Filter": {
                 "beta": "0.07",

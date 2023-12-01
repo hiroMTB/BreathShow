@@ -10,8 +10,8 @@ shared_ptr<ofApp> ofApp::app = nullptr;
 
 void ofApp::setup()
 {
-//     ofSetLogLevel(OF_LOG_NOTICE);
-    ofSetLogLevel(OF_LOG_VERBOSE);
+     ofSetLogLevel(OF_LOG_NOTICE);
+//    ofSetLogLevel(OF_LOG_VERBOSE);
     ofSetCircleResolution(64);
     
 #ifndef USE_MULTI_VIEWPORT
@@ -27,7 +27,6 @@ void ofApp::setup()
     cam.setFarClip(10000);
     
     Serializer::load(initGrp, ofToDataPath("./init.json"));
-    //currentProjectPath = "./projects/testProject";
     io::loadProject(currentProjectPath);
         
     osc.setupReceiver();

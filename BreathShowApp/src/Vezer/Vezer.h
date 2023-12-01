@@ -101,8 +101,6 @@ public:
         currentFrame = frame;
         provider.setCurrentTracks(comp, frame);
         bNeedUpdate = true;
-        
-        ofLogNotice("Vezer") << "setFrame()";
     }
 
     void resizeQueue(){
