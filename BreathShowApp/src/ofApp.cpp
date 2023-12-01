@@ -34,24 +34,26 @@ void ofApp::setup()
 }
 
 void ofApp::receiveOsc(){
-    if(bUseTracker){
-        if(bLiveOsc){
-            osc.receive([&](const ofxOscMessage &m) -> void {
-                string address = m.getAddress();
-                const vector<string> &tokens = Util::split(address, "/");
-                body.processOsc(m, tokens);
-                //cout << m << endl;
-            });
-        }else{
-            // load vezer xml file
-            vezer.receive( [&](const ofxOscMessage & m) -> void {
-               string address = m.getAddress();
-               const vector<string> &tokens = Util::split(address, "/");
-               body.processOsc(m, tokens);
-           });
-        }
+    if(bLiveTracking){
+        osc.receive([&](const ofxOscMessage &m) -> void {
+            string address = m.getAddress();
+            const vector<string> &tokens = Util::split(address, "/");
+            body.processOsc(m, tokens);
+            //cout << m << endl;
+        });
     }else{
-        // Read sequencer to move Human
+        
+        const auto & items = sequencer.getSequenceItems();
+        for( auto & i : items){
+            if (std::holds_alternative<shared_ptr<Vezer>>(i.user)) {
+                auto & vezer = std::get<shared_ptr<Vezer>>(i.user);
+                vezer->receive([&](const ofxOscMessage &m) -> void {
+                    string address = m.getAddress();
+                    const vector<string> &tokens = Util::split(address, "/");
+                    body.processOsc(m, tokens);
+                });
+            }
+        }
     }
 }
 
@@ -59,12 +61,7 @@ void ofApp::update()
 {
     ofSetFrameRate(app->targetFps);
     
-    if(bUseTracker){
-        if(bLiveOsc){
-            
-        }else{
-            vezer.setFrame(sequencer.getCurrentFrame() );
-        }
+    if(1){        
         receiveOsc();
         body.calc();
         human.root.setPosition(body.rootPos);
@@ -73,8 +70,6 @@ void ofApp::update()
         human.orientationY = body.rootOri.y;
         glm::quat q = glm::angleAxis(glm::radians(human.orientationY.get()), vec3(0,1,0));
         human.root.setOrientation(q);
-    }else{
-        /// Read Sequencer?
     }
     
     const auto & items = sequencer.getSequenceItems();

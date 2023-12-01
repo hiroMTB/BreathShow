@@ -69,7 +69,7 @@ void ofApp::draw3DScene(){
     
     human.draw();
 
-    if(bUseTracker){
+    if(1){
     	body.draw(2, ofColor(255));
     }
     
