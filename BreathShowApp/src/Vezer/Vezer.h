@@ -68,7 +68,7 @@ public:
             ofLogError("Vezer") << "No Composition loaded?";
         }
 
-        if( bNeedUpdate ) {
+        if( isPlaying || bNeedUpdate ) {
 //            if(!bNeedUpdate)currentFrame++;
 //            currentFrame %= comp.length;
 //            setFrame(currentFrame);
@@ -89,10 +89,20 @@ public:
         }
     }
 
+    void start(){
+        isPlaying = true;
+    }
+    
+    void stop(){
+        isPlaying = false;
+    }
+    
     void setFrame(int frame){
         currentFrame = frame;
         provider.setCurrentTracks(comp, frame);
         bNeedUpdate = true;
+        
+        ofLogNotice("Vezer") << "setFrame()";
     }
 
     void resizeQueue(){
@@ -103,6 +113,18 @@ public:
     
     int getTotalFrames(){
         return comp.length;
+    }
+    
+    int getCurrentFrame(){
+        return currentFrame;
+    }
+    
+    bool isReady(){
+        return comp.state;
+    }
+    
+    void prepareFbo(float w, float h){
+        parser.redraw(comp, w, h);
     }
     
     ofxVezer::Parser parser;
@@ -117,6 +139,7 @@ public:
     ofEventListeners listeners;
 
 private:
+    bool isPlaying{false};
     bool bNeedUpdate{false};
     int currentFrame{0};  // this must be synched with sequencer time line
 };
