@@ -57,14 +57,24 @@ void ofApp::draw3DScene(){
     // Floor (Grid)
     drawFloor();
     
-    if(Vezer::getIsPlayingSomeVezer()){
-    	body.draw(2, ofColor(255));
-    }else{
+    //if(Vezer::getIsPlayingSomeVezer())
+    bool bNoVezer = true;
+    const auto & items = sequencer.getSequenceItems();
+    for( auto & i : items){
+        if (std::holds_alternative<shared_ptr<Vezer>>(i.user)) {
+            auto & vezer = std::get<shared_ptr<Vezer>>(i.user);
+            if(vezer->getIsPlaying()){
+                vezer->body.draw(3, ofColor(230));
+                bNoVezer = false;
+            }
+        }
+    }
+
+    if(bNoVezer){
         human.draw();
     }
     
     // Fan, RectScreen, Ellipse
-    const auto & items = sequencer.getSequenceItems();
     for( auto & i : items){
         if (std::holds_alternative<shared_ptr<Shape>>(i.user)) {
           auto & shape = std::get<shared_ptr<Shape>>(i.user);
