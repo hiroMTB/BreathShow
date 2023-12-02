@@ -15,23 +15,31 @@ class RampEdit : public ImCurveEdit::Delegate
 
 public:
 	RampEdit()
-	{
-        mPts.assign(3, std::vector<ImVec2>());
+    {
+        //makeDefault();
+    }
+    
+    void makeDefault(){
+        mPts.clear();
+        mPts.assign(4, std::vector<ImVec2>());
 
         mPts[0].emplace_back( 0.f, 0.5f );
         mPts[0].emplace_back( 10000.f, 0.7f );
         mPts[1].emplace_back( 0.f, 0.5f );
         mPts[1].emplace_back( 10000.f, 0.5f );
         mPts[2].emplace_back( 0.f, 0.5f );
-		mPts[2].emplace_back( 10000.f, 0.1f );
+        mPts[2].emplace_back( 10000.f, 0.1f );
+        mPts[3].emplace_back( 0.f, 0.5f );
+		mPts[3].emplace_back( 10000.f, 0.5f );
 
-		mbVisible[0] = mbVisible[1] = mbVisible[2] = true;
+		mbVisible[0] = mbVisible[1] = mbVisible[2] = mbVisible[3] = true;
 		mMax = ImVec2(1.0, 1.0);
 		mMin = ImVec2(0.0, 0.0);
 
         SortValues(0);
         SortValues(1);
         SortValues(2);
+        SortValues(3);
 	}
 
 	size_t GetCurveCount() override
@@ -51,7 +59,7 @@ public:
 
 	uint32_t GetCurveColor(size_t curveIndex) override
 	{
-		uint32_t cols[] = {0xFF0000FF, 0xFF00FF00, 0xFFFF0000};
+		uint32_t cols[] = {0xFF0000FF, 0xFF00FF00, 0xFFFF0000, 0xFF999999};
 		return cols[curveIndex];
 	}
 
@@ -88,7 +96,7 @@ public:
 	virtual unsigned int GetBackgroundColor() override { return 0; }
 
 	std::vector<std::vector<ImVec2>> mPts;
-	bool mbVisible[3];
+	bool mbVisible[4];
 	ImVec2 mMin;
 	ImVec2 mMax;
 

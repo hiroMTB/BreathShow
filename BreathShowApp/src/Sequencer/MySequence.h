@@ -82,8 +82,15 @@ public:
 	// my datas
 	MySequence() : mFrameMin(0), mFrameMax(0) {}
 	int mFrameMin, mFrameMax;
-	struct MySequenceItem
+	class MySequenceItem
 	{
+    public:
+        MySequenceItem(int t, int st, int end, bool ex, SequenceUser & u):
+        mType(t), mFrameStart(st), mFrameEnd(end), mExpanded(ex), user(u){
+            if(mType==4){
+                rampEdit.makeDefault();
+            }
+        }
 		int mType;
 		int mFrameStart, mFrameEnd;
 		bool mExpanded;
@@ -106,14 +113,15 @@ public:
 
 	virtual void CustomDraw(int index, ImDrawList *draw_list, const ImRect &rc, const ImRect &legendRect, const ImRect &clippingRect, const ImRect &legendClippingRect)
 	{
-		static const char *labels[] = {"Translation", "Rotation", "Scale"};
+		static const char *labels[] = {"X", "Y", "Z", "OrientationY"};
 		RampEdit &rampEdit = myItems[index].rampEdit;
 
 		rampEdit.mMax = ImVec2(float(mFrameMax), 1.f);
 		rampEdit.mMin = ImVec2(float(mFrameMin), 0.f);
 		//draw_list->PushClipRect(legendClippingRect.Min, legendClippingRect.Max, true);
 
-		for (int i = 0; i < 3; i++)
+#pragma mark FIX_HARDCODED_4
+		for (int i = 0; i < 4; i++)
 		{
 			ImVec2 pta(legendRect.Min.x + 30, legendRect.Min.y + i * 14.f);
 			ImVec2 ptb(legendRect.Max.x, legendRect.Min.y + (i + 1) * 14.f);
