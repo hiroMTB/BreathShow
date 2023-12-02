@@ -75,6 +75,7 @@ void ofApp::draw3DScene(){
     }
     
     // Fan, RectScreen, Ellipse
+    ofSetColor(255); // important
     for( auto & i : items){
         if (std::holds_alternative<shared_ptr<Shape>>(i.user)) {
           auto & shape = std::get<shared_ptr<Shape>>(i.user);
@@ -96,8 +97,8 @@ void ofApp::drawProjectorFbo(){
     ofClear(0);
     ofBackground(0);
     
-    // Fan
-    ofSetColor(255);
+    // Shapes
+    ofSetColor(255); // important
     ofPushMatrix();
     const auto & items = sequencer.getSequenceItems();
     for( auto & i : items){
