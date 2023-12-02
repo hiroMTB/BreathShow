@@ -17,6 +17,7 @@
 #include "Helper.h"
 #include "AnimHuman.h"
 #include "Human.h"
+#include "RampEdit.h"
 
 Sequencer::Sequencer(){
     setup();
@@ -737,7 +738,35 @@ bool Sequencer::save(const std::string & filepath){
                 auto & human = std::get<shared_ptr<AnimHuman>>(item.user);
                 ofJson humanJson;
                 ofSerialize(humanJson, human->grp);
+                
+                // Curve points
+                const vector<vector<ImVec2>> & pts = item.rampEdit.mPts;
+                if(pts.size() > 0){
+                 
+                    ofJson cj = ofJson::array();
+                    for(int i=0; i<pts.size(); i++){
+                        
+                        ofJson ptsJ = ofJson::array();
+
+                        const vector<ImVec2> & vec = pts[i];
+                        auto it = vec.begin();
+                        for(; it!=vec.end(); ++it){
+                            const ImVec2 & p = *it;
+                            ofJson ptJ;// = ofJson::array();
+                            ptJ["type"] = "smooth";
+                            ptJ["x"] = ofToString(p.x);
+                            ptJ["y"] = ofToString(p.y);
+                            ptsJ.push_back(ptJ);
+                        }
+                        
+                        cj.push_back(ptsJ);
+                    }
+                    
+                    humanJson["curve"] = cj;
+                }
+                
                 t["human"] = humanJson;
+
             }
         }
 
@@ -799,6 +828,30 @@ bool Sequencer::load(const std::string & filepath){
                     auto & h = std::get<shared_ptr<AnimHuman>>(u);
                     if(h && h->grp){
                         ofDeserialize(*itHuman, h->grp);
+                    }
+                    
+                    auto cit = itHuman->find("curve");
+                    if(cit != itHuman->end()){
+                        auto & item = mySequence.myItems.back();
+                        vector<vector<ImVec2>> & pts = item.rampEdit.mPts;
+                        pts.clear();
+                        ofJson ptsJ = *cit;
+                        
+                        for(int i=0; i<ptsJ.size(); i++){
+                            pts.emplace_back( vector<ImVec2>() );
+                            vector<ImVec2> & pt = pts.back();
+                            
+                            auto pit = ptsJ[i].begin();
+                            for(; pit!=ptsJ[i].end(); ++pit){
+                                ofJson pj = *pit;
+                                string type = pj.value("type", "smooth");
+                                float x = ofToFloat(pj.value("x", "0"));
+                                float y = ofToFloat(pj.value("y", "0"));
+                                pt.emplace_back(x, y); 
+                            }
+                        }
+                        
+                        itm.rampEdit.sortAll();
                     }
                 }
             }
