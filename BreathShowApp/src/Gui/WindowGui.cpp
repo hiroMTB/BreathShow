@@ -37,11 +37,11 @@ void ofApp::drawGui_Human()
             human.setModelScale();
         }
 
-        if(ImGui::SliderFloat3("position", (float*)&human.root.position.get().x, human.root.position.getMin().x, human.root.position.getMax().x)){
+        if(ImGui::SliderFloat3("position", (float*)&human.root.position.get().x, human.root.position.getMin().x, human.root.position.getMax().x, "%.2f")){
             human.root.setPosition(human.root.position);
         }
                         
-        if(ImGui::SliderFloat("orientation Y", (float*)&human.orientationY.get(), -360, 360)){
+        if(ImGui::SliderFloat("orientation Y", (float*)&human.orientationY.get(), -360, 360, "%.2f")){
             glm::quat q = glm::angleAxis(glm::radians(human.orientationY.get()), vec3(0,1,0));
             human.root.setOrientation(q);
         }

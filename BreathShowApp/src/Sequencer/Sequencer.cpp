@@ -507,20 +507,20 @@ void Sequencer::drawGui_Fan(shared_ptr<Shape> & shape){
             fan->setup();
         }
 
-        if(ImGui::SliderFloat3("position", (float*)&fan->position.get().x, fan->position.getMin().x, fan->position.getMax().x)){
+        if(ImGui::SliderFloat3("position", (float*)&fan->position.get().x, fan->position.getMin().x, fan->position.getMax().x, "%.2f")){
             fan->setPosition(fan->position);
         }
 
-        if(ImGui::SliderFloat("orientationY", (float*)&fan->orientationY.get(), fan->orientationY.getMin(), fan->orientationY.getMax())){
+        if(ImGui::SliderFloat("orientationY", (float*)&fan->orientationY.get(), fan->orientationY.getMin(), fan->orientationY.getMax(), "%.2f")){
             glm::quat q = glm::angleAxis(glm::radians(fan->orientationY.get()), vec3(0,1,0));
             fan->setOrientation(q);
         }
 
-        if(ImGui::SliderFloat("openAngle", (float*)&fan->openAngle.get(), fan->openAngle.getMin(), fan->openAngle.getMax())){
+        if(ImGui::SliderFloat("openAngle", (float*)&fan->openAngle.get(), fan->openAngle.getMin(), fan->openAngle.getMax(), "%.2f")){
             fan->setup();
         }
 
-        if(ImGui::SliderFloat("radius", (float*)&fan->radius.get(), fan->radius.getMin(), fan->radius.getMax())){
+        if(ImGui::SliderFloat("radius", (float*)&fan->radius.get(), fan->radius.getMin(), fan->radius.getMax(), "%.2f")){
             fan->setup();
         }
 
@@ -549,15 +549,15 @@ void Sequencer::drawGui_RectScreen(shared_ptr<Shape> & shape){
             rectScreen->setup();
         }
 
-        if(ImGui::SliderFloat3("position", (float*)&rectScreen->position.get().x, rectScreen->position.getMin().x, rectScreen->position.getMax().x)){
+        if(ImGui::SliderFloat3("position", (float*)&rectScreen->position.get().x, rectScreen->position.getMin().x, rectScreen->position.getMax().x, "%.2f")){
             rectScreen->setPosition(rectScreen->position);
         }
 
-        if(ImGui::SliderFloat2("size", (float*)&rectScreen->size.get().x, rectScreen->size.getMin().x, rectScreen->size.getMax().x)){
+        if(ImGui::SliderFloat2("size", (float*)&rectScreen->size.get().x, rectScreen->size.getMin().x, rectScreen->size.getMax().x, "%.2f")){
             rectScreen->setup();
         }
 
-        if(ImGui::SliderFloat("orientationY", (float*)&rectScreen->orientationY.get(), rectScreen->orientationY.getMin(), rectScreen->orientationY.getMax())){
+        if(ImGui::SliderFloat("orientationY", (float*)&rectScreen->orientationY.get(), rectScreen->orientationY.getMin(), rectScreen->orientationY.getMax(), "%.2f")){
             glm::quat q = glm::angleAxis(glm::radians(rectScreen->orientationY.get()), vec3(0,1,0));
             rectScreen->setOrientation(q);
         }
@@ -584,19 +584,19 @@ void Sequencer::drawGui_Ellipse(shared_ptr<Shape> & shape){
             ellipse->setup();
         }
 
-        if(ImGui::SliderFloat3("position", (float*)&ellipse->position.get().x, ellipse->position.getMin().x, ellipse->position.getMax().x)){
+        if(ImGui::SliderFloat3("position", (float*)&ellipse->position.get().x, ellipse->position.getMin().x, ellipse->position.getMax().x, "%.2f")){
             ellipse->setPosition(ellipse->position);
         }
 
-        if(ImGui::SliderFloat("radius", (float*)&ellipse->radius.get(), ellipse->radius.getMin(), ellipse->radius.getMax())){
+        if(ImGui::SliderFloat("radius", (float*)&ellipse->radius.get(), ellipse->radius.getMin(), ellipse->radius.getMax(), "%.2f")){
             ellipse->setup();
         }
 
-        if(ImGui::SliderFloat("center Width", (float*)&ellipse->centerWidth.get(), ellipse->centerWidth.getMin(), ellipse->centerWidth.getMax())){
+        if(ImGui::SliderFloat("center Width", (float*)&ellipse->centerWidth.get(), ellipse->centerWidth.getMin(), ellipse->centerWidth.getMax(), "%.2f")){
             ellipse->setup();
         }
 
-        if(ImGui::SliderFloat("orientationY", (float*)&ellipse->orientationY.get(), ellipse->orientationY.getMin(), ellipse->orientationY.getMax())){
+        if(ImGui::SliderFloat("orientationY", (float*)&ellipse->orientationY.get(), ellipse->orientationY.getMin(), ellipse->orientationY.getMax(), "%.2f")){
             glm::quat q = glm::angleAxis(glm::radians(ellipse->orientationY.get()), vec3(0,1,0));
             ellipse->setOrientation(q);
         }
@@ -650,7 +650,7 @@ void Sequencer::drawGui_VezerM(shared_ptr<Vezer> & vezer){
     
     ImGui::Text("Skeleton");
   
-    if(ImGui::SliderFloat3("offset", (float*)&body.offset.get().x, body.offset.getMin().x, body.offset.getMax().x)){
+    if(ImGui::SliderFloat3("offset", (float*)&body.offset.get().x, body.offset.getMin().x, body.offset.getMax().x, "%.2f")){
     }
     
 //    if(ImGui::SliderFloat3("Scale", (float*)&body.scale.get().x, body.scale.getMin().x, body.scale.getMax().x)){
@@ -676,7 +676,7 @@ void Sequencer::drawGui_VezerM(shared_ptr<Vezer> & vezer){
         ofxImGui::VectorCombo("Filter Type", (int *) &body.filterType.get(), fTypes);
         if (body.filterType == 0) {
         } else if (body.filterType == 1) {
-            ImGui::SliderFloat(body.lowpass.getName().c_str(), (float*)&body.lowpass.get(), body.lowpass.getMin(), body.lowpass.getMax());
+            ImGui::SliderFloat(body.lowpass.getName().c_str(), (float*)&body.lowpass.get(), body.lowpass.getMin(), body.lowpass.getMax(), "%.2f");
         } else if (body.filterType == 2) {
             gui::Helper::DragDouble(body.frequency, 1);
             gui::Helper::DragDouble(body.mincutoff);
@@ -688,11 +688,11 @@ void Sequencer::drawGui_VezerM(shared_ptr<Vezer> & vezer){
 }
 
 void Sequencer::drawGui_Human(shared_ptr<AnimHuman> & human){
-    if(ImGui::SliderFloat3("position", (float*)&human->position.get().x, human->position.getMin().x, human->position.getMax().x)){
+    if(ImGui::SliderFloat3("position", (float*)&human->position.get().x, human->position.getMin().x, human->position.getMax().x, "%.2f")){
         //human->setPosition(human->root.position);
     }
                     
-    if(ImGui::SliderFloat("orientation Y", (float*)&human->orientationY.get(), -360, 360)){
+    if(ImGui::SliderFloat("orientation Y", (float*)&human->orientationY.get(), -360, 360, "%.2f")){
 //        glm::quat q = glm::angleAxis(glm::radians(human->orientationY.get()), vec3(0,1,0));
 //        human->root.setOrientation(q);
     }
@@ -894,7 +894,7 @@ void Sequencer::videoSection(shared_ptr<Shape> s){
         ImGui::Text("total frames  : %5d frames, (%3.2f sec)", nFrames, duration);
         ImGui::Text("frame rate    : %2.2f fps", frameRate);
         ImGui::Text("state         : %s, %s", isPlaying ? "Playing" : "Not playing", isLoop ? "Loop" : "Loop None");
-        if(ImGui::SliderFloat("volume", (float *)&s->videoVolume.get(), s->videoVolume.getMin(), s->videoVolume.getMax())){
+        if(ImGui::SliderFloat("volume", (float *)&s->videoVolume.get(), s->videoVolume.getMin(), s->videoVolume.getMax(), "%.2f")){
             s->setVideoVolume(s->videoVolume);
         }
         
