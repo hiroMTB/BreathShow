@@ -16,32 +16,37 @@ class RampEdit : public ImCurveEdit::Delegate
 public:
 	RampEdit()
     {
+        mPts.clear();
         //makeDefault();
+        mbVisible[0] = mbVisible[1] = mbVisible[2] = mbVisible[3] = true;
+        mMax = ImVec2(1.0, 1.0);
+        mMin = ImVec2(0.0, 0.0);
     }
     
     void makeDefault(){
-        mPts.clear();
-        mPts.assign(4, std::vector<ImVec2>());
+//        mPts.clear();
+//        mPts.assign(4, std::vector<ImVec2>());
+//
+//        mPts[0].emplace_back( 0.f, 0.5f );
+//        mPts[0].emplace_back( 10000.f, 0.7f );
+//        mPts[1].emplace_back( 0.f, 0.5f );
+//        mPts[1].emplace_back( 10000.f, 0.5f );
+//        mPts[2].emplace_back( 0.f, 0.5f );
+//        mPts[2].emplace_back( 10000.f, 0.1f );
+//        mPts[3].emplace_back( 0.f, 0.5f );
+//		mPts[3].emplace_back( 10000.f, 0.5f );
+//
+//		mbVisible[0] = mbVisible[1] = mbVisible[2] = mbVisible[3] = true;
+//
+	}
 
-        mPts[0].emplace_back( 0.f, 0.5f );
-        mPts[0].emplace_back( 10000.f, 0.7f );
-        mPts[1].emplace_back( 0.f, 0.5f );
-        mPts[1].emplace_back( 10000.f, 0.5f );
-        mPts[2].emplace_back( 0.f, 0.5f );
-        mPts[2].emplace_back( 10000.f, 0.1f );
-        mPts[3].emplace_back( 0.f, 0.5f );
-		mPts[3].emplace_back( 10000.f, 0.5f );
-
-		mbVisible[0] = mbVisible[1] = mbVisible[2] = mbVisible[3] = true;
-		mMax = ImVec2(1.0, 1.0);
-		mMin = ImVec2(0.0, 0.0);
-
+    void sortAll(){
         SortValues(0);
         SortValues(1);
         SortValues(2);
         SortValues(3);
-	}
-
+    }
+    
 	size_t GetCurveCount() override
 	{
 		return mPts.size();
