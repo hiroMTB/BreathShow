@@ -19,9 +19,9 @@ public:
         mPts.assign(3, std::vector<ImVec2>());
 
         mPts[0].emplace_back( 0.f, 0.5f );
-        mPts[0].emplace_back( 10000.f, 0.1f );
-        mPts[1].emplace_back( 0.f, 0.0f );
-        mPts[1].emplace_back( 10000.f, 0.0f );
+        mPts[0].emplace_back( 10000.f, 0.7f );
+        mPts[1].emplace_back( 0.f, 0.5f );
+        mPts[1].emplace_back( 10000.f, 0.5f );
         mPts[2].emplace_back( 0.f, 0.5f );
 		mPts[2].emplace_back( 10000.f, 0.1f );
 
