@@ -125,6 +125,14 @@ public:
         parser.redraw(comp, w, h);
     }
     
+    static bool getIsPlayingSomeVezer(){
+        return isPlayingSomeVezer;
+    }
+    
+    static void setIsPlayingSomeVezer(bool b){
+        isPlayingSomeVezer = b;
+    }
+    
     ofxVezer::Parser parser;
     ofxVezer::Composition comp;
     ofxVezer::Provider provider;
@@ -140,4 +148,6 @@ private:
     bool isPlaying{false};
     bool bNeedUpdate{false};
     int currentFrame{0};  // this must be synched with sequencer time line
+
+    static bool isPlayingSomeVezer;
 };
