@@ -140,6 +140,24 @@
             "start": "11977",
             "type": "3",
             "vezer": {
+                "Body": {
+                    "Filter": {
+                        "Filter_Type": "2",
+                        "Legacy_Filter": {
+                            "lowpass": "0.7"
+                        },
+                        "One_Euro_Filter": {
+                            "beta": "0.07",
+                            "dcutoff": "1",
+                            "frequency": "60",
+                            "mincutoff": "1"
+                        }
+                    },
+                    "Landmark": {
+                        "offset": "-10.6046, 110, 255.02",
+                        "scale": "1, 1, 1"
+                    }
+                },
                 "File_Path": "./vezer/cello.xml",
                 "Max_Message_Queue_Num": "5"
             }
@@ -149,6 +167,24 @@
             "start": "18806",
             "type": "3",
             "vezer": {
+                "Body": {
+                    "Filter": {
+                        "Filter_Type": "2",
+                        "Legacy_Filter": {
+                            "lowpass": "0.7"
+                        },
+                        "One_Euro_Filter": {
+                            "beta": "0.07",
+                            "dcutoff": "1",
+                            "frequency": "60",
+                            "mincutoff": "1"
+                        }
+                    },
+                    "Landmark": {
+                        "offset": "16.9559, 110, 301.37",
+                        "scale": "1, 1, 1"
+                    }
+                },
                 "File_Path": "./vezer/violine.xml",
                 "Max_Message_Queue_Num": "5"
             }
