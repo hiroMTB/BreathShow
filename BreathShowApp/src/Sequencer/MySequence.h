@@ -46,14 +46,15 @@ public:
 
 	virtual void Get(int index, int **start, int **end, int *type, unsigned int *color)
 	{
-        static ImU32 shapeColor{ImColor(140, 140, 140)};
+        static ImU32 shapeColor{ImColor(160, 160, 160)};
         static ImU32 vezerColor{ImColor(180, 65, 0)}; // Vezer orange (253, 89, 0)
+        static ImU32 humanColor{ImColor(240, 214, 153)}; // Human
         
 		MySequenceItem &item = myItems[index];
         if (color){
-            *color = (item.mType == 3)
-            ? vezerColor
-            : shapeColor;
+            if(item.mType <= 2) *color = shapeColor;
+            else if(item.mType == 3) *color = vezerColor;
+            else if(item.mType == 4) *color = humanColor;
         }
 		if (start)
 			*start = &item.mFrameStart;
