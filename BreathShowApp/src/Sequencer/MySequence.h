@@ -111,7 +111,8 @@ public:
 
 		rampEdit.mMax = ImVec2(float(mFrameMax), 1.f);
 		rampEdit.mMin = ImVec2(float(mFrameMin), 0.f);
-		draw_list->PushClipRect(legendClippingRect.Min, legendClippingRect.Max, true);
+		//draw_list->PushClipRect(legendClippingRect.Min, legendClippingRect.Max, true);
+
 		for (int i = 0; i < 3; i++)
 		{
 			ImVec2 pta(legendRect.Min.x + 30, legendRect.Min.y + i * 14.f);
@@ -120,7 +121,7 @@ public:
 			if (ImRect(pta, ptb).Contains(ImGui::GetMousePos()) && ImGui::IsMouseClicked(0))
 				rampEdit.mbVisible[i] = !rampEdit.mbVisible[i];
 		}
-		draw_list->PopClipRect();
+		//draw_list->PopClipRect();
 
 		ImGui::SetCursorScreenPos(rc.Min);
 		ImVec2 diff;
