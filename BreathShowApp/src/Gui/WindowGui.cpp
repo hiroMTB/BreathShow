@@ -26,10 +26,9 @@ void ofApp::drawGui_Projector(){
 
 void ofApp::drawGui_Human()
 {
-    ImGuiTreeNodeFlags flag = ImGuiTreeNodeFlags_DefaultOpen;
     auto settings = ofxImGui::Settings();
    
-    if(ofxImGui::BeginWindow("Human", settings, false, (bool*)&bProjectorOpen.get())) {
+    if(ofxImGui::BeginWindow("Human", settings, false, (bool*)&bHumanOpen.get())) {
        
         ImGui::Checkbox("ON", (bool*)&human.bOn.get());
                 
