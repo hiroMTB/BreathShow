@@ -80,7 +80,6 @@ class ofApp : public ofBaseApp{
         ofParameterGroup grp{"app settings", genGrp, panelGrp};
 
         Human human;
-        //vector<shared_ptr<Shape>> shapes;
             
         ofParameter<string> currentProjectPath{"Current Project Path", "./projects/testProject"};
         ofParameterGroup initGrp{"init", currentProjectPath};
