@@ -243,39 +243,51 @@ void Sequencer::updateSequenceItem(int entry, bool bSeek){
         }
     }
     
-    if(0){
-        /// TODO: Read Curve Value
-        if(st <= currentFrame && currentFrame <= end){
+    if(type==4){
+        if (std::holds_alternative<shared_ptr<AnimHuman>>(item.user)) {
+            auto & h = std::get<shared_ptr<AnimHuman>>(item.user);
             
-            RampEdit & ramp = item.rampEdit;
-            int cnt = ramp.GetCurveCount();
-            for(int j=0; j<cnt; j++){
-                std::vector<ImVec2> & pts = ramp.GetPoints(j);
-                if(pts.size() == 1){
-                    // only one points, value is the same
-                    std::cout << "y = " << pts[0].y << std::endl;
-                }
-                for(int k=0; k<pts.size()-1; k++){
-                    ImVec2 & p1 = pts[k];
-                    ImVec2 & p2 = pts[k+1];
-                    float x1 = p1.x;
-                    float x2 = p2.x;
+            /// Read Curve Value
+            if(st <= currentFrame && currentFrame <= end){
+                
+                RampEdit & ramp = item.rampEdit;
+                int cnt = ramp.GetCurveCount();
+                for(int j=0; j<cnt; j++){
+                    std::vector<ImVec2> & pts = ramp.GetPoints(j);
+                    if(pts.size() == 1){
+                        // only one points, value is the same
+                        std::cout << "y = " << pts[0].y << std::endl;
+                    }
                     
-                    if( x1<=currentFrame && currentFrame<=x2){
-                        //std::cout << "Between points " << x1 << " and " << x2 << std::endl;
-                        ImCurveEdit::CurveType ctype = ramp.GetCurveType(j);
-                        float t = (currentFrame-x1) / (x2 - x1);
-                        const ImVec2 sp1 = ImLerp(p1, p2, t);
+                    vec3 tPos = h->position;
+                    
+                    for(int k=0; k<pts.size()-1; k++){
+                        ImVec2 & p1 = pts[k];
+                        ImVec2 & p2 = pts[k+1];
+                        float x1 = p1.x;
+                        float x2 = p2.x;
                         
-                        if(ctype == ImCurveEdit::CurveType::CurveSmooth){
-                            // calculate smooth value
-                            const float rt1 = ImCurveEdit::smoothstep(p1.x, p2.x, sp1.x);
-                            const float y = ImLerp(p1.y, p2.y, rt1);
-                            //std::cout << y << std::endl;
-                        }else if(ctype == ImCurveEdit::CurveType::CurveLinear){
-                            // return sp1
+                        if( x1<=currentFrame && currentFrame<=x2){
+                            //std::cout << "Between points " << x1 << " and " << x2 << std::endl;
+                            ImCurveEdit::CurveType ctype = ramp.GetCurveType(j);
+                            float t = (currentFrame-x1) / (x2 - x1);
+                            const ImVec2 sp1 = ImLerp(p1, p2, t);
+                            
+                            if(ctype == ImCurveEdit::CurveType::CurveSmooth){
+                                // calculate smooth value
+                                const float rt1 = ImCurveEdit::smoothstep(p1.x, p2.x, sp1.x);
+                                const float y = ImLerp(p1.y, p2.y, rt1);
+                                //std::cout << y << std::endl;
+                                float v = ofMap(y, 0.0f, 1.0f, h->position.getMin().x, h->position.getMax().x);
+                                tPos[j] = v;
+                            }else if(ctype == ImCurveEdit::CurveType::CurveLinear){
+                                // return sp1
+                            }
                         }
                     }
+                    
+                    h->position = tPos;
+                    h->applyTransformation();
                 }
             }
         }
