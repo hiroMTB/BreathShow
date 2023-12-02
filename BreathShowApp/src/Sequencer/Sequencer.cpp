@@ -15,6 +15,8 @@
 #include "Ellipse.h"
 #include "io.h"
 #include "Helper.h"
+#include "AnimHuman.h"
+#include "Human.h"
 
 Sequencer::Sequencer(){
     setup();
@@ -23,6 +25,7 @@ Sequencer::Sequencer(){
 void Sequencer::setup(){
     //setupTestSequences();
 }
+
 SequenceUser Sequencer::addTrack( int type, int st, int end, bool bExpanded ){
     
     SequenceUser user = std::monostate{};
@@ -75,9 +78,9 @@ SequenceUser Sequencer::addTrack( int type, int st, int end, bool bExpanded ){
         
         // human
         if(type == 4){
-            auto user = make_shared<Human>();
+            user = make_shared<AnimHuman>();
             mySequence.myItems.push_back(MySequence::MySequenceItem{ type, st, end, bExpanded, user});
-            ofLogError("Sequencer::AddTrack() - ") << "Human";
+            ofLogError("Sequencer::AddTrack() - ") << "AnimHuman";
         }
     }
     
@@ -116,6 +119,9 @@ void Sequencer::startTrack(const SequenceUser & user, int frame){
                 vezer->start();
                 vezer->setFrame(frame);
             }
+        }else if (std::holds_alternative<shared_ptr<AnimHuman>>(user)) {
+            auto & human = std::get<shared_ptr<AnimHuman>>(user);
+            human->applyTransformation();
         }
     }
 }
@@ -196,6 +202,7 @@ void Sequencer::updateSequenceItem(int entry, bool bSeek){
     int end = item.mFrameEnd;
     int type = item.mType;
     bool isVezer = (type == 3);
+    bool isHuman = (type == 4);
     {
         if(st == currentFrame){
             startTrack(item.user, 0);
@@ -214,10 +221,11 @@ void Sequencer::updateSequenceItem(int entry, bool bSeek){
                 ofLogVerbose("Sequencer") << entry << " : seek, frame=" << frame;
             }
 
-            if(isVezer){
+            if(isVezer || isHuman){
                 startTrack(item.user, frame);
                 //Vezer::setIsPlayingSomeVezer(true);
             }
+
         }else if(end == currentFrame){
             if(bLoop && st == min && end == max){
                 // special case
@@ -367,7 +375,7 @@ void Sequencer::draw(bool * bOpen){
             
             shared_ptr<Shape> shape = nullptr;
             shared_ptr<Vezer> vezer = nullptr;
-            shared_ptr<Human> human = nullptr;
+            shared_ptr<AnimHuman> human = nullptr;
 
             if (std::holds_alternative<shared_ptr<Shape>>(item.user)) {
                 shape = std::get<shared_ptr<Shape>>(item.user);
@@ -377,8 +385,8 @@ void Sequencer::draw(bool * bOpen){
                 vezer = std::get<shared_ptr<Vezer>>(item.user);
             }
 
-            if (std::holds_alternative<shared_ptr<Human>>(item.user)) {
-                human = std::get<shared_ptr<Human>>(item.user);
+            if (std::holds_alternative<shared_ptr<AnimHuman>>(item.user)) {
+                human = std::get<shared_ptr<AnimHuman>>(item.user);
             }
 
             if( checkUserIsValid(item.user) ){
@@ -661,9 +669,20 @@ void Sequencer::drawGui_VezerM(shared_ptr<Vezer> & vezer){
     }
 }
 
-
-void Sequencer::drawGui_Human(shared_ptr<Human> & human){
-
+void Sequencer::drawGui_Human(shared_ptr<AnimHuman> & human){
+    if(ImGui::SliderFloat3("position", (float*)&human->position.get().x, human->position.getMin().x, human->position.getMax().x)){
+        //human->setPosition(human->root.position);
+    }
+                    
+    if(ImGui::SliderFloat("orientation Y", (float*)&human->orientationY.get(), -360, 360)){
+//        glm::quat q = glm::angleAxis(glm::radians(human->orientationY.get()), vec3(0,1,0));
+//        human->root.setOrientation(q);
+    }
+    
+    if(ImGui::Button("Reset")){
+        human->position = vec3(0);
+        human->orientationY = 0;
+    }
 }
 
 bool Sequencer::save(const std::string & filepath){
@@ -697,8 +716,8 @@ bool Sequencer::save(const std::string & filepath){
                 ofJson vezerJson;
                 ofSerialize(vezerJson, vezer->grp);
                 t["vezer"] = vezerJson["vezer"];
-            }else if( std::holds_alternative<shared_ptr<Human>>(item.user)) {
-                auto & human = std::get<shared_ptr<Human>>(item.user);
+            }else if( std::holds_alternative<shared_ptr<AnimHuman>>(item.user)) {
+                auto & human = std::get<shared_ptr<AnimHuman>>(item.user);
                 ofJson humanJson;
                 ofSerialize(humanJson, human->grp);
                 t["human"] = humanJson;
@@ -746,16 +765,7 @@ bool Sequencer::load(const std::string & filepath){
                         ofDeserialize(*itShape, s->grp);
                     }
                 }
-                
-                auto itHuman = j.find("human");
-                if( itHuman != j.end()){
-                    SequenceUser u = addTrack(type, st, end, false);
-                    auto & h = std::get<shared_ptr<Human>>(u);
-                    if(h && h->grp){
-                        ofDeserialize(*itHuman, h->grp);
-                    }
-                }
-                
+             
                 auto itVezer = j.find("vezer");
                 if( itVezer != j.end()){
                     SequenceUser u = addTrack(type, st, end, false);
@@ -764,6 +774,15 @@ bool Sequencer::load(const std::string & filepath){
                     tmp["vezer"] = *itVezer;
                     ofDeserialize(tmp, v->grp);
                     v->load();
+                }
+                                
+                auto itHuman = j.find("human");
+                if( itHuman != j.end()){
+                    SequenceUser u = addTrack(type, st, end, false);
+                    auto & h = std::get<shared_ptr<AnimHuman>>(u);
+                    if(h && h->grp){
+                        ofDeserialize(*itHuman, h->grp);
+                    }
                 }
             }
             

@@ -8,9 +8,9 @@
 
 class Shape;
 class Vezer;
-class Human;
+class AnimHuman;
 
-using SequenceUser = std::variant<std::monostate, shared_ptr<Shape>, shared_ptr<Human>, shared_ptr<Vezer>>;
+using SequenceUser = std::variant<std::monostate, shared_ptr<Shape>, shared_ptr<Vezer>, shared_ptr<AnimHuman>>;
 
 class Sequencer{
     
@@ -44,7 +44,7 @@ private:
     void drawGui_Ellipse(shared_ptr<Shape> & s);
     void drawGui_VezerL(shared_ptr<Vezer> & vezer);
     void drawGui_VezerM(shared_ptr<Vezer> & vezer);
-    void drawGui_Human(shared_ptr<Human> & human);
+    void drawGui_Human(shared_ptr<AnimHuman> & human);
 
     void videoSection(shared_ptr<Shape> s);
     bool checkUserIsValid(const SequenceUser & user);

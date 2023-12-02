@@ -12,12 +12,12 @@
 #include "ImCurveEdit.h"
 
 #include "Shape.h"
-#include "Human.h"
+#include "AnimHuman.h"
 #include "Vezer.h"
 
-using SequenceUser = std::variant<std::monostate, shared_ptr<Shape>, shared_ptr<Human>, shared_ptr<Vezer>>;
+using SequenceUser = std::variant<std::monostate, shared_ptr<Shape>, shared_ptr<Vezer>, shared_ptr<AnimHuman>>;
 
-static const char *SequencerItemTypeNames[] = {"Fan", "Rect", "Ellipse", "Vezer"} ; //, "Human"};
+static const char *SequencerItemTypeNames[] = {"Fan", "Rect", "Ellipse", "Vezer", "Human"};
 
 class MySequence : public ImSequencer::SequenceInterface
 {
