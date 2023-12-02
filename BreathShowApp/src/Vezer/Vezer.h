@@ -130,13 +130,13 @@ public:
         return isPlaying;
     }
     
-    static bool getIsPlayingSomeVezer(){
-        return isPlayingSomeVezer;
-    }
-    
-    static void setIsPlayingSomeVezer(bool b){
-        isPlayingSomeVezer = b;
-    }
+//    static bool getIsPlayingSomeVezer(){
+//        return isPlayingSomeVezer;
+//    }
+//    
+//    static void setIsPlayingSomeVezer(bool b){
+//        isPlayingSomeVezer = b;
+//    }
     
     Body body;
     
@@ -156,5 +156,5 @@ private:
     bool bNeedUpdate{false};
     int currentFrame{0};  // this must be synched with sequencer time line
 
-    static bool isPlayingSomeVezer;
+//    static bool isPlayingSomeVezer;
 };

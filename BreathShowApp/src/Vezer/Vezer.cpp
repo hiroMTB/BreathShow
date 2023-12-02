@@ -3,4 +3,4 @@
 
 #include "Vezer.h"
 
-bool Vezer::isPlayingSomeVezer = false;
+//bool Vezer::isPlayingSomeVezer = false;
