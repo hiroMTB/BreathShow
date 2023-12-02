@@ -10,7 +10,6 @@
 #include "Shape.h"
 #include "Sequencer.h"
 #include "Osc/Osc.h"
-#include "Body/Body.h"
 
 using glm::vec2;
 using glm::vec3;
@@ -91,5 +90,4 @@ class ofApp : public ofBaseApp{
         Projector projector;
         Sequencer sequencer;
         Osc osc;
-        Body body;
 };
