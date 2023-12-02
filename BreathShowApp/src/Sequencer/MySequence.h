@@ -46,9 +46,15 @@ public:
 
 	virtual void Get(int index, int **start, int **end, int *type, unsigned int *color)
 	{
+        static ImU32 shapeColor{ImColor(140, 140, 140)};
+        static ImU32 vezerColor{ImColor(180, 65, 0)}; // Vezer orange (253, 89, 0)
+        
 		MySequenceItem &item = myItems[index];
-		if (color)
-			*color = 0xFFAA8080; // same color for everyone, return color based on type
+        if (color){
+            *color = (item.mType == 3)
+            ? vezerColor
+            : shapeColor;
+        }
 		if (start)
 			*start = &item.mFrameStart;
 		if (end)
