@@ -260,7 +260,7 @@ void Sequencer::updateSequenceItem(int entry, bool bSeek){
                     }
                     
                     vec3 tPos = h->position;
-                    
+                    float oriY = h->orientationY;
                     for(int k=0; k<pts.size()-1; k++){
                         ImVec2 & p1 = pts[k];
                         ImVec2 & p2 = pts[k+1];
@@ -279,7 +279,11 @@ void Sequencer::updateSequenceItem(int entry, bool bSeek){
                                 const float y = ImLerp(p1.y, p2.y, rt1);
                                 //std::cout << y << std::endl;
                                 float v = ofMap(y, 0.0f, 1.0f, h->position.getMin().x, h->position.getMax().x);
-                                tPos[j] = v;
+                                if(j == 3){
+                                    oriY = v;
+                                }else{
+                                    tPos[j] = v;
+                                }
                             }else if(ctype == ImCurveEdit::CurveType::CurveLinear){
                                 // return sp1
                             }
@@ -287,6 +291,7 @@ void Sequencer::updateSequenceItem(int entry, bool bSeek){
                     }
                     
                     h->position = tPos;
+                    h->orientationY = oriY;
                     h->applyTransformation();
                 }
             }
