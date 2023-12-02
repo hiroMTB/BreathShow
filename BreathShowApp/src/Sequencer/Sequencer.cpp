@@ -851,7 +851,7 @@ bool Sequencer::load(const std::string & filepath){
                             }
                         }
                         
-                        itm.rampEdit.sortAll();
+                        item.rampEdit.sortAll();
                     }
                 }
             }
