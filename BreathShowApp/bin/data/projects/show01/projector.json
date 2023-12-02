@@ -1,7 +1,7 @@
 {
     "Projector": {
         "calibration": "0",
-        "farClip": "500",
+        "farClip": "1000",
         "fbo_offset_position": "0, 0",
         "frustumVisible": "0",
         "naerClip": "1",
