@@ -4,6 +4,7 @@
 #include "ofxVezer.h"
 #include "ofxOscMessage.h"
 #include "ParserCereal.h"
+#include "Body.h"
 
 class Vezer {
     
@@ -125,6 +126,10 @@ public:
         parser.redraw(comp, w, h);
     }
     
+    bool getIsPlaying(){
+        return isPlaying;
+    }
+    
     static bool getIsPlayingSomeVezer(){
         return isPlayingSomeVezer;
     }
@@ -132,6 +137,8 @@ public:
     static void setIsPlayingSomeVezer(bool b){
         isPlayingSomeVezer = b;
     }
+    
+    Body body;
     
     ofxVezer::Parser parser;
     ofxVezer::Composition comp;
@@ -141,7 +148,7 @@ public:
     
     ofParameter<string> filepath{ "File Path", "./vezer/rec01.xml"};
     ofParameter<int> maxMsgQueueNum{"Max Message Queue Num", 5, 0, 100};
-    ofParameterGroup grp{"vezer", filepath, maxMsgQueueNum};
+    ofParameterGroup grp{"vezer", filepath, maxMsgQueueNum, body.grp};
     ofEventListeners listeners;
     
 private:
