@@ -8,13 +8,13 @@
 class Vezer {
     
 public:
-
+    
     Vezer(){}
-
+    
     bool load() {
         return load(filepath);
     }
-
+    
     bool load(const string& pathXml){
         ofFile file(pathXml);
         if(file.exists()) {
@@ -25,7 +25,7 @@ public:
             return false;
         }
     }
-
+    
     bool load(const string& pathXml, const string & pathBin){
         ofFile file(pathXml);
         if(file.exists()) {
@@ -48,36 +48,36 @@ public:
             return false;
         }
     }
-
+    
     void draw(){
         parser.debugDraw();
-//        //int frame = int(ofGetElapsedTimef() * comp.fps) % comp.length;
-//        int frame = currentFrame;
-//        float x = (frame / float(comp.length)) * ofGetWidth();
-//        ofRect(x, 0, 1, ofGetHeight());
+        //        //int frame = int(ofGetElapsedTimef() * comp.fps) % comp.length;
+        //        int frame = currentFrame;
+        //        float x = (frame / float(comp.length)) * ofGetWidth();
+        //        ofRect(x, 0, 1, ofGetHeight());
     }
-
+    
     void redraw(){
         parser.redraw(comp);
     }
-
+    
     template<typename Visitor>
     void receive(Visitor visitor){
         //int frame = int(ofGetElapsedTimef() * comp.fps)  % comp.length;
         if( !comp.state ) {
             ofLogError("Vezer") << "No Composition loaded?";
         }
-
+        
         if( isPlaying || bNeedUpdate ) {
-//            if(!bNeedUpdate)currentFrame++;
-//            currentFrame %= comp.length;
-//            setFrame(currentFrame);
-
+            //            if(!bNeedUpdate)currentFrame++;
+            //            currentFrame %= comp.length;
+            //            setFrame(currentFrame);
+            
             while (provider.hasWaitingMessages()) {
                 ofxOscMessage m;
                 provider.getNextMessage(&m);
                 visitor(m);
-
+                
                 if(maxMsgQueueNum !=0 ) {
                     resizeQueue();
                     std::stringstream ss;
@@ -88,7 +88,7 @@ public:
             bNeedUpdate = false;
         }
     }
-
+    
     void start(){
         isPlaying = true;
     }
@@ -102,7 +102,7 @@ public:
         provider.setCurrentTracks(comp, frame);
         bNeedUpdate = true;
     }
-
+    
     void resizeQueue(){
         while(msgQueue.size() >= maxMsgQueueNum){
             msgQueue.pop_front();
@@ -136,14 +136,14 @@ public:
     ofxVezer::Parser parser;
     ofxVezer::Composition comp;
     ofxVezer::Provider provider;
-
+    
     std::deque<string> msgQueue;
-
+    
     ofParameter<string> filepath{ "File Path", "./vezer/rec01.xml"};
     ofParameter<int> maxMsgQueueNum{"Max Message Queue Num", 5, 0, 100};
     ofParameterGroup grp{"vezer", filepath, maxMsgQueueNum};
     ofEventListeners listeners;
-
+    
 private:
     bool isPlaying{false};
     bool bNeedUpdate{false};
