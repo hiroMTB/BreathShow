@@ -16,7 +16,6 @@ public:
         root.position.setMax(glm::vec3(300));
         root.position = glm::vec3(0);
         grp.add(root.position);
-        
     }
     
     bool setup(){
@@ -53,8 +52,7 @@ public:
         }
         return bOk;
     }
-    
-    
+        
     void draw(){
         if(bOn){
             root.transformGL();
