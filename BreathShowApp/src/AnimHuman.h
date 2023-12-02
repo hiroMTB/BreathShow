@@ -14,7 +14,7 @@ public:
     AnimHuman(){};
     void applyTransformation();
     
-    ofParameter<vec3> position{"position", vec3(0), vec3(-100), vec3(100) };
+    ofParameter<vec3> position{"position", vec3(0), vec3(-300), vec3(300) };
     ofParameter<float> orientationY{"orientationY", 0, -360, 360};
     ofParameterGroup grp{"AnimHuman", position, orientationY };
 };

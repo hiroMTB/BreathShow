@@ -12,8 +12,8 @@ public:
     
     Human(){
         root.position.setName("position");
-        root.position.setMin(glm::vec3(-500));
-        root.position.setMax(glm::vec3(500));
+        root.position.setMin(glm::vec3(-300));
+        root.position.setMax(glm::vec3(300));
         root.position = glm::vec3(0);
         grp.add(root.position);
         
