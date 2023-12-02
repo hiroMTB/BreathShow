@@ -361,7 +361,8 @@ namespace ImSequencer
 			{
 				int *start, *end;
 				unsigned int color;
-				sequence->Get(i, &start, &end, NULL, &color);
+                int type;
+				sequence->Get(i, &start, &end, &type, &color);
 				size_t localCustomHeight = sequence->GetCustomHeight(i);
 
 				ImVec2 pos = ImVec2(contentMin.x + legendWidth - firstFrameUsed * framePixelWidth, contentMin.y + ItemHeight * i + 1 + customHeight);
@@ -378,8 +379,10 @@ namespace ImSequencer
 				}
 				if (ImRect(slotP1, slotP2).Contains(io.MousePos) && io.MouseDoubleClicked[0])
 				{
-					// TODO: temporaly disabled!
-					// sequence->DoubleClick(i);
+					// Only open curve editor for AnimHuman item
+                    if(type==4){
+                        sequence->DoubleClick(i);
+                    }
 				}
 				// Ensure grabbable handles
 				const float max_handle_width = slotP2.x - slotP1.x / 3.0f;
