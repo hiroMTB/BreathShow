@@ -42,7 +42,8 @@ private:
     void drawGui_Fan(shared_ptr<Shape> & s);
     void drawGui_RectScreen(shared_ptr<Shape> & s);
     void drawGui_Ellipse(shared_ptr<Shape> & s);
-    void drawGui_Vezer(shared_ptr<Vezer> & vezer);
+    void drawGui_VezerL(shared_ptr<Vezer> & vezer);
+    void drawGui_VezerM(shared_ptr<Vezer> & vezer);
     void drawGui_Human(shared_ptr<Human> & human);
 
     void videoSection(shared_ptr<Shape> s);
