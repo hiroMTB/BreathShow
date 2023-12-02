@@ -175,6 +175,9 @@ void Sequencer::updateCurrentFrame(){
 }
 
 void Sequencer::updateSequenceItemAll(bool bSeek){
+    
+    Vezer::setIsPlayingSomeVezer(false);
+    
     std::vector<MySequence::MySequenceItem> & items = mySequence.myItems;
     for(int i=0; i<items.size(); i++){
         updateSequenceItem(i, bSeek);
@@ -192,9 +195,13 @@ void Sequencer::updateSequenceItem(int entry, bool bSeek){
     int st = item.mFrameStart;
     int end = item.mFrameEnd;
     int type = item.mType;
+    bool isVezer = (type == 3);
     {
         if(st == currentFrame){
             startTrack(item.user, 0);
+            if(isVezer) {
+                Vezer::setIsPlayingSomeVezer(true);
+            }
             ofLogVerbose("Sequencer") << entry << " : start";
         }
         else if(st < currentFrame && currentFrame < end){
@@ -206,9 +213,9 @@ void Sequencer::updateSequenceItem(int entry, bool bSeek){
                 ofLogVerbose("Sequencer") << entry << " : seek, frame=" << frame;
             }
 
-            bool bVezer = (type == 3);
-            if(bVezer){
+            if(isVezer){
                 startTrack(item.user, frame);
+                Vezer::setIsPlayingSomeVezer(true);
             }
         }else if(end == currentFrame){
             if(bLoop && st == min && end == max){

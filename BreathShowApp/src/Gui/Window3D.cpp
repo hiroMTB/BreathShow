@@ -56,21 +56,11 @@ void ofApp::draw3DScene(){
 
     // Floor (Grid)
     drawFloor();
-
-//    ofPushMatrix();
-//    ofTranslate(0, 100, 0);
-//    drawFloor();
-//    ofPopMatrix();
-//
-//    ofPushMatrix();
-//    ofTranslate(0, 200, 0);
-//    drawFloor();
-//    ofPopMatrix();
     
-    human.draw();
-
-    if(1){
+    if(Vezer::getIsPlayingSomeVezer()){
     	body.draw(2, ofColor(255));
+    }else{
+        human.draw();
     }
     
     // Fan, RectScreen, Ellipse

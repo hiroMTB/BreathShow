@@ -60,7 +60,7 @@ void ofApp::update()
 {
     ofSetFrameRate(app->targetFps);
     
-    if(1){        
+    if(Vezer::getIsPlayingSomeVezer()){        
         receiveOsc();
         body.calc();
         human.root.setPosition(body.rootPos);
