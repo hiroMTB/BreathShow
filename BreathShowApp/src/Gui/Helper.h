@@ -38,7 +38,7 @@ public:
     inline static void DragDouble( ofParameter<double> & p, float step=0.01f){
         double min = p.getMin();
         double max = p.getMax();
-        ImGui::DragScalar(p.getName().c_str(), ImGuiDataType_Double, (double *) &p.get(), step, &min, &max);
+        ImGui::DragScalar(p.getName().c_str(), ImGuiDataType_Double, (double *) &p.get(), step, &min, &max, "%.2f");
     }
     
     inline static void Combo( ofParameter<int> & p, const vector<string> & items){
