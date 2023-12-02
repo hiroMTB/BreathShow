@@ -403,7 +403,7 @@ void Sequencer::draw(bool * bOpen){
                         case ShapeType::FAN: drawGui_Fan(shape); break;
                         case ShapeType::RECT_SCREEN: drawGui_RectScreen(shape); break;
                         case ShapeType::ELLIPSE: drawGui_Ellipse(shape); break;
-                        case 3: drawGui_Vezer(vezer); break;
+                        case 3: drawGui_VezerL(vezer); break;
                         case 4: drawGui_Human(human); break;
                         default: ofLogError("Sequencer::draw()") << "Something went wrong about ShapeType"; break;
                     }
@@ -421,11 +421,7 @@ void Sequencer::draw(bool * bOpen){
                     }
                     
                     if(vezer){
-                        ImGui::Text("OSC Logger");
-                        if(ImGui::SliderInt("Queue Size", (int*)&vezer->maxMsgQueueNum.get(), vezer->maxMsgQueueNum.getMin(), vezer->maxMsgQueueNum.getMax())){
-                            vezer->resizeQueue();
-                        }
-                        gui::Helper::drawMsgLogger( vezer->msgQueue );
+                        drawGui_VezerM(vezer);
                     }
                     
                     // preview Vezer timelien, too small space
@@ -581,21 +577,89 @@ void Sequencer::drawGui_Ellipse(shared_ptr<Shape> & shape){
     ImGui::PopID();
 }
 
-void Sequencer::drawGui_Vezer(shared_ptr<Vezer> & vezer){
+void Sequencer::drawGui_VezerL(shared_ptr<Vezer> & vezer){
     
     if(vezer->isReady()){
-        filesystem::path path{vezer->filepath.get()};
-        ImGui::Text("file name     : %s", path.filename().c_str());
+
+        string filepath = ofToDataPath(vezer->filepath.get(), true);
+        filesystem::path p(filepath);
+        ImGui::Text("File Name     : %s", p.filename().c_str());
+
+        {
+            ImGui::SameLine();
+            ImGui::TextDisabled("(path)");
+            if (ImGui::IsItemHovered(ImGuiHoveredFlags_DelayShort) && ImGui::BeginTooltip())
+            {
+                ImGui::PushTextWrapPos(ImGui::GetFontSize() * 35.0f);
+                ImGui::TextUnformatted(filepath.c_str());
+                ImGui::PopTextWrapPos();
+                ImGui::EndTooltip();
+            }
+        }
+
+        
+        if( ImGui::Button("Load Vezer XML file") ){
+            io::dialogueOpenVezer(vezer);
+        }
         ImGui::Text("current frame : %d", vezer->getCurrentFrame());
         ImGui::Text("total frames  : %d", vezer->getTotalFrames());
+        
+        if(ImGui::TreeNodeEx("OSC Logger")){
+            if(ImGui::SliderInt("Queue Size", (int*)&vezer->maxMsgQueueNum.get(), vezer->maxMsgQueueNum.getMin(), vezer->maxMsgQueueNum.getMax())){
+                vezer->resizeQueue();
+            }
+            gui::Helper::drawMsgLogger( vezer->msgQueue );
+            ImGui::TreePop();
+        }
     }else{
         ImGui::Text("Vezer file not loaded");
     }
     
-    if( ImGui::Button("Load Vezer XML file") ){
-     io::dialogueOpenVezer(vezer);
- }
 }
+
+void Sequencer::drawGui_VezerM(shared_ptr<Vezer> & vezer){
+    
+    Body & body = vezer->body;
+    
+    ImGui::Text("Skeleton");
+  
+    if(ImGui::SliderFloat3("offset", (float*)&body.offset.get().x, body.offset.getMin().x, body.offset.getMax().x)){
+    }
+    
+//    if(ImGui::SliderFloat3("Scale", (float*)&body.scale.get().x, body.scale.getMin().x, body.scale.getMax().x)){
+//    }
+
+    if(ImGui::Button("Set Offset")){
+        vec3 prevOffset = body.offset;
+        float y = prevOffset.y;
+        vec3 r = body.rootPos - prevOffset;
+        body.offset = vec3(-r.x, y, -r.z);
+    }
+
+    ImGui::SameLine();
+
+    if( ImGui::Button("Reset Offset")){
+        vec3 prevOffset = body.offset;
+        float y = prevOffset.y;
+        body.offset = vec3(0, y, 0);
+    }
+    
+    if (ImGui::TreeNodeEx("Filter")) {
+        vector<string> fTypes{"none", "legacy", "OneEuro"};
+        ofxImGui::VectorCombo("Filter Type", (int *) &body.filterType.get(), fTypes);
+        if (body.filterType == 0) {
+        } else if (body.filterType == 1) {
+            ImGui::SliderFloat(body.lowpass.getName().c_str(), (float*)&body.lowpass.get(), body.lowpass.getMin(), body.lowpass.getMax());
+        } else if (body.filterType == 2) {
+            gui::Helper::DragDouble(body.frequency, 1);
+            gui::Helper::DragDouble(body.mincutoff);
+            gui::Helper::DragDouble(body.beta);
+            gui::Helper::DragDouble(body.dcutoff);
+        }
+        ImGui::TreePop();
+    }
+}
+
 
 void Sequencer::drawGui_Human(shared_ptr<Human> & human){
 
