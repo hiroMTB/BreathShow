@@ -37,7 +37,7 @@ void ofApp::receiveOsc(){
         osc.receive([&](const ofxOscMessage &m) -> void {
             string address = m.getAddress();
             const vector<string> &tokens = Util::split(address, "/");
-            body.processOsc(m, tokens);
+            //body.processOsc(m, tokens);
             //cout << m << endl;
         });
     }else{
@@ -49,7 +49,14 @@ void ofApp::receiveOsc(){
                 vezer->receive([&](const ofxOscMessage &m) -> void {
                     string address = m.getAddress();
                     const vector<string> &tokens = Util::split(address, "/");
-                    body.processOsc(m, tokens);
+                    vezer->body.processOsc(m, tokens);
+                    vezer->body.calc();
+                    human.root.setPosition(vezer->body.rootPos);
+                    
+                    // orientation
+                    human.orientationY = vezer->body.rootOri.y;
+                    glm::quat q = glm::angleAxis(glm::radians(human.orientationY.get()), vec3(0,1,0));
+                    human.root.setOrientation(q);
                 });
             }
         }
@@ -60,16 +67,7 @@ void ofApp::update()
 {
     ofSetFrameRate(app->targetFps);
     
-    if(Vezer::getIsPlayingSomeVezer()){        
-        receiveOsc();
-        body.calc();
-        human.root.setPosition(body.rootPos);
-        
-        // orientation
-        human.orientationY = body.rootOri.y;
-        glm::quat q = glm::angleAxis(glm::radians(human.orientationY.get()), vec3(0,1,0));
-        human.root.setOrientation(q);
-    }
+    receiveOsc();
     
     const auto & items = sequencer.getSequenceItems();
     for( auto & i : items){
