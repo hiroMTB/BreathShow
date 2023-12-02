@@ -60,15 +60,16 @@ public:
             root.transformGL();
             ofSetColor(200, 200);
             //model.drawWireframe();
+            ofScale(meshScale);
             mesh.drawWireframe();
             root.restoreTransformGL();
         }
     }
     
     void setModelScale(){
-        glm::vec3 s =  preScale * height.get() * 0.01f ;
-        model.setScale(s.x, s.y, s.z);
-        model.update();
+        meshScale =  preScale * height.get() * 0.01f ;
+        //model.setScale(s.x, s.y, s.z);
+        //model.update();
     }
     
     ofNode root; // empty Root Node, place holder
@@ -81,6 +82,8 @@ public:
     ofParameterGroup grp{"human", bOn, height, orientationY};
     ofMesh mesh;
 private:
+    
+    glm::vec3 meshScale{1};
     
 #if OF_VERSION_MINOR >= 12
     // can not load obj file with propery scaling editted by Blender
