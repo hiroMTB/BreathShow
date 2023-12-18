@@ -83,6 +83,13 @@ public:
         bOn = true;
     }
     
+    void setFrame(int frame){
+        if(vid.getCurrentFrame() != frame){
+            vid.setFrame(frame);
+            vid.update();
+        }
+    }
+    
     void stop(){
         if(vid.isPlaying()){
             vid.stop();
