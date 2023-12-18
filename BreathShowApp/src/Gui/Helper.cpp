@@ -47,17 +47,18 @@ void Helper::menu(const shared_ptr<ofApp> & app) {
         }
         
         ImGui::Spacing(); ImGui::Separator(); ImGui::Spacing();
-        ImGui::Text("%3.1f fps", ofGetFrameRate());
+        ImGui::Text("%3d fps", (int)ofGetFrameRate());
         ImGui::Spacing(); ImGui::Separator(); ImGui::Spacing();
 
         ImGui::PushItemWidth(50);
-        if(ImGui::DragInt("Target fps", (int*)&app->targetFps.get(), 1, 1, 200, "%2d fps")){
+        if(ImGui::DragInt("Target fps", (int*)&app->targetFps.get(), 1, 1, 200, "%2d")){
         }
         
         ImGui::Spacing(); ImGui::Separator(); ImGui::Spacing();
         if(ImGui::Checkbox("Play", (bool*)&app->bPlay.get())){
             app->setPlay(app->bPlay);
         }
+        
         ImGui::Spacing(); ImGui::Separator(); ImGui::Spacing();
         if(ImGui::Checkbox("Loop", (bool*)&app->bLoop.get())){
             app->setLoop(app->bLoop);
