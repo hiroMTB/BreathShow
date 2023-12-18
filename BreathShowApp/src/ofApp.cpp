@@ -30,6 +30,8 @@ void ofApp::setup()
     io::loadProject(currentProjectPath);
         
     osc.setupReceiver();
+    
+    renderer.setup(projector.fbo);
 }
 
 void ofApp::receiveOsc(){
@@ -81,7 +83,8 @@ void ofApp::update()
 void ofApp::draw()
 {
     drawProjectorFbo();
-
+    renderer.render(projector.fbo.getTexture());
+    
     ofBackground(0);
     gui.begin();
     
@@ -152,6 +155,12 @@ void ofApp::keyPressed(ofKeyEventArgs & args)
             
         case ' ':
             setPlay(!bPlay);
+            break;
+            
+        case 'r':
+            string timestamp = ofGetTimestampString();
+            string dirpath = ofToDataPath(timestamp, true);
+            renderer.start(dirpath);
             break;
     }
 }

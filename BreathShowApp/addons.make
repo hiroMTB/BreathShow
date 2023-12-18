@@ -7,3 +7,4 @@ ofxXmlSettings
 ../local_addons/ofxVezer
 ../local_addons/ofxGizmo
 ../local_addons/ofxCereal
+../local_addons/ofxTextureRecorder
