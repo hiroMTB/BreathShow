@@ -105,11 +105,18 @@ void Sequencer::deleteTrack(int index){
 
 void Sequencer::startTrack(const SequenceUser & user, int frame){
 
+    bool playing = ofApp::get()->bPlay;
+    
     if(checkUserIsValid(user)){
         if (std::holds_alternative<shared_ptr<Shape>>(user)) {
             auto & shape = std::get<shared_ptr<Shape>>(user);
             if(shape){
-                shape->start(frame);
+                if(playing){
+                    shape->start(frame);
+                } else {
+                    shape->setFrame(frame);
+                    shape->bOn = true;
+                }
             }else{
                 ofLogError("Sequencer::startTrack") << "shape is null";
             }
@@ -117,7 +124,7 @@ void Sequencer::startTrack(const SequenceUser & user, int frame){
             // vezer
             auto & vezer = std::get<shared_ptr<Vezer>>(user);
             if(vezer){
-                vezer->start();
+                if(playing) vezer->start();
                 vezer->setFrame(frame);
             }
         }else if (std::holds_alternative<shared_ptr<AnimHuman>>(user)) {
@@ -312,10 +319,26 @@ void Sequencer::draw(bool * bOpen){
         
         ImGui::PushItemWidth(100);
         
-        ImGui::InputInt("Min", &mySequence.mFrameMin);
+        auto app = ofApp::get();
+        if(ImGui::Button("Start")){
+            app->setPlay(true);
+        }
+        
+        ImGui::SameLine();
+        if(ImGui::Button("Stop")){
+            app->setPlay(false);
+        }
 
-        ImGui::SameLine(); ImGui::Dummy({30, 0}); ImGui::SameLine();
-        ImGui::InputInt("Frame ", &currentFrame);
+        ImGui::SameLine();
+        if(ImGui::Button("Reset")){
+            currentFrame = mySequence.mFrameMin;
+        }
+        
+        //ImGui::SameLine();
+        //ImGui::InputInt("Min", &mySequence.mFrameMin);
+
+        ImGui::SameLine(); ImGui::Dummy({100, 0}); ImGui::SameLine();
+        ImGui::InputInt("Current Frame ", &currentFrame);
 
         ImGui::SameLine();
         int sec = std::floor(currentFrame/30.0);
