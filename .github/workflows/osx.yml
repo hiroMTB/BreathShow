@@ -29,13 +29,14 @@ jobs:
       - name: Checkout BreathShow
         uses: actions/checkout@v4
         with:
-        path: BreathShow
+          path: BreathShow
           
       - name: Checkout oF
         uses: actions/checkout@v4
         repository: openframeworks/openFrameworks
-        path: of
-        submodules: true
+        with:
+          path: of
+          submodules: true
 
       - name: Download libs
         # continue-on-error: true
