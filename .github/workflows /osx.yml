@@ -4,7 +4,7 @@ run-name: Build oF and BreathShowApp
 # make the action not run on the local repo if the branch is also in a pull request to OF/OF
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
     # if: github.event_name == 'push' && github.event.pull_request == null
     # paths-ignore:
     # - '**/*.md'
