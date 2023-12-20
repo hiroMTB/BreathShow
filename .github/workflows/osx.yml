@@ -26,10 +26,10 @@ jobs:
       TARGET: ${{matrix.cfg.target}}
       OPT: ${{matrix.cfg.opt}}
     steps:
-     - name: Checkout BreathShow
+      - name: Checkout BreathShow
         uses: actions/checkout@v4
         with:
-          path: BreathShow
+        path: BreathShow
           
       - name: Checkout oF
         uses: actions/checkout@v4
