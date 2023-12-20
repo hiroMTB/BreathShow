@@ -58,7 +58,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: Mac Os Artifacts
-          path: ./BreathShow/BreathShowApp/bin/BreathShowApp.app
+          path: ./BreathShow/BreathShowApp/bin
 
       # Building the project
 
