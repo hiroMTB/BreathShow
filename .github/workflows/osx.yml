@@ -47,6 +47,20 @@ jobs:
           ./BreathShow/ci/projectGenerator -o"./of" -p"osx" ./BreathShow/BreathShowApp
 
       # Building the project
+      - name: Building BreathShow
+        run: |
+          cd ./BreathShow/BreathShowApp
+          ls -la
+          xcodebuild -configuration Release -target BreathShowApp -project "BreathShow.xcodeproj"
+
+      # Upload executable binaries to GitHub
+      - name: Uploading artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: Mac Os Artifacts
+          path: ./BreathShow/BreathShowApp/bin/
+
+      # Building the project
 
       # - name: Build oF + emptyExample
       #   run:
@@ -58,3 +72,5 @@ jobs:
       #   env:
       #     DEVELOPER_DIR: "/Applications/Xcode.app/Contents/Developer"
       #     SDKROOT: "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk"
+
+      
