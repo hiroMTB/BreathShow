@@ -18,8 +18,8 @@ jobs:
   build-osx:
     runs-on: macos-12
     strategy:
-        matrix:
-          cfg:
+      matrix:
+        cfg:
           - {target: osx, opt: "xcode"}
           - {target: osx, opt: "makefiles"}
     env:
