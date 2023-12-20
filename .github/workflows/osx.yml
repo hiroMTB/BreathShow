@@ -44,7 +44,7 @@ jobs:
 
       - name: Create project files for Xcode
         run: |
-          ./BreathShow/ci/projectGenerator -o"./of" -p"os" ./BreathShow/BreathShowApp
+          ./BreathShow/ci/projectGenerator -o"./of" -p"osx" ./BreathShow/BreathShowApp
 
       # Building the project
 
