@@ -60,17 +60,4 @@ jobs:
           name: Mac Os Artifacts
           path: ./BreathShow/BreathShowApp/bin
 
-      # Building the project
-
-      # - name: Build oF + emptyExample
-      #   run:
-      #     if [ "$OPT" = "xcode" ]; then
-      #       ./of/scripts/ci/$TARGET/build.sh $OPT;
-      #     else
-      #       scripts/ci/$TARGET/run_tests.sh;
-      #     fi
-      #   env:
-      #     DEVELOPER_DIR: "/Applications/Xcode.app/Contents/Developer"
-      #     SDKROOT: "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk"
-
-      
+    
