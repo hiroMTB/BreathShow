@@ -1,0 +1,49 @@
+name: build-macos
+
+# make the action not run on the local repo if the branch is also in a pull request to OF/OF
+on:
+  push:
+    if: github.event_name == 'push' && github.event.pull_request == null
+    paths-ignore:
+    - '**/*.md'
+    - 'examples/**'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+    build-osx:
+    runs-on: macos-12
+    strategy:
+        matrix:
+          cfg:
+          - {target: osx, opt: "xcode"}
+          - {target: osx, opt: "makefiles"}
+    env:
+      TARGET: ${{matrix.cfg.target}}
+      OPT: ${{matrix.cfg.opt}}
+    steps:
+     - name: Checkout BreathShow
+        uses: actions/checkout@v4
+        with:
+          path: BreathShow
+          
+      - name: Checkout oF
+        uses: actions/checkout@v4
+        repository: openframeworks/openFrameworks
+        path: of
+        submodules: true
+
+      - name: Download libs
+        # continue-on-error: true
+        run: ./of/scripts/$TARGET/download_libs.sh
+
+      - name: Build oF + emptyExample
+        run:
+          if [ "$OPT" = "xcode" ]; then
+            ./of/scripts/ci/$TARGET/build.sh $OPT;
+          fi
+        env:
+          DEVELOPER_DIR: "/Applications/Xcode.app/Contents/Developer"
+          SDKROOT: "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk"
