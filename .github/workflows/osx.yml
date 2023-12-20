@@ -33,8 +33,8 @@ jobs:
           
       - name: Checkout oF
         uses: actions/checkout@v4
-        repository: openframeworks/openFrameworks
         with:
+          repository: openframeworks/openFrameworks
           path: of
           submodules: true
 
