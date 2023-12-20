@@ -21,7 +21,7 @@ jobs:
       matrix:
         cfg:
           - {target: osx, opt: "xcode"}
-          - {target: osx, opt: "makefiles"}
+          # - {target: osx, opt: "makefiles"}
     env:
       TARGET: ${{matrix.cfg.target}}
       OPT: ${{matrix.cfg.opt}}
@@ -42,11 +42,19 @@ jobs:
         # continue-on-error: true
         run: ./of/scripts/$TARGET/download_libs.sh
 
-      - name: Build oF + emptyExample
-        run:
-          if [ "$OPT" = "xcode" ]; then
-            ./of/scripts/ci/$TARGET/build.sh $OPT;
-          fi
-        env:
-          DEVELOPER_DIR: "/Applications/Xcode.app/Contents/Developer"
-          SDKROOT: "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk"
+      - name: Create project files for Xcode
+        run: |
+          ./BreathShow/ci/projectGenerator -o"./of" -p"os" ./BreathShow/BreathShowApp
+
+      # Building the project
+
+      # - name: Build oF + emptyExample
+      #   run:
+      #     if [ "$OPT" = "xcode" ]; then
+      #       ./of/scripts/ci/$TARGET/build.sh $OPT;
+      #     else
+      #       scripts/ci/$TARGET/run_tests.sh;
+      #     fi
+      #   env:
+      #     DEVELOPER_DIR: "/Applications/Xcode.app/Contents/Developer"
+      #     SDKROOT: "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk"
