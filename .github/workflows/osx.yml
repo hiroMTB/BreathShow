@@ -34,7 +34,8 @@ jobs:
       - name: Checkout oF
         uses: actions/checkout@v4
         with:
-          repository: openframeworks/openFrameworks
+          repository: hiroMTB/openFrameworks
+          ref: expose-ofNode-position-to-public
           path: of
           submodules: true
 
