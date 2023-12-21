@@ -52,7 +52,7 @@ jobs:
         run: |
           cd ./BreathShow/BreathShowApp
           ls -la
-          xcodebuild -configuration Release -target BreathShowApp -project "BreathShowApp.xcodeproj"
+          xcodebuild -arch x86_64 -configuration Release -target BreathShowApp -project "BreathShowApp.xcodeproj"
 
       # Upload executable binaries to GitHub
       - name: Uploading artifacts
