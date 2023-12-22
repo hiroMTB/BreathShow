@@ -120,7 +120,7 @@ void Projector::drawCalibration() const
     ofSetLineWidth(10);
     ofDrawLine(-w2, -h2, w2, h2);
     ofDrawLine(-w2, h2, w2, -h2);
-    float s = min(w, h);
+    float s = fmin(w, h);
     float s2 = s / 2.0;
     if(id<4){
         ofDrawCircle(0,0,s2);
