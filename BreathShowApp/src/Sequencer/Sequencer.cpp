@@ -632,7 +632,7 @@ void Sequencer::drawGui_VezerL(shared_ptr<Vezer> & vezer){
     if(vezer->isReady()){
 
         string filepath = ofToDataPath(vezer->filepath.get(), true);
-        filesystem::path p(filepath);
+        std::filesystem::path p(filepath);
         ImGui::Text("File Name     : %s", p.filename().c_str());
 
         {
@@ -890,7 +890,7 @@ void Sequencer::videoSection(shared_ptr<Shape> s){
     ImGui::Text("Video");
 
     string filepath = ofToDataPath(s->videoPath.get(), true);
-    filesystem::path p(filepath);
+    std::filesystem::path p(filepath);
     ImGui::TextWrapped("File Name     : %s", p.filename().c_str());
 
     {
