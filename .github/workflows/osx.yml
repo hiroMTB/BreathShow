@@ -43,22 +43,38 @@ jobs:
         # continue-on-error: true
         run: ./of/scripts/$TARGET/download_libs.sh
 
-      - name: Create project files for Xcode
-        run: |
-          ./BreathShow/ci/projectGenerator -o"./of" -p"osx" ./BreathShow/BreathShowApp
 
-      # Building the project
-      - name: Building BreathShow
-        run: |
-          cd ./BreathShow/BreathShowApp
-          ls -la
-          xcodebuild -configuration Release -target BreathShowApp -project "BreathShowApp.xcodeproj"
+      - name: Build oF + emptyExample
+        run:
+          if [ "$OPT" = "xcode" ]; then
+            ./of/scripts/ci/$TARGET/build.sh $OPT;
+        env:
+          DEVELOPER_DIR: "/Applications/Xcode.app/Contents/Developer"
+          SDKROOT: "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk"
 
       # Upload executable binaries to GitHub
       - name: Uploading artifacts
         uses: actions/upload-artifact@v4
         with:
           name: Mac Os Artifacts
-          path: ./BreathShow/BreathShowApp/bin
+          path: ./of/scripts/templates/osx/bin
+
+      # - name: Create project files for Xcode
+      #   run: |
+      #     ./BreathShow/ci/projectGenerator -o"./of" -p"osx" ./BreathShow/BreathShowApp
+
+      # Building the project
+      # - name: Building BreathShow
+      #   run: |
+      #     cd ./BreathShow/BreathShowApp
+      #     ls -la
+      #     xcodebuild -arch x86_64 -configuration Release -target BreathShowApp -project "BreathShowApp.xcodeproj"
+
+      # Upload executable binaries to GitHub
+      # - name: Uploading artifacts
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: Mac Os Artifacts
+      #     path: ./BreathShow/BreathShowApp/bin
 
     
