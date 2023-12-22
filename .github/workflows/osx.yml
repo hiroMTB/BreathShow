@@ -45,9 +45,7 @@ jobs:
 
 
       - name: Build oF + emptyExample
-        run:
-          if [ "$OPT" = "xcode" ]; then
-            ./of/scripts/ci/$TARGET/build.sh $OPT;
+        run: ./of/scripts/ci/$TARGET/build.sh $OPT;
         env:
           DEVELOPER_DIR: "/Applications/Xcode.app/Contents/Developer"
           SDKROOT: "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk"
