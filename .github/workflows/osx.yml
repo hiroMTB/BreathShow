@@ -35,7 +35,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: hiroMTB/openFrameworks
-          ref: expose-ofNode-position-to-public
+          ref: expose-ofNode-position-to-public-latestMaster
           path: of
           submodules: true
 
@@ -52,7 +52,7 @@ jobs:
         run: |
           cd ./BreathShow/BreathShowApp
           ls -la
-          xcodebuild -arch x86_64 -configuration Release -target BreathShowApp -project "BreathShowApp.xcodeproj"
+          xcodebuild -configuration Release -target BreathShowApp -project "BreathShowApp.xcodeproj"
 
       # Upload executable binaries to GitHub
       - name: Uploading artifacts
