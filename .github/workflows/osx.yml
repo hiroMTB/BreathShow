@@ -103,5 +103,6 @@ jobs:
       - name: Create Release
         uses: ncipollo/release-action@v1
         with:
+          name: "BreathShowApp ${{github.ref_name}}"
           artifacts: "./BreathShowApp.app.tar"
           #bodyFile: "README.md"
