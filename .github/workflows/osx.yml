@@ -25,10 +25,7 @@ jobs:
     env:
       TARGET: ${{matrix.cfg.target}}
       OPT: ${{matrix.cfg.opt}}
-    steps:
-      - name: Check OpenSSL verison
-        run: openssl version
-        
+    steps:        
       - name: Checkout BreathShow
         uses: actions/checkout@v4
         with:
@@ -58,7 +55,7 @@ jobs:
       # - name: Uploading artifacts
       #   uses: actions/upload-artifact@v4
       #   with:
-      #     name: Mac Os Artifacts
+      #     name: emptyExampleApp
       #     path: ./of/scripts/templates/osx/bin
 
 
@@ -73,9 +70,30 @@ jobs:
           ls -la
           xcodebuild -arch x86_64 -configuration Release -target BreathShowApp -project "BreathShowApp.xcodeproj"
 
+      #Codesign App
+      - name: Codesign with self-signed certificate
+        env:
+          #Get secrets stored in Github Action Secrets
+          MACOS_CERTIFICATE: ${{ secrets.BUILD_CERTIFICATE_BASE64 }}
+          MACOS_CERTIFICATE_PWD: ${{ secrets.P12_PASSWORD }}
+          KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
+        run: |
+          echo $MACOS_CERTIFICATE | base64 --decode > certificate.p12
+          security create-keychain -p $KEYCHAIN_PASSWORD build.keychain
+          security default-keychain -s build.keychain
+          security unlock-keychain -p $KEYCHAIN_PASSWORD build.keychain
+          security import certificate.p12 -k build.keychain -P $MACOS_CERTIFICATE_PWD -T /usr/bin/codesign
+          security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k $KEYCHAIN_PASSWORD build.keychain
+          /usr/bin/codesign --force -s "of-cert" ./BreathShow/BreathShowApp/bin/BreathShowApp.app/Contents/MacOS/BreathShowApp -v
+          /usr/bin/codesign -dv ./BreathShow/BreathShowApp/bin/BreathShowApp.app
+
+      # Make tar file to maintain file permiossion
+      - name: 'Tar files'
+        run: tar -cvf ./BreathShowApp.app.tar ./BreathShow/BreathShowApp/bin
+
       #Upload executable binaries to GitHub
       - name: Uploading artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: Mac Os Artifacts
-          path: ./BreathShow/BreathShowApp/bin
+          name: BreathShowApp
+          path: ./BreathShowApp.app.tar
