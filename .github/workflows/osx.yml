@@ -4,11 +4,9 @@ run-name: Build oF and BreathShowApp
 # make the action not run on the local repo if the branch is also in a pull request to OF/OF
 on:
   push:
-    branches: [ main ]
-    # if: github.event_name == 'push' && github.event.pull_request == null
-    # paths-ignore:
-    # - '**/*.md'
-    # - 'examples/**'
+    #branches: [ main ]
+    tags:
+    - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -92,8 +90,15 @@ jobs:
         run: tar -cvf ./BreathShowApp.app.tar ./BreathShow/BreathShowApp/bin
 
       #Upload executable binaries to GitHub
-      - name: Uploading artifacts
-        uses: actions/upload-artifact@v4
+      # - name: Uploading artifacts
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: BreathShowApp
+      #     path: ./BreathShowApp.app.tar
+
+      #Create Release
+      - name: Create Release
+        uses: ncipollo/release-action@v1
         with:
-          name: BreathShowApp
-          path: ./BreathShowApp.app.tar
+          artifacts: "./BreathShowApp.app.tar"
+          #bodyFile: "README.md"
