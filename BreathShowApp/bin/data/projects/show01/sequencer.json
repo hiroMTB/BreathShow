@@ -3,43 +3,43 @@
     "min": "0",
     "tracks": [
         {
-            "end": "12090",
+            "end": "12290",
             "shape": {
                 "Fun": {
                     "Flip_X": "1",
                     "On": "0",
                     "direction": "-1",
                     "openAngle": "180",
-                    "orientationY": "2.457",
-                    "position": "-7, 109, -17.808",
-                    "radius": "85.95",
-                    "resolution": "60",
+                    "orientationY": "0",
+                    "position": "-73, 124.5, -135",
+                    "radius": "81",
+                    "resolution": "89",
                     "test_texture": "0",
                     "video_path": "./vid/App_groe_Voice_li2.mov",
                     "video_volume": "1"
                 }
             },
-            "start": "6110",
+            "start": "6310",
             "type": "0"
         },
         {
-            "end": "12090",
+            "end": "12290",
             "shape": {
                 "Fun": {
                     "Flip_X": "0",
                     "On": "0",
                     "direction": "1",
                     "openAngle": "180",
-                    "orientationY": "-2.457",
-                    "position": "22, 109, -17.808",
-                    "radius": "85.95",
+                    "orientationY": "0",
+                    "position": "-40, 124.5, -135",
+                    "radius": "81",
                     "resolution": "60",
                     "test_texture": "0",
                     "video_path": "./vid/App_groe_Voice_re 2.mov",
                     "video_volume": "1"
                 }
             },
-            "start": "6110",
+            "start": "6310",
             "type": "0"
         },
         {
@@ -49,8 +49,8 @@
                     "Flip_X": "0",
                     "On": "0",
                     "orientationY": "0",
-                    "position": "6, 142, 0",
-                    "size": "275, 155",
+                    "position": "-30.59, 195.29, 0",
+                    "size": "215.33, 130.17",
                     "test_texture": "0",
                     "video_path": "./vid/1.Nebelzug_240.mov",
                     "video_volume": "1"
@@ -60,91 +60,91 @@
             "type": "1"
         },
         {
-            "end": "18980",
+            "end": "18936",
             "shape": {
                 "Ellipse": {
                     "Flip_X": "0",
                     "On": "0",
-                    "center_width": "27.577",
-                    "orientationY": "0",
-                    "position": "9.5, 111, 0",
-                    "radius": "80",
+                    "center_width": "40",
+                    "orientationY": "10",
+                    "position": "-42.5, 167, 0",
+                    "radius": "58",
                     "resolution": "60",
                     "test_texture": "0",
                     "video_path": "./vid/Circle_Cello_final.mov",
                     "video_volume": "1"
                 }
             },
-            "start": "12070",
+            "start": "12270",
             "type": "2"
         },
         {
-            "end": "21510",
+            "end": "21930",
             "shape": {
                 "Fun": {
                     "Flip_X": "0",
                     "On": "0",
                     "direction": "-1",
                     "openAngle": "180",
-                    "orientationY": "2.457",
-                    "position": "-7, 109, -17.808",
-                    "radius": "85.95",
+                    "orientationY": "0",
+                    "position": "-73, 124.5, -135",
+                    "radius": "81",
                     "resolution": "60",
                     "test_texture": "0",
-                    "video_path": "./vid/App_groe_violin_li_Hiro.mov",
+                    "video_path": "/Users/kerstinluecker/Desktop/BreathShowApp_v11.0/data/vid/Violine_final_L.mov",
                     "video_volume": "1"
                 }
             },
-            "start": "18750",
+            "start": "18925",
             "type": "0"
         },
         {
-            "end": "21505",
+            "end": "21930",
             "shape": {
                 "Fun": {
                     "Flip_X": "0",
                     "On": "0",
                     "direction": "1",
                     "openAngle": "180",
-                    "orientationY": "-2.457",
-                    "position": "22, 109, -17.808",
-                    "radius": "85.95",
+                    "orientationY": "0",
+                    "position": "-40, 124.5, -135",
+                    "radius": "81",
                     "resolution": "60",
                     "test_texture": "0",
-                    "video_path": "./vid/App_groe_violin_re_Hiro .mov",
+                    "video_path": "/Users/kerstinluecker/Desktop/BreathShowApp_v11.0/data/vid/Violine_final_R.mov",
                     "video_volume": "1"
                 }
             },
-            "start": "18725",
+            "start": "18925",
             "type": "0"
         },
         {
-            "end": "25078",
+            "end": "27990",
             "shape": {
                 "Rect": {
                     "Flip_X": "0",
                     "On": "1",
                     "orientationY": "0",
-                    "position": "-11, 150, 0",
-                    "size": "175, 175",
+                    "position": "-49.41, 200, 0",
+                    "size": "194.16, 137.01",
                     "test_texture": "0",
                     "video_path": "./vid/2. Nebelzug.mov",
                     "video_volume": "1"
                 }
             },
-            "start": "21560",
+            "start": "22310",
             "type": "1"
         },
         {
-            "end": "18862",
-            "start": "11977",
+            "end": "16853",
+            "start": "12249",
             "type": "3",
             "vezer": {
                 "Body": {
                     "Filter": {
-                        "Filter_Type": "2",
+                        "Filter_Type": "1",
                         "Legacy_Filter": {
-                            "lowpass": "0.7"
+                            "lowpass": "0.985"
                         },
                         "One_Euro_Filter": {
                             "beta": "0.07",
@@ -163,102 +163,25 @@
             }
         },
         {
-            "end": "21444",
-            "start": "18806",
-            "type": "3",
-            "vezer": {
-                "Body": {
-                    "Filter": {
-                        "Filter_Type": "2",
-                        "Legacy_Filter": {
-                            "lowpass": "0.7"
-                        },
-                        "One_Euro_Filter": {
-                            "beta": "0.07",
-                            "dcutoff": "1",
-                            "frequency": "60",
-                            "mincutoff": "1"
-                        }
-                    },
-                    "Landmark": {
-                        "offset": "16.9559, 110, 301.37",
-                        "scale": "1, 1, 1"
-                    }
-                },
-                "File_Path": "./vezer/violine.xml",
-                "Max_Message_Queue_Num": "5"
-            }
-        },
-        {
-            "end": "12041",
-            "human": {
-                "AnimHuman": {
-                    "orientationY": "-69.3357",
-                    "position": "93.4562, 0, -47.3846"
-                },
-                "curve": [
-                    [
-                        {
-                            "type": "smooth",
-                            "x": "760.466",
-                            "y": "0.36"
-                        },
-                        {
-                            "type": "smooth",
-                            "x": "11447.3",
-                            "y": "0.66"
-                        }
-                    ],
-                    [
-                        {
-                            "type": "smooth",
-                            "x": "367.969",
-                            "y": "0.5"
-                        },
-                        {
-                            "type": "smooth",
-                            "x": "11938",
-                            "y": "0.5"
-                        }
-                    ],
-                    [
-                        {
-                            "type": "smooth",
-                            "x": "956.714",
-                            "y": "0.49"
-                        },
-                        {
-                            "type": "smooth",
-                            "x": "11447.3",
-                            "y": "0.42"
-                        }
-                    ],
-                    [
-                        {
-                            "type": "smooth",
-                            "x": "686.872",
-                            "y": "0.59"
-                        },
-                        {
-                            "type": "smooth",
-                            "x": "11643.6",
-                            "y": "0.38"
-                        }
-                    ]
-                ]
-            },
-            "start": "25",
-            "type": "4"
-        },
-        {
-            "end": "24999",
+            "end": "11977",
             "human": {
                 "AnimHuman": {
                     "orientationY": "0",
                     "position": "0, 0, 0"
                 }
             },
-            "start": "21564",
+            "start": "0",
+            "type": "4"
+        },
+        {
+            "end": "30093",
+            "human": {
+                "AnimHuman": {
+                    "orientationY": "0",
+                    "position": "0, 0, 0"
+                }
+            },
+            "start": "19119",
             "type": "4"
         }
     ]
