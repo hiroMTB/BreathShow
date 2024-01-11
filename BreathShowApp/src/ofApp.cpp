@@ -157,11 +157,11 @@ void ofApp::keyPressed(ofKeyEventArgs & args)
             setPlay(!bPlay);
             break;
             
-        case 'r':
-            string timestamp = ofGetTimestampString();
-            string dirpath = ofToDataPath(timestamp, true);
-            renderer.start(dirpath);
-            break;
+//        case 'r':
+//            string timestamp = ofGetTimestampString();
+//            string dirpath = ofToDataPath(timestamp, true);
+//            renderer.start(dirpath);
+//            break;
     }
 }
 
