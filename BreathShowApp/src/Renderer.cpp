@@ -21,7 +21,7 @@ void Renderer::start(const std::string & dirpath){
     }
     
     recorder.setFolderPath(dirpath+"/");
-    bRender = true;    
+    bRender = true;
     ofLogVerbose("Renderder") << "start render: " << dirpath;
 }
 

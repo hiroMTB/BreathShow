@@ -12,6 +12,7 @@ Projector::Projector(const glm::vec2& reso)
     s.internalformat = GL_RGBA8;
     s.numSamples = 0; //ofFbo::maxSamples();
     fbo.allocate(s);
+    //fbo.getTexture().getTextureData().bFlipTexture = true;
     
     rotationDegs.addListener(this, &Projector::onRotationDegs);
     position.addListener(this, &Projector::onPosition);
