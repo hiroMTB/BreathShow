@@ -63,6 +63,26 @@ void Helper::menu(const shared_ptr<ofApp> & app) {
         if(ImGui::Checkbox("Loop", (bool*)&app->bLoop.get())){
             app->setLoop(app->bLoop);
         }
+        
+        static string renderPath = "";
+        ImGui::Spacing(); ImGui::Separator(); ImGui::Spacing();
+        if(!app->renderer.isRendering()){
+            if(ImGui::Button("Render")){
+                renderPath = io::dialogueStartRendering();
+            }
+        }else{
+            if(ImGui::Button("Stop Rendering")){
+                app->renderer.stop();
+                app->setPlay(false);
+                
+                if(renderPath!="error"){
+                    ofSystem("open " + renderPath);
+                }
+            }
+        }
+        
+        ImGui::Spacing(); ImGui::Separator(); ImGui::Spacing();
+        
         ImGui::EndMenuBar();
     }
 }

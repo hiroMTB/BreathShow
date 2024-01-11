@@ -125,4 +125,15 @@ inline void dialogueOpenVezer(const shared_ptr<Vezer> & vezer){
     }
 }
 
+inline std::string dialogueStartRendering(){
+    auto dir = pfd::select_folder("Select directory to save image sequence", ofToDataPath("", true));
+    string dirpath = dir.result();
+    if(ofDirectory::doesDirectoryExist(dirpath, false)) {
+        auto & app = ofApp::get();
+        app->renderer.start(dirpath);
+        app->setPlay(true);
+        return dirpath;
+    }
+    return "error";
+}
 };
